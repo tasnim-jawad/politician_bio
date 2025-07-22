@@ -21,6 +21,7 @@ class Seeder extends SeederClass
             self::$model::create([                'date_time' => $faker->dateTime,
                 'place_address' => $faker->text(200),
                 'title' => $faker->text(100),
+                'short_description' => $faker->paragraph,
                 'description' => $faker->text,
                 'location_link' => $faker->text(250),
             ]);

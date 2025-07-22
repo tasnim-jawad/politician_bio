@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\NewsManagement\Models;
+namespace App\Modules\Management\NewsManagement\News\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;

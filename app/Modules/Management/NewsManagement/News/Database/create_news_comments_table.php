@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     php artisan migrate --path='\App\Modules\Management\NewsManagement\Database\create_news_comments_table.php'
+     php artisan migrate --path='\App\Modules\Management\NewsManagement\News\Database\create_news_comments_table.php'
      * Run the migrations.
      */
     public function up(): void

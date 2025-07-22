@@ -17,6 +17,7 @@ return new class extends Migration
             $table->datetime('date_time')->nullable();
             $table->string('place_address', 200)->nullable();
             $table->string('title', 100)->nullable();
+            $table->text('short_description')->nullable();
             $table->longtext('description')->nullable();
             $table->string('location_link', 250)->nullable();
 

@@ -14,7 +14,7 @@
                                     <table-head />
                                 </thead>
                                 <tbody v-if="all?.data?.length">
-                                    <table-body :data="all?.data" />
+                                    <table-body :data="all?.data" :current_page="page" :per_page="paginate" />
                                 </tbody>
                                 <tbody v-else>
                                     <tr>
@@ -133,6 +133,8 @@ export default {
             all: 'all',
             paginate: 'paginate',
             import_csv_modal_show: 'import_csv_modal_show',
+            page: 'page',
+            paginate: 'paginate',
         })
     },
     components: {

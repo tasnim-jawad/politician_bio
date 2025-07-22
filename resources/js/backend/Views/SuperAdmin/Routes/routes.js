@@ -7,6 +7,7 @@ import SettingsRoutes from "../Management/Settings/setup/routes.js";
 //UserRoutes
 import UserRoutes from "../Management/UserManagement/User/setup/routes.js";
 //routes
+import EventRoutes from '../../../GlobalManagement/EventManagement/Event/setup/routes.js';
 import AboutUsRoutes from '../../../GlobalManagement/AboutUsManagement/AboutUs/setup/routes.js';
 import ContactPeopleRoutes from '../../../GlobalManagement/ContactUsManagement/ContactPeople/setup/routes.js';
 import ContactAddressRoutes from '../../../GlobalManagement/ContactUsManagement/ContactAddress/setup/routes.js';
@@ -15,7 +16,6 @@ import NewsCategoryRoutes from '../../../GlobalManagement/NewsManagement/NewsCat
 import JoinEventRoutes from '../../../GlobalManagement/EventManagement/JoinEvent/setup/routes.js';
 import EventFacilitiesRoutes from '../../../GlobalManagement/EventManagement/EventFacilities/setup/routes.js';
 import SpeakersRoutes from '../../../GlobalManagement/EventManagement/Speakers/setup/routes.js';
-import EventRoutes from '../../../GlobalManagement/EventManagement/Event/setup/routes.js';
 import FaqRoutes from '../../../GlobalManagement/FaqManagement/Faq/setup/routes.js';
 import ProjectPlaningRoutes from '../../../GlobalManagement/ProjectPlaningManagement/ProjectPlaning/setup/routes.js';
 import ServicesRoutes from '../../../GlobalManagement/ServicesManagement/Services/setup/routes.js';
@@ -47,38 +47,36 @@ const routes = {
       name: "adminDashboard",
     },
     //management routes
-        AboutUsRoutes,
-        ContactPeopleRoutes,
-        ContactAddressRoutes,
-        NewsRoutes,
-        NewsCategoryRoutes,
-        JoinEventRoutes,
-        EventFacilitiesRoutes,
-        SpeakersRoutes,
-        EventRoutes,
-        FaqRoutes,
-        ProjectPlaningRoutes,
-        ServicesRoutes,
-        GetInvolvedRoutes,
-        IssuesRoutes,
-        videoRoutes,
-        ImageRoutes,
-        GalleryCategoryRoutes,
-        VolunteerRoutes,
-        OurSpeechesRoutes,
-        OurPrinciplesRoutes,
-        HistoryTimelineRoutes,
-        OurJourneyRoutes,
-        DonationDetailsRoutes,
-        MissionVisionRoutes,
-        PublicCommentRoutes,
-        ContributeRoutes,
-        MediaCoverageRoutes,
-        WhyChoseUsRoutes,
-        BannerRoutes,
-
-      
-
+    EventRoutes,
+    AboutUsRoutes,
+    ContactPeopleRoutes,
+    ContactAddressRoutes,
+    NewsRoutes,
+    NewsCategoryRoutes,
+    JoinEventRoutes,
+    EventFacilitiesRoutes,
+    SpeakersRoutes,
+    FaqRoutes,
+    ProjectPlaningRoutes,
+    ServicesRoutes,
+    GetInvolvedRoutes,
+    IssuesRoutes,
+    videoRoutes,
+    ImageRoutes,
+    GalleryCategoryRoutes,
+    VolunteerRoutes,
+    OurSpeechesRoutes,
+    OurPrinciplesRoutes,
+    HistoryTimelineRoutes,
+    OurJourneyRoutes,
+    DonationDetailsRoutes,
+    MissionVisionRoutes,
+    PublicCommentRoutes,
+    ContributeRoutes,
+    MediaCoverageRoutes,
+    WhyChoseUsRoutes,
+    BannerRoutes,
+    
     //user routes
     UserRoutes,
     //settings

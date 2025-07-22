@@ -21,6 +21,13 @@ export default [
 	},
 
 	{
+		name: "short_description",
+		label: "Enter your short description",
+		type: "textarea",
+		value: "",
+	},
+
+	{
 		name: "description",
 		label: "Enter your description",
 		type: "textarea",

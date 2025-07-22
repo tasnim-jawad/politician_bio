@@ -14,7 +14,7 @@ php artisan make:module NewsletterManagement/Newsletter [email:string-50]
 | AboutUs
 |--------------------------------------------------------------------------
 */
-php artisan make:module AboutUsManagement/AboutUs [title:string-50,description:text,quotation:string-200,features:json,video_url:string-200,image:file,facts_&_figures:json] --vue
+php artisan make:module AboutUsManagement/AboutUs [title:string-50,description:text,quotation:string-200,features:json,video_url:string-200,image:file,facts_figures:json] --vue
 php artisan make:module MissionVisionManagement/MissionVision [page_type:enum-future_plan.mission.vission.none,description:longtext] --vue
 /*
 |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ php artisan make:module FaqManagement/Faq [question:longtext,answer:longtext] --
 | Event
 |--------------------------------------------------------------------------
 */
-php artisan make:module EventManagement/Event [date_time:datetime,place_address:string-200,title:string-100,description:longtext,location_link:string-250] --vue
+php artisan make:module EventManagement/Event [date_time:datetime,place_address:string-200,title:string-100,short_description:text,description:longtext,location_link:string-250] --vue
 php artisan make:module EventManagement/Speakers [event_id:bigint{EventManagement/Event},name:string-50,designation:string-50,image:file,social_link:json] --vue
 php artisan make:module EventManagement/EventFacilities [event_id:bigint{EventManagement/Event},video_url:string-250,facility:json] --vue
 php artisan make:module EventManagement/JoinEvent [event_id:bigint{EventManagement/Event},name:string-100,email:string-100,mobile_number:string-20,comment:text] --vue
@@ -91,7 +91,7 @@ php artisan make:module EventManagement/JoinEvent [event_id:bigint{EventManageme
 */
 php artisan make:module NewsManagement/NewsCategory [title:string-50] --vue
 php artisan make:module NewsManagement/News [banner_image:file,news_category_id:bigint{NewsManagement/NewsCategory},title:string-100,content:longtext,tags:string-20] --vue
-php artisan make:table NewsManagement/News/NewsComment [news_id:bigint{NewsManagement/News},name:string-50,email:string-50,comment:longtext] --model
+php artisan make:table NewsManagement/News/NewsComment [news_id:bigint,name:string-50,email:string-50,comment:longtext] --model
 /*
 |--------------------------------------------------------------------------
 | Contact

@@ -80,10 +80,6 @@ export default {
     TableRowAction,
     SelectSingle,
   },
-  created() {
-    console.log("table body",this.data);
-    
-  },
 
   mounted() {
     this.initFancybox();

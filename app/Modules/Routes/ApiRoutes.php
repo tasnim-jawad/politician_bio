@@ -34,6 +34,7 @@ include_once base_path("app/Modules/Management/WhyChoseUsManagement/WhyChoseUs/R
 include_once base_path("app/Modules/Management/MediaCoverageManagement/MediaCoverage/Routes/Route.php");
 include_once base_path("app/Modules/Management/ContributeManagement/Contribute/Routes/Route.php");
 include_once base_path("app/Modules/Management/PublicCommentManagement/PublicComment/Routes/Route.php");
+include_once base_path("app/Modules/Management/NewsletterManagement/Newsletter/Routes/Route.php");
 include_once base_path("app/Modules/Management/MissionVisionManagement/MissionVision/Routes/Route.php");
 include_once base_path("app/Modules/Management/DonationDetailsManagement/DonationDetails/Routes/Route.php");
 include_once base_path("app/Modules/Management/OurJourneyManagement/OurJourney/Routes/Route.php");
@@ -49,7 +50,6 @@ include_once base_path("app/Modules/Management/GetInvolvedManagement/GetInvolved
 include_once base_path("app/Modules/Management/ServicesManagement/Services/Routes/Route.php");
 include_once base_path("app/Modules/Management/ProjectPlaningManagement/ProjectPlaning/Routes/Route.php");
 include_once base_path("app/Modules/Management/FaqManagement/Faq/Routes/Route.php");
-include_once base_path("app/Modules/Management/EventManagement/Event/Routes/Route.php");
 include_once base_path("app/Modules/Management/EventManagement/Speakers/Routes/Route.php");
 include_once base_path("app/Modules/Management/EventManagement/EventFacilities/Routes/Route.php");
 include_once base_path("app/Modules/Management/EventManagement/JoinEvent/Routes/Route.php");
@@ -58,4 +58,4 @@ include_once base_path("app/Modules/Management/NewsManagement/News/Routes/Route.
 include_once base_path("app/Modules/Management/ContactUsManagement/ContactAddress/Routes/Route.php");
 include_once base_path("app/Modules/Management/ContactUsManagement/ContactPeople/Routes/Route.php");
 include_once base_path("app/Modules/Management/AboutUsManagement/AboutUs/Routes/Route.php");
-include_once base_path("app/Modules/Management/NewsletterManagement/Newsletter/Routes/Route.php");
+include_once base_path("app/Modules/Management/EventManagement/Event/Routes/Route.php");

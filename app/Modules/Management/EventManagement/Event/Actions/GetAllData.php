@@ -33,6 +33,8 @@ class GetAllData
 
     $q->orWhere('title', 'like', '%' . $searchKey . '%');    
 
+    $q->orWhere('short_description', 'like', '%' . $searchKey . '%');    
+
     $q->orWhere('description', 'like', '%' . $searchKey . '%');    
 
     $q->orWhere('location_link', 'like', '%' . $searchKey . '%');              
