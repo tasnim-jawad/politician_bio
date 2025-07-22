@@ -8,7 +8,7 @@
     <!-- Mobile Supported Navbar End -->
     <!-- Banner Section Area Start Here -->
     <!-- Banner Section Area Start Here -->
-    <BannerSection />
+    <BannerSection :data="data.banner"/>
     <!-- Banner Section Area End Here -->
     <!-- Banner Section Area End Here -->
   </div>
@@ -104,6 +104,7 @@ import WhyChoseUs from "../../GlobalComponent/WhyChoseUs.vue";
 export default {
   props: {
     event: Object,
+    data: Object,
   },
   components: {
     Header,

@@ -5,16 +5,20 @@ namespace App\Modules\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Modules\Management\BannerManagement\Banner\Models\Model as BannerModel;
 
 class FrontendController extends Controller
 {
     // Home
     public function HomePage()
     {
+        $banner = BannerModel::active()->latest()->first();
         return Inertia::render('HomePage/Index', [
-            
             'event' => [
                 'title' => 'Home Page',
+            ],
+            'data' => [
+                'banner' => $banner,
             ]
         ]);
     }

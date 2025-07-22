@@ -1,9 +1,10 @@
 <template>
   <div
     class="header-area header-sanatory header-bg-04"
-    style="
-      background-image: url(frontend/assets/img/Home-five/home-five-banner.png);
-    "
+    :style="{
+      backgroundImage: `url(/${data.background_image || '/uploads/default.jpg'})`,
+    }"
+    
   >
     <div class="container custom-container-02">
       <div class="home-five-banner">
@@ -11,17 +12,13 @@
           <div class="col-lg-6">
             <div class="header-inner-02">
               <h4 class="subtitle">
-                LETS STAND TOGETHER<i class="icon-star"></i
+                {{ data.slogan }}<i class="icon-star"></i
                 ><i class="icon-star"></i><i class="icon-star"></i>
-                <span>City Mayor</span>
+                <span>{{ data.election_type }}</span>
               </h4>
-              <h1 class="title">We Can Make Our City Great Again!</h1>
+              <h1 class="title">{{ data.main_title }}</h1>
               <p>
-                President represented Delaware for 36 years in the U.S. Senate
-                before becoming the 47th <br />
-                Vice President of the United States. As President, Harison will
-                restore America’s leadership <br />
-                and build our communities back better.
+                {{ data.short_title }}
               </p>
               <div class="btn-wrapper">
                 <Link href="/about-us" class="boxed-btn read-btn"
@@ -31,10 +28,10 @@
           </div>
           <div class="col-lg-5 offset-lg-1">
             <div class="thumbnail">
-              <img
-                src="frontend/assets/img/Home-five/candidate-img.png"
+                <img
+                :src="data.image || '/uploads/default.jpg'"
                 alt="mayor image"
-              />
+                />
             </div>
           </div>
         </div>
@@ -50,6 +47,9 @@
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 
 export default {
+  props: {
+    data: Object,
+  },
   components: {
     NavbarArea,
   },
