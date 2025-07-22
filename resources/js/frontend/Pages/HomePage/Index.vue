@@ -1,4 +1,5 @@
 <template>
+  <Head :title="event.title" />
   <!-- Header Single Section Start here -->
   <!-- Header Single Section Start here -->
   <div class="header-style-05">
@@ -82,6 +83,7 @@
 </template>
 
 <script>
+import { Head } from '@inertiajs/vue3'
 import BannerSection from "./Components/BannerSection.vue";
 // Common Components
 import BackToTop from "../../CommonComponents/BackToTop.vue";
@@ -100,6 +102,9 @@ import Testimonial from "../../GlobalComponent/Testimonial.vue";
 import WhyChoseUs from "../../GlobalComponent/WhyChoseUs.vue";
 
 export default {
+  props: {
+    event: Object,
+  },
   components: {
     Header,
     BannerSection,

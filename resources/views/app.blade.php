@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Senatory Political HTML-5 Template</title>
+    <!-- <title>Senatory Political HTML-5 Template</title> -->
     <!-- favicon -->
     <link rel="icon" href="{{ asset('frontend') }}/assets/img/favicon.png" sizes="20x20" type="image/png" />
     <!-- animate -->

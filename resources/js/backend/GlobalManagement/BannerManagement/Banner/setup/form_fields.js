@@ -20,26 +20,6 @@ export default [
 		value: "",
 	},
 
-	{
-		name: "short_title",
-		label: "Enter your short title",
-		type: "text",
-		value: "",
-	},
-
-	{
-		name: "description",
-		label: "Enter your description",
-		type: "textarea",
-		value: "",
-	},
-
-	{
-		name: "perma_link",
-		label: "Enter your perma link",
-		type: "text",
-		value: "",
-	},
 
 	{
 		name: "image",
@@ -55,5 +35,21 @@ export default [
 		type: "file",
 		multiple: "false",
 		value: "",
+	},
+
+	{
+		name: "short_title",
+		label: "Enter your short title",
+		type: "text",
+		value: "",
+		row_col_class: "col-md-12",
+	},
+
+	{
+		name: "description",
+		label: "Enter your description",
+		type: "textarea",
+		value: "",
+		row_col_class: "col-md-12",
 	},
 ];
