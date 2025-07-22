@@ -12,7 +12,7 @@
     </td>
     <template v-for="(row_item, index) in setup.table_row_data" :key="index">
       <td v-if="row_item == 'id'">
-        {{ dataindex + 1 }}
+        {{ (current_page - 1) * per_page + dataindex + 1 }}
       </td>
       <td v-else-if="row_item === 'image' || isImageFile(item[row_item])" class="text-wrap max-w-120">
         <a
@@ -71,7 +71,7 @@ import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 export default {
-  props: ["data"],
+  props: ["data", "current_page", "per_page"],
   data: () => ({
     setup,
   }),
@@ -79,6 +79,10 @@ export default {
     SelectAll,
     TableRowAction,
     SelectSingle,
+  },
+  created() {
+    console.log("table body",this.data);
+    
   },
 
   mounted() {

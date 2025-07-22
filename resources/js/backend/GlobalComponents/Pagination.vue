@@ -56,6 +56,7 @@ export default {
     },
     set_per_page_limit: function () {
       this.set_paginate(event.target.value);
+      this.set_page(1);
       this.get_data();
     },
   },
