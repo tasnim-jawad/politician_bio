@@ -2,8 +2,9 @@ export default [
 	{
 		name: "icon",
 		label: "Enter your icon",
-		type: "text",
+		type: "select",
 		value: "",
+		data_list: [],
 	},
 
 	{
@@ -20,12 +21,6 @@ export default [
 		value: "",
 	},
 
-	{
-		name: "description",
-		label: "Enter your description",
-		type: "textarea",
-		value: "",
-	},
 
 	{
 		name: "image",
@@ -36,10 +31,18 @@ export default [
 	},
 
 	{
-		name: "statistics",
-		label: "Enter your statistics",
+		name: "description",
+		label: "Enter your description",
 		type: "textarea",
-		placeholder: "Enter JSON data",
 		value: "",
+		row_col_class: "col-md-12",
 	},
+
+	// {
+	// 	name: "statistics",
+	// 	label: "Enter your statistics",
+	// 	type: "textarea",
+	// 	placeholder: "Enter JSON data",
+	// 	value: "",
+	// },
 ];

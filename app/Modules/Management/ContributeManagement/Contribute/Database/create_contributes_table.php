@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('contributes', function (Blueprint $table) {
             $table->id();
-            $table->string('short_title', 30)->nullable();
-            $table->string('title', 30)->nullable();
+            $table->string('short_title', 100)->nullable();
+            $table->string('title', 100)->nullable();
             $table->text('description')->nullable();
             $table->string('image', 100)->nullable();
 

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title', 30)->nullable();
             $table->date('year')->nullable();
             $table->text('short_description')->nullable();
-            $table->string('image', 150)->nullable();
+            $table->string('image', 100)->nullable();
 
             $table->bigInteger('creator')->unsigned()->nullable();
             $table->string('slug', 50)->nullable();

@@ -6,17 +6,21 @@ export default [
 		value: "",
 	},
 
+
+	{
+		name: "icon",
+		label: "Enter your icon",
+		type: "select",
+		value: "",
+		data_list: [],
+	},
+
+
 	{
 		name: "description",
 		label: "Enter your description",
 		type: "textarea",
 		value: "",
-	},
-
-	{
-		name: "icon",
-		label: "Enter your icon",
-		type: "text",
-		value: "",
+		row_col_class: "col-md-12",
 	},
 ];

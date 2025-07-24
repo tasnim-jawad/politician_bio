@@ -6,7 +6,7 @@
 php artisan make:module BannerManagement/Banner [slogan:string-100,election_type:string-50,main_title:string-100,short_title:text,description:longtext,perma_link:string-150,image:file,background_image:file] --vue
 php artisan make:module WhyChoseUsManagement/WhyChoseUs [title:string-30,description:longtext,icon:string-50] --vue
 php artisan make:module MediaCoverageManagement/MediaCoverage [video_url:string-250,thumbnail_image:file,title:string-30,date:date,tag:string-150] --vue
-php artisan make:module ContributeManagement/Contribute [short_title:string-30,title:string-30,description:text,image:file] --vue
+php artisan make:module ContributeManagement/Contribute [short_title:string-100,title:string-100,description:text,image:file] --vue
 php artisan make:module PublicCommentManagement/PublicComment [comment:longtext,name:string-50,commenter_image:file] --vue
 php artisan make:module NewsletterManagement/Newsletter [email:string-50]
 /*
@@ -27,7 +27,7 @@ php artisan make:module DonationDetailsManagement/DonationDetails [author:string
 | History
 |--------------------------------------------------------------------------
 */
-php artisan make:module OurJourneyManagement/OurJourney [title:string-30,year:date,short_description:text,image:string-150] --vue
+php artisan make:module OurJourneyManagement/OurJourney [title:string-30,year:date,short_description:text,image:file] --vue
 php artisan make:module HistoryTimelineManagement/HistoryTimeline [month_year:date,title:string-30,description:text,image:file] --vue
 /*
 |--------------------------------------------------------------------------

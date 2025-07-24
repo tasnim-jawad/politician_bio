@@ -1,10 +1,4 @@
 export default [
-	{
-		name: "comment",
-		label: "Enter your comment",
-		type: "textarea",
-		value: "",
-	},
 
 	{
 		name: "name",
@@ -19,5 +13,13 @@ export default [
 		type: "file",
 		multiple: "false",
 		value: "",
+	},
+
+	{
+		name: "comment",
+		label: "Enter your comment",
+		type: "textarea",
+		value: "",
+		row_col_class: "col-md-12",
 	},
 ];

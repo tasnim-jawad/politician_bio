@@ -47,6 +47,7 @@ const routes = {
       name: "adminDashboard",
     },
     //management routes
+        OurJourneyRoutes,
     EventRoutes,
     AboutUsRoutes,
     ContactPeopleRoutes,

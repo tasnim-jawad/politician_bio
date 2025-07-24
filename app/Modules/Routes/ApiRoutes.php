@@ -37,7 +37,6 @@ include_once base_path("app/Modules/Management/PublicCommentManagement/PublicCom
 include_once base_path("app/Modules/Management/NewsletterManagement/Newsletter/Routes/Route.php");
 include_once base_path("app/Modules/Management/MissionVisionManagement/MissionVision/Routes/Route.php");
 include_once base_path("app/Modules/Management/DonationDetailsManagement/DonationDetails/Routes/Route.php");
-include_once base_path("app/Modules/Management/OurJourneyManagement/OurJourney/Routes/Route.php");
 include_once base_path("app/Modules/Management/HistoryTimelineManagement/HistoryTimeline/Routes/Route.php");
 include_once base_path("app/Modules/Management/OurPrinciplesManagement/OurPrinciples/Routes/Route.php");
 include_once base_path("app/Modules/Management/OurSpeechesManagement/OurSpeeches/Routes/Route.php");
@@ -59,3 +58,4 @@ include_once base_path("app/Modules/Management/ContactUsManagement/ContactAddres
 include_once base_path("app/Modules/Management/ContactUsManagement/ContactPeople/Routes/Route.php");
 include_once base_path("app/Modules/Management/AboutUsManagement/AboutUs/Routes/Route.php");
 include_once base_path("app/Modules/Management/EventManagement/Event/Routes/Route.php");
+include_once base_path("app/Modules/Management/OurJourneyManagement/OurJourney/Routes/Route.php");

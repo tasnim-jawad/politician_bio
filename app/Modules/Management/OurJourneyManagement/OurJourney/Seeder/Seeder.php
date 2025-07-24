@@ -21,7 +21,7 @@ class Seeder extends SeederClass
             self::$model::create([                'title' => $faker->text(30),
                 'year' => $faker->date,
                 'short_description' => $faker->paragraph,
-                'image' => $faker->text(150),
+                'image' => null,
             ]);
         }
     }
