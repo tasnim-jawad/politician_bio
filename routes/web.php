@@ -26,3 +26,4 @@ require_once __DIR__ . '/../app/Modules/Routes/BackendRoutes.php';
 */
 
 require_once __DIR__ . '/test.php';
+

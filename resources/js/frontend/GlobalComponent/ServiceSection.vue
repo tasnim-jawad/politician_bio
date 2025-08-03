@@ -21,7 +21,7 @@
       </div>
       <div class="row">
         <div
-          v-for="(item, idx) in serviceItems"
+          v-for="(item, idx) in processedServiceItems"
           :key="idx"
           class="col-lg-4 col-md-6"
         >
@@ -33,7 +33,13 @@
               <h4 class="title">
                 <a :href="item.url">{{ item.title }}</a>
               </h4>
-              <p class="description">{{ item.description }}</p>
+              <p class="description">
+                {{
+                  item.description.length > 150
+                    ? item.description.substring(0, 150) + "..."
+                    : item.description
+                }}
+              </p>
             </div>
             <div class="btn-wrapper">
               <a :href="item.url" class="boxed-btn event-btn"
@@ -113,6 +119,22 @@ export default {
             "Efficiently orchestrate resource sucking human capital whereas future-proof",
         },
       ],
+    },
+  },
+  computed: {
+    processedServiceItems() {
+      return this.serviceItems.map((item) => ({
+        ...item,
+        description:
+          item.description &&
+          (() => {
+            const txt = document.createElement("textarea");
+            txt.innerHTML = item.description.replace(/<[^>]*>/g, "");
+            return txt.value;
+          })(),
+        icon: item.icon || "icon-school",
+        url: item.url || `/pages/services/details?slug=${item.slug}`,
+      }));
     },
   },
 };

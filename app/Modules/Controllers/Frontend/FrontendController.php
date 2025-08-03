@@ -6,19 +6,32 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Modules\Management\BannerManagement\Banner\Models\Model as BannerModel;
+use App\Modules\Management\ServicesManagement\Services\Models\Model as ServiceModel;
+use App\Modules\Management\WhyChoseUsManagement\WhyChoseUs\Models\Model as WhyChoseUsModel;
+use App\Modules\Management\OurPrinciplesManagement\OurPrinciples\Models\Model as OurPrinciplesModel;
+use App\Modules\Management\OurPrinciplesManagement\OurPrinciples\Models\Model as PrincipleModel;
+use App\Modules\Management\OurJourneyManagement\OurJourney\Models\Model as OurJourneyModel;
+use App\Modules\Management\MediaCoverageManagement\MediaCoverage\Models\Model as MediaCoverageModel;
+use App\Modules\Management\PublicCommentManagement\PublicComment\Models\Model as PublicCommentModel;
+
 
 class FrontendController extends Controller
 {
     // Home
     public function HomePage()
     {
-        $banner = BannerModel::active()->latest()->first();
+        // Store each dataset in the cache for 10 minutes (600 seconds)
+        cache()->put('home_banner', BannerModel::active()->latest()->first(), 600);
+        cache()->put('home_services', ServiceModel::active()->latest()->take(6)->get(), 600);
+        cache()->put('home_why_chose_us', WhyChoseUsModel::active()->latest()->take(3)->get(), 600);
+        cache()->put('home_principles', PrincipleModel::latest()->take(6)->get(), 600);
+        cache()->put('home_our_journey', OurJourneyModel::active()->latest()->get(), 600);
+        cache()->put('home_media_coverages', MediaCoverageModel::active()->latest()->take(3)->get(), 600);
+        cache()->put('home_comments', PublicCommentModel::active()->latest()->take(10)->get(), 600);
+
         return Inertia::render('HomePage/Index', [
             'event' => [
                 'title' => 'Home Page',
-            ],
-            'data' => [
-                'banner' => $banner,
             ]
         ]);
     }
@@ -134,19 +147,31 @@ class FrontendController extends Controller
     // Pages/Services
     public function ServicesPage()
     {
+        $services = ServiceModel::active()->latest()->take(6)->get();
         return Inertia::render('Pages/Services/Index', [
             'event' => [
                 'title' => 'Services',
+            ],
+            'data' => [
+                'services' => $services,
             ]
         ]);
     }
 
     // Pages/Services Details
-    public function ServicesDetailsPage()
+    public function ServicesDetailsPage(Request $request)
     {
+        $slug = $request->query('slug');
+        $service = null;
+        if ($slug) {
+            $service = ServiceModel::where('slug', $slug)->first();
+        }
         return Inertia::render('Pages/Services/Details', [
             'event' => [
                 'title' => 'Service Details',
+            ],
+            'data' => [
+                'service' => $service,
             ]
         ]);
     }

@@ -8,7 +8,7 @@
     <!-- Mobile Supported Navbar End -->
     <!-- Banner Section Area Start Here -->
     <!-- Banner Section Area Start Here -->
-    <BannerSection :data="data.banner"/>
+    <BannerSection :data="data.banner" />
     <!-- Banner Section Area End Here -->
     <!-- Banner Section Area End Here -->
   </div>
@@ -17,7 +17,10 @@
 
   <!-- Services Single Section Start here -->
   <!-- Services Single Section Start here -->
-  <ServiceSection :serviceMarginTop="'100px'"/>
+  <ServiceSection
+    :serviceMarginTop="'100px'"
+    :serviceItems="data.services"
+  />
   <!-- Services Single Section Start here -->
   <!-- Services Single Section Start here -->
 
@@ -27,6 +30,7 @@
     :position="'right'"
     :main-bg="'/frontend/assets/img/group-activity-02.png'"
     :side-bg="'/frontend/assets/img/ceo.png'"
+    :whyChooseItems="data.why_chose_us"
   />
   <!-- Why Choose us secion End here -->
   <!-- Why Choose us secion End here -->
@@ -67,8 +71,6 @@
   <!-- News Section End  -->
   <!-- News Section End  -->
 
-
-
   <!-- back to top area start -->
   <!-- back to top area start -->
   <BackToTop />
@@ -83,7 +85,7 @@
 </template>
 
 <script>
-import { Head } from '@inertiajs/vue3'
+import { Head } from "@inertiajs/vue3";
 import BannerSection from "./Components/BannerSection.vue";
 // Common Components
 import BackToTop from "../../CommonComponents/BackToTop.vue";

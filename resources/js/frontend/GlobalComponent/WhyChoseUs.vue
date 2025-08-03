@@ -12,55 +12,23 @@
           </div>
           <div class="single-items-wrapper">
             <div
+              v-for="(item, idx) in whyChooseItems"
+              :key="idx"
               class="why-choose-single-items wow animate__animated animate__fadeInUp"
+              :class="
+                idx === 1
+                  ? 'animate__delay-1s'
+                  : idx === 2
+                  ? 'animate__delay-2s'
+                  : ''
+              "
             >
               <div class="icon">
-                <i class="icon-tips-bulb"></i>
+                <i :class="item.icon"></i>
               </div>
               <div class="content">
-                <h4 class="title">Smart Thinking</h4>
-                <p>
-                  Every pleasures is to welcomed pain avoided owing to the
-                  dutythe obligations of business
-                </p>
-              </div>
-              <img
-                src="frontend/assets/img/setting-shape.png"
-                class="shape"
-                alt=""
-              />
-            </div>
-            <div
-              class="why-choose-single-items wow animate__animated animate__fadeInUp animate__delay-1s"
-            >
-              <div class="icon">
-                <i class="icon-crown"></i>
-              </div>
-              <div class="content">
-                <h4 class="title">Smart Thinking</h4>
-                <p>
-                  Every pleasures is to welcomed pain avoided owing to the
-                  dutythe obligations of business
-                </p>
-              </div>
-              <img
-                src="frontend/assets/img/setting-shape.png"
-                class="shape"
-                alt=""
-              />
-            </div>
-            <div
-              class="why-choose-single-items wow animate__animated animate__fadeInUp animate__delay-2s"
-            >
-              <div class="icon">
-                <i class="icon-hand-shake"></i>
-              </div>
-              <div class="content">
-                <h4 class="title">Smart Thinking</h4>
-                <p>
-                  Every pleasures is to welcomed pain avoided owing to the
-                  dutythe obligations of business
-                </p>
+                <h4 class="title">{{ item.title }}</h4>
+                <p>{{ item.description.length > 80 ? item.description.substring(0, 80) + '...' : item.description }}</p>
               </div>
               <img
                 src="frontend/assets/img/setting-shape.png"
@@ -88,6 +56,29 @@ export default {
     sideBg: {
       type: String,
       required: true,
+    },
+    whyChooseItems: {
+      type: Array,
+      default: () => [
+        {
+          icon: "icon-tips-bulb",
+          title: "Smart Thinking",
+          description:
+            "Every pleasures is to welcomed pain avoided owing to the dutythe obligations of business",
+        },
+        {
+          icon: "icon-crown",
+          title: "Quality Service",
+          description:
+            "We provide top-notch services that meet the highest standards.",
+        },
+        {
+          icon: "icon-hand-shake",
+          title: "Customer Satisfaction",
+          description:
+            "Our priority is to ensure that our customers are happy and satisfied with our services.",
+        },
+      ],
     },
   },
   computed: {

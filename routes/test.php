@@ -23,3 +23,8 @@ Route::get('/test', function () {
 Route::get('/test-something-here', function () {
     dd("test something");
 });
+
+
+Route::get('/cache-test', function () {
+    return cache('home_principles');
+});
