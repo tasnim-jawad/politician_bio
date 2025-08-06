@@ -62,8 +62,8 @@
                 <h4 class="title">
                   <a :href="`/news/details?slug=${news.slug}`">
                     {{
-                      news.title.length > 30
-                        ? news.title.slice(0, 30) + "..."
+                      news.title.length > 36
+                        ? news.title.slice(0, 36) + "..."
                         : news.title
                     }}
                   </a>

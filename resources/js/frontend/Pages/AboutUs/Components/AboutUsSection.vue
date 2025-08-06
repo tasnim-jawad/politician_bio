@@ -33,28 +33,25 @@
           <div class="administration-single-items style-01">
             <div class="content">
               <h4 class="title wow animate__animated animate__fadeInUp">
-                We Have Super Power Administration
+                {{ about_us.title }}
               </h4>
               <p class="wow animate__animated animate__fadeInUp">
-                Every pleasures is to welcomed pain avoided owing to the duty
-                the obligations of business it will frequently.
+                {{ about_us.description }}
               </p>
             </div>
             <div
               class="administration-quotes wow animate__animated animate__fadeInUp"
             >
               <h5 class="title">
-                Successfully Providing the Best Solution from 20 years
+                {{ about_us.quotation }}
               </h5>
               <div class="icon">
-                <img src="assets/icon/quotes-02.svg" alt="" />
+                <img src="/frontend/assets/icon/quotes-02.svg" alt="" />
               </div>
             </div>
             <div class="list-items wow animate__animated animate__fadeInUp">
               <ul>
-                <li>Politics is the set of activities that are associated</li>
-                <li>There are several ways in which approaching politics.</li>
-                <li>Some perspectives on politics view it empirically.</li>
+                <li v-for="(item,index) in about_us.features" :key="index">{{ item.title }}</li>
               </ul>
             </div>
             <div class="feedback wow animate__animated animate__fadeInUp">
@@ -76,5 +73,11 @@
 <script>
 export default {
   name: "AboutUsSection",
+  props: {
+    about_us: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>

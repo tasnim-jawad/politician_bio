@@ -62,3 +62,4 @@ include_once base_path("app/Modules/Management/ContactUsManagement/ContactPeople
 include_once base_path("app/Modules/Management/AboutUsManagement/AboutUs/Routes/Route.php");
 include_once base_path("app/Modules/Management/EventManagement/Event/Routes/Route.php");
 include_once base_path("app/Modules/Management/OurJourneyManagement/OurJourney/Routes/Route.php");
+include_once base_path("app/Modules/Management/CounterManagement/Counter/Routes/Route.php");

@@ -16,6 +16,7 @@ php artisan make:module NewsletterManagement/Newsletter [email:string-50]
 */
 php artisan make:module AboutUsManagement/AboutUs [title:string-50,description:text,quotation:string-200,features:json,video_url:string-200,image:file,facts_figures:json] --vue
 php artisan make:module MissionVisionManagement/MissionVision [page_type:enum-future_plan.mission.vission.none,description:longtext] --vue
+php artisan make:module CounterManagement/Counter [title:string-50,number:integer,unit:string-10] --vue
 /*
 |--------------------------------------------------------------------------
 | Donation

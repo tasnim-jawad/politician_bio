@@ -7,6 +7,7 @@ import SettingsRoutes from "../Management/Settings/setup/routes.js";
 //UserRoutes
 import UserRoutes from "../Management/UserManagement/User/setup/routes.js";
 //routes
+import CounterRoutes from '../../../GlobalManagement/CounterManagement/Counter/setup/routes.js';
 import EventRoutes from '../../../GlobalManagement/EventManagement/Event/setup/routes.js';
 import AboutUsRoutes from '../../../GlobalManagement/AboutUsManagement/AboutUs/setup/routes.js';
 import ContactPeopleRoutes from '../../../GlobalManagement/ContactUsManagement/ContactPeople/setup/routes.js';
@@ -47,6 +48,7 @@ const routes = {
       name: "adminDashboard",
     },
     //management routes
+        CounterRoutes,
         OurJourneyRoutes,
     EventRoutes,
     AboutUsRoutes,

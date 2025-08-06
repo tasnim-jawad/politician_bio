@@ -322,7 +322,18 @@
           },
         ]"
       />
-      <!-- Management end -->
+      <side-bar-drop-down-menus
+        :icon="`fa fa-plus`"
+        :menu_title="`CounterManagement`"
+        :menus="[
+          {
+            route_name: `AllCounter`,
+            title: `Counter`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+        ]"
+/>
+<!-- Management end -->
     </ul>
   </div>
 </template>
