@@ -39,12 +39,12 @@
                   <p
                     class="description wow animate__animated animate__fadeInUp"
                   >
-                    {{ item.description }}
+                    {{ item.comment }}
                   </p>
                   <div
                     class="author-meta wow animate__animated animate__fadeInUp"
                   >
-                    <span class="author-name">{{ item.author }}</span>
+                    <span class="author-name">{{ item.name }}</span>
                     <span class="line"></span>
                   </div>
                 </div>
@@ -63,21 +63,77 @@ export default {
       type: Array,
       default: () => [
         {
-          description:
+          comment:
             "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Occaecat cupidatat non proident,sunt in culpa qui officia deserunt mollit anim id, sint occaecat cupidatat non proident, sunt in culpa qui",
-          author: "William Smith 1",
+          name: "William Smith 1",
         },
         {
           description:
             "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Occaecat cupidatat non proident,sunt in culpa qui officia deserunt mollit anim id, sint occaecat cupidatat non proident, sunt in culpa qui",
-          author: "William Smith 2",
+          name: "William Smith 2",
         },
         {
           description:
             "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Occaecat cupidatat non proident,sunt in culpa qui officia deserunt mollit anim id, sint occaecat cupidatat non proident, sunt in culpa qui",
-          author: "William Smith 3",
+          name: "William Smith 3",
         },
       ],
+    },
+  },
+
+  created: function () {
+    console.log("Testimonial component created", this.comments);
+  },
+  watch: {
+    comments: {
+      handler(newVal) {
+        console.log("Comments updated:", newVal);
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    this.initCarousel();
+  },
+  updated() {
+    this.initCarousel();
+  },
+  methods: {
+    initCarousel() {
+      // Ensure jQuery and OwlCarousel are loaded
+      const $TestimonialCarousel = $(".testimonial-carousel-four");
+      if ($TestimonialCarousel.length > 0) {
+        // Destroy if already initialized
+        if ($TestimonialCarousel.hasClass("owl-loaded")) {
+          $TestimonialCarousel
+            .trigger("destroy.owl.carousel")
+            .removeClass("owl-loaded owl-carousel");
+          $TestimonialCarousel.find(".owl-stage-outer").children().unwrap();
+        }
+        $TestimonialCarousel.owlCarousel({
+          loop: true,
+          autoplay: true,
+          autoplayTimeout: 1000,
+          autoplaySpeed: 2500,
+          smartSpeed: 2500,
+          margin: 30,
+          items: 2,
+          dots: false,
+          nav: true,
+          navText: [
+            '<i class="fa fa-angle-left"></i>',
+            '<i class="fa fa-angle-right"></i>',
+          ],
+          responsive: {
+            0: { items: 1 },
+            460: { items: 1 },
+            599: { items: 1 },
+            768: { items: 1 },
+            960: { items: 1 },
+            1200: { items: 1 },
+          },
+        });
+      }
     },
   },
 };

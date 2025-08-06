@@ -14,7 +14,7 @@ use App\Modules\Management\BannerManagement\Banner\Validations\BulkActionsValida
 use App\Modules\Management\BannerManagement\Banner\Validations\DataStoreValidation;
 use App\Modules\Management\BannerManagement\Banner\Actions\BulkActions;
 use App\Http\Controllers\Controller as ControllersController;
-
+use App\Modules\Management\BannerManagement\Banner\Actions\GetCustomData;
 
 class Controller extends ControllersController
 {
@@ -71,6 +71,11 @@ class Controller extends ControllersController
     public function bulkAction(BulkActionsValidation $request)
     {
         $data = BulkActions::execute($request);
+        return $data;
+    }
+    public function getCustomData()
+    {
+        $data = GetCustomData::execute();
         return $data;
     }
 

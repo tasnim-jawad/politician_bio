@@ -13,6 +13,7 @@ use App\Modules\Management\OurPrinciplesManagement\OurPrinciples\Actions\ImportD
 use App\Modules\Management\OurPrinciplesManagement\OurPrinciples\Validations\BulkActionsValidation;
 use App\Modules\Management\OurPrinciplesManagement\OurPrinciples\Validations\DataStoreValidation;
 use App\Modules\Management\OurPrinciplesManagement\OurPrinciples\Actions\BulkActions;
+use App\Modules\Management\OurPrinciplesManagement\OurPrinciples\Actions\GetCustomData;
 use App\Http\Controllers\Controller as ControllersController;
 
 
@@ -71,6 +72,12 @@ class Controller extends ControllersController
     public function bulkAction(BulkActionsValidation $request)
     {
         $data = BulkActions::execute($request);
+        return $data;
+    }
+
+    public function getCustomData()
+    {
+        $data = GetCustomData::execute();
         return $data;
     }
 

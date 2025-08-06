@@ -14,6 +14,7 @@ use App\Modules\Management\WhyChoseUsManagement\WhyChoseUs\Validations\BulkActio
 use App\Modules\Management\WhyChoseUsManagement\WhyChoseUs\Validations\DataStoreValidation;
 use App\Modules\Management\WhyChoseUsManagement\WhyChoseUs\Actions\BulkActions;
 use App\Http\Controllers\Controller as ControllersController;
+use App\Modules\Management\WhyChoseUsManagement\WhyChoseUs\Actions\GetCustomData;
 
 
 class Controller extends ControllersController
@@ -71,6 +72,11 @@ class Controller extends ControllersController
     public function bulkAction(BulkActionsValidation $request)
     {
         $data = BulkActions::execute($request);
+        return $data;
+    }
+    public function getCustomData()
+    {
+        $data = GetCustomData::execute();
         return $data;
     }
 

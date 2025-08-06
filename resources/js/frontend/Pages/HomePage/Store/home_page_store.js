@@ -31,13 +31,10 @@ export const store = defineStore("home_page", {
         return;
       }
       try {
-        const res = await axios.get("banners",{
-          params: {
-            get_all:1,
-            limit:1
-          }
-        });
+        const res = await axios.get("banners/custom-data");
         this.banner = res.data;
+        console.log("Banner fetched from API:", res.data);
+        
         this._setCache("banners", res.data);
         console.log("Banner fetched successfully:", this.banner);
       } catch (e) {
@@ -50,7 +47,7 @@ export const store = defineStore("home_page", {
         return;
       }
       try {
-        const res = await axios.get("services");
+        const res = await axios.get("services/custom-data");
         this.services = res.data;
         this._setCache("services", res.data);
       } catch (e) {
@@ -63,7 +60,7 @@ export const store = defineStore("home_page", {
         return;
       }
       try {
-        const res = await axios.get("why-chose-us");
+        const res = await axios.get("why-chose-uses/custom-data");
         this.whyChoseUs = res.data;
         this._setCache("whyChoseUs", res.data);
       } catch (e) {
@@ -76,7 +73,7 @@ export const store = defineStore("home_page", {
         return;
       }
       try {
-        const res = await axios.get("principles");
+        const res = await axios.get("our-principles/custom-data");
         this.principles = res.data;
         this._setCache("principles", res.data);
       } catch (e) {
@@ -89,7 +86,7 @@ export const store = defineStore("home_page", {
         return;
       }
       try {
-        const res = await axios.get("our-journey");
+        const res = await axios.get("our-journeys/custom-data");
         this.ourJourney = res.data;
         this._setCache("ourJourney", res.data);
       } catch (e) {
@@ -102,7 +99,7 @@ export const store = defineStore("home_page", {
         return;
       }
       try {
-        const res = await axios.get("media-coverages");
+        const res = await axios.get("media-coverages/custom-data");
         this.mediaCoverages = res.data;
         this._setCache("mediaCoverages", res.data);
       } catch (e) {
@@ -115,7 +112,7 @@ export const store = defineStore("home_page", {
         return;
       }
       try {
-        const res = await axios.get("comments");
+        const res = await axios.get("public-comments/custom-data");
         this.comments = res.data;
         this._setCache("comments", res.data);
       } catch (e) {

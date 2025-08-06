@@ -35,13 +35,13 @@
         },
       ]" />
 
-      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`SeminerManagement`" :menus="[
+      <!-- <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`SeminerManagement`" :menus="[
         {
           route_name: `AllSeminer`,
           title: `Seminer`,
           icon: `zmdi zmdi-dot-circle-alt`,
         },
-      ]" />
+      ]" /> -->
       <!-- Management end -->
     </ul>
   </div>
