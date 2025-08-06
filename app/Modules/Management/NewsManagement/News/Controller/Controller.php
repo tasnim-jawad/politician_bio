@@ -14,7 +14,7 @@ use App\Modules\Management\NewsManagement\News\Validations\BulkActionsValidation
 use App\Modules\Management\NewsManagement\News\Validations\DataStoreValidation;
 use App\Modules\Management\NewsManagement\News\Actions\BulkActions;
 use App\Http\Controllers\Controller as ControllersController;
-
+use App\Modules\Management\NewsManagement\News\Actions\GetCustomData;
 
 class Controller extends ControllersController
 {
@@ -72,6 +72,10 @@ class Controller extends ControllersController
     {
         $data = BulkActions::execute($request);
         return $data;
+    }
+    public function getCustomData()
+    {
+        return GetCustomData::execute();
     }
 
 }

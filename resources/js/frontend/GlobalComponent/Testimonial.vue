@@ -81,17 +81,6 @@ export default {
     },
   },
 
-  created: function () {
-    console.log("Testimonial component created", this.comments);
-  },
-  watch: {
-    comments: {
-      handler(newVal) {
-        console.log("Comments updated:", newVal);
-      },
-      deep: true,
-    },
-  },
   mounted() {
     this.initCarousel();
   },

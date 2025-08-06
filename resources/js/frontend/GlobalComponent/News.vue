@@ -24,51 +24,22 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" v-for="(lead_news, index) in lead_news" :key="index">
           <div
             class="news-single-items wow animate__animated animate__fadeInUp"
           >
             <div
               class="news-bg"
-              style="
-                background-image: url(/frontend/assets/img/businessmen-shaking-hands.png);
-              "
+              :style="'background-image: url(' + lead_news.banner_image + ');'"
             >
               <span class="even">Event</span>
               <div class="content">
                 <h4 class="title">
-                  <a href="news-single.html">
-                    Many important brands have given us their trust</a
-                  >
+                  <a :href="`/news/details?slug=${lead_news.slug}`"> {{ lead_news.title }}</a>
                 </h4>
                 <div class="author-meta">
-                  <p class="author-name">By:Smith Roy</p>
-                  <p>24th March,2021</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div
-            class="news-single-items wow animate__animated animate__fadeInUp animate__delay-1s"
-          >
-            <div
-              class="news-bg"
-              style="
-                background-image: url(/frontend/assets/img/partners-shaking-hands.png);
-              "
-            >
-              <span class="even">Event</span>
-              <div class="content">
-                <h4 class="title">
-                  <a href="news-single.html">
-                    Many important brands have given us their trust</a
-                  >
-                </h4>
-                <div class="author-meta">
-                  <p class="author-name">By:Smith Roy</p>
-                  <p>24th March,2021</p>
+                  <p class="author-name">By: {{ lead_news.author }}</p>
+                  <p>{{ lead_news.date }}</p>
                 </div>
               </div>
             </div>
@@ -78,42 +49,24 @@
           <ul
             class="news-single-list wow animate__animated animate__fadeInRight animate__delay-2s"
           >
-            <li class="news-single-list-items">
+            <li
+              class="news-single-list-items"
+              v-for="(news, index) in side_news"
+              :key="index"
+            >
               <div class="thumb">
-                <img src="/frontend/assets/img/cheking-sheet.png" alt="" />
+                <img :src="news.banner_image" alt="" />
               </div>
               <div class="content">
-                <span class="date">24th March,2021</span>
+                <span class="date">{{ formatDate(news.date) }}</span>
                 <h4 class="title">
-                  <a href="news-single.html">
-                    Many important brands have given us their</a
-                  >
-                </h4>
-              </div>
-            </li>
-            <li class="news-single-list-items">
-              <div class="thumb">
-                <img src="/frontend/assets/img/busisess-women.png" alt="" />
-              </div>
-              <div class="content">
-                <span class="date">24th March,2021</span>
-                <h4 class="title">
-                  <a href="news-single.html">
-                    Many important brands have given us their</a
-                  >
-                </h4>
-              </div>
-            </li>
-            <li class="news-single-list-items">
-              <div class="thumb">
-                <img src="/frontend/assets/img/discussion.png" alt="" />
-              </div>
-              <div class="content">
-                <span class="date">24th March,2021</span>
-                <h4 class="title">
-                  <a href="news-single.html">
-                    Many important brands have given us</a
-                  >
+                  <a :href="`/news/details?slug=${news.slug}`">
+                    {{
+                      news.title.length > 30
+                        ? news.title.slice(0, 30) + "..."
+                        : news.title
+                    }}
+                  </a>
                 </h4>
               </div>
             </li>
@@ -123,6 +76,163 @@
     </div>
   </div>
 </template>
+
 <script>
-export default {};
+export default {
+  props: {
+    lead_news: {
+      type: Array,
+      default: () => [
+        // Example default data for news-single-items
+        {
+          title: "Default Lead News 1",
+          url: "#",
+          author: "Admin",
+          date: "2025-08-06",
+          bg: "/default-lead-bg1.jpg",
+        },
+        {
+          title: "Default Lead News 2",
+          url: "#",
+          author: "Editor",
+          date: "2025-08-05",
+          bg: "/default-lead-bg2.jpg",
+        },
+      ],
+    },
+    side_news: {
+      type: Array,
+      default: () => [
+        // Example default data for news-single-list-items
+        {
+          title: "Default Side News 1",
+          url: "#",
+          date: "2025-08-06",
+          thumb: "/default-side-thumb1.jpg",
+        },
+        {
+          title: "Default Side News 2",
+          url: "#",
+          date: "2025-08-05",
+          thumb: "/default-side-thumb2.jpg",
+        },
+      ],
+    },
+  },
+  methods: {
+    formatDate(dateStr) {
+      if (!dateStr) return "";
+      const date = new Date(dateStr);
+      if (isNaN(date)) return dateStr;
+      const day = date.getDate();
+      const daySuffix = (d) => {
+        if (d > 3 && d < 21) return "th";
+        switch (d % 10) {
+          case 1:
+            return "st";
+          case 2:
+            return "nd";
+          case 3:
+            return "rd";
+          default:
+            return "th";
+        }
+      };
+      const month = date.toLocaleString("default", { month: "long" });
+      const year = date.getFullYear();
+      return `${day}${daySuffix(day)} ${month},${year}`;
+    },
+  },
+};
 </script>
+
+<style scoped>
+.news-section-start {
+  padding: 60px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.subtitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.icon {
+  margin: 0 5px;
+}
+
+.icon-star {
+  font-size: 18px;
+  color: #f39c12;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.news-single-items {
+  margin-bottom: 30px;
+}
+
+.news-bg {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.even {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.author-meta {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.author-name {
+  margin-right: 10px;
+}
+
+.news-single-list {
+  list-style: none;
+  padding: 10;
+  margin: 0;
+}
+
+.news-single-list-items {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.news-single-list-items .thumb {
+  margin-right: 10px;
+}
+
+.news-single-list-items .content {
+  flex: 1;
+}
+
+.news-single-list-items .date {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 5px;
+}
+</style>

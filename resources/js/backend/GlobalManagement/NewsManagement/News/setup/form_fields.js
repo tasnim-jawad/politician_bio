@@ -27,4 +27,16 @@ export default [
 		type: "text",
 		value: "",
 	},
+	{
+		name: "date",
+		label: "Enter your date",
+		type: "date",
+		value: "",
+	},
+	{
+		name: "author",
+		label: "Enter your author",
+		type: "text",
+		value: "",
+	},
 ];

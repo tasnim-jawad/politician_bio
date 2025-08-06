@@ -51,7 +51,7 @@
   <!-- Media section Start here -->
   <!-- Media section Start here -->
   <MediaCoverage
-    v-if="mediaCoverages.length > 0"
+    v-if="mediaCoverages"
     :mediaItems="mediaCoverages"
   />
   <!-- Media section end here -->
@@ -71,7 +71,7 @@
 
   <!-- News Section Start -->
   <!-- News Section Start -->
-  <News />
+  <News v-if="news" :lead_news="news.lead_news" :side_news="news.side_news"/>
   <!-- News Section End  -->
   <!-- News Section End  -->
 
@@ -146,6 +146,7 @@ export default {
       "ourJourney",
       "mediaCoverages",
       "comments",
+      "news",
       "loading",
       "error",
     ]),

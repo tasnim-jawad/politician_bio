@@ -3349,6 +3349,8 @@ ul {
   background: linear-gradient(160deg, rgba(4, 7, 46, 0) 50%, rgb(4, 7, 46) 100%);
   border-radius: 10px;
   z-index: 0;
+  top: 0;
+  left: 0;
 }
 .news-single-items .even {
   font-size: 14px;
@@ -3368,8 +3370,8 @@ ul {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  width: 100%;
-  padding: 0px 30px;
+  width: 88%;
+  /* padding: 0px 30px; */
 }
 .news-single-items .content .title {
   font-size: 20px;

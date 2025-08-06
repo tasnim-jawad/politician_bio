@@ -13,6 +13,7 @@ use App\Modules\Management\OurPrinciplesManagement\OurPrinciples\Models\Model as
 use App\Modules\Management\OurJourneyManagement\OurJourney\Models\Model as OurJourneyModel;
 use App\Modules\Management\MediaCoverageManagement\MediaCoverage\Models\Model as MediaCoverageModel;
 use App\Modules\Management\PublicCommentManagement\PublicComment\Models\Model as PublicCommentModel;
+use App\Modules\Management\NewsManagement\News\Models\Model as NewsModel;
 
 
 class FrontendController extends Controller
@@ -212,7 +213,7 @@ class FrontendController extends Controller
         return Inertia::render('News/Details', [
             'event' => [
                 'title' => 'News Details',
-            ]
+            ],
         ]);
     }
 

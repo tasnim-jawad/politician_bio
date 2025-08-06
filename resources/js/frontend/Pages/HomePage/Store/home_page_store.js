@@ -10,6 +10,7 @@ export const store = defineStore("home_page", {
     ourJourney: [],
     mediaCoverages: [],
     comments: [],
+    news: [],
     loading: false,
     error: null,
   }),
@@ -33,10 +34,7 @@ export const store = defineStore("home_page", {
       try {
         const res = await axios.get("banners/custom-data");
         this.banner = res.data;
-        console.log("Banner fetched from API:", res.data);
-        
         this._setCache("banners", res.data);
-        console.log("Banner fetched successfully:", this.banner);
       } catch (e) {
         this.error = e;
       }
@@ -101,6 +99,8 @@ export const store = defineStore("home_page", {
       try {
         const res = await axios.get("media-coverages/custom-data");
         this.mediaCoverages = res.data;
+        console.log("Media coverages fetched:", res.data);
+        
         this._setCache("mediaCoverages", res.data);
       } catch (e) {
         this.error = e;
@@ -119,6 +119,19 @@ export const store = defineStore("home_page", {
         this.error = e;
       }
     },
+    async fetch_news() {
+      if (this._isCacheValid("news")) {
+        this.news = this._cache["news"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("news/custom-data");
+        this.news = res.data;
+        this._setCache("news", res.data);
+      } catch (e) {
+        this.error = e;
+      }
+    },
     async fetchAllHomePageData() {
       this.loading = true;
       this.error = null;
@@ -131,6 +144,7 @@ export const store = defineStore("home_page", {
           this.fetch_our_journey(),
           this.fetch_media_coverages(),
           this.fetch_comments(),
+          this.fetch_news(),
         ]);
       } catch (e) {
         this.error = e;

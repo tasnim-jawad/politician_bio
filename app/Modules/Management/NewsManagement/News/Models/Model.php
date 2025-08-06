@@ -40,6 +40,7 @@ class Model extends EloquentModel
         return $q->onlyTrashed();
     }
     public function news_category_id()
-{
-    return $this->belongsTo("App\Modules\Management\NewsManagement\NewsCategory\Models\Model", "news_category_id");
-}}
+    {
+        return $this->belongsTo("App\Modules\Management\NewsManagement\NewsCategory\Models\Model", "news_category_id");
+    }
+}

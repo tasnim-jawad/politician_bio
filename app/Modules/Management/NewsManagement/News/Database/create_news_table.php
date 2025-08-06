@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('title', 100)->nullable();
             $table->longtext('content')->nullable();
             $table->string('tags', 20)->nullable();
+            $table->date('date')->nullable();
+            $table->string('author',80)->nullable();
 
             $table->bigInteger('creator')->unsigned()->nullable();
             $table->string('slug', 50)->nullable();
