@@ -29,10 +29,10 @@
             <div
               class="btn-wrapper margin-top-35 wow animate__animated animate__fadeInUp"
             >
-              <a href="#" class="price-btn">$25</a>
+              <!-- <a href="#" class="price-btn">$25</a>
               <a href="#" class="price-btn">$50</a>
-              <a href="#" class="price-btn">$100</a>
-              <a href="#" class="boxed-btn donate-btn btn-sanatory"
+              <a href="#" class="price-btn">$100</a> -->
+              <a href="/donation" class="boxed-btn donate-btn btn-sanatory"
                 >Donation Now <i class="fas fa-paper-plane"></i
               ></a>
             </div>

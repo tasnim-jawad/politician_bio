@@ -13671,6 +13671,12 @@ input[type=checkbox] {
 }
 .media-thumb img {
   width: 100%;
+  aspect-ratio: 12 / 9;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 5px;
+
+
 }
 .media-thumb .media-thumb-video {
   position: absolute;

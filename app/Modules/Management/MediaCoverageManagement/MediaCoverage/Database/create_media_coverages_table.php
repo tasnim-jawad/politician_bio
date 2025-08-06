@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('video_url', 250)->nullable();
             $table->string('thumbnail_image', 100)->nullable();
-            $table->string('title', 30)->nullable();
+            $table->string('title', 100)->nullable();
             $table->date('date')->nullable();
             $table->string('tag', 150)->nullable();
 

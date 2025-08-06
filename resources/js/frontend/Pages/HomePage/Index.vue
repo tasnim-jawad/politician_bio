@@ -8,7 +8,7 @@
     <!-- Mobile Supported Navbar End -->
     <!-- Banner Section Area Start Here -->
     <!-- Banner Section Area Start Here -->
-    <BannerSection :data="data.banner" />
+    <BannerSection v-if="banner" :data="banner" />
     <!-- Banner Section Area End Here -->
     <!-- Banner Section Area End Here -->
   </div>
@@ -19,7 +19,8 @@
   <!-- Services Single Section Start here -->
   <ServiceSection
     :serviceMarginTop="'100px'"
-    :serviceItems="data.services"
+    v-if="services.length > 0"
+    :serviceItems="services"
   />
   <!-- Services Single Section Start here -->
   <!-- Services Single Section Start here -->
@@ -30,26 +31,29 @@
     :position="'right'"
     :main-bg="'/frontend/assets/img/group-activity-02.png'"
     :side-bg="'/frontend/assets/img/ceo.png'"
-    :whyChooseItems="data.why_chose_us"
+    :whyChooseItems="whyChoseUs"
   />
   <!-- Why Choose us secion End here -->
   <!-- Why Choose us secion End here -->
 
   <!-- Our Principle Section Start here -->
   <!-- Our Principle Section Start here -->
-  <OurPrinciple />
+  <OurPrinciple v-if="principles.length > 0" :principleItems="principles" />
   <!-- Our Principle Section End here -->
   <!-- Our Principle Section End here -->
 
   <!-- Our Journey Section Start Here -->
   <!-- Our Journey Section Start Here -->
-  <OurJourney />
+  <OurJourney v-if="ourJourney.length > 0" :journeyItems="ourJourney" />
   <!-- Our Journey Section End Here -->
   <!-- Our Journey Section End Here -->
 
   <!-- Media section Start here -->
   <!-- Media section Start here -->
-  <MediaCoverage />
+  <MediaCoverage
+    v-if="mediaCoverages.length > 0"
+    :mediaItems="mediaCoverages"
+  />
   <!-- Media section end here -->
   <!-- Media section end here -->
 
@@ -61,7 +65,7 @@
 
   <!-- Testimonial Section-02 Start -->
   <!-- Testimonial Section-02 Start -->
-  <Testimonial />
+  <Testimonial v-if="comments" :comments="comments" />
   <!-- Testimonial Secition-02 End -->
   <!-- Testimonial Secition-02 End -->
 
@@ -85,6 +89,8 @@
 </template>
 
 <script>
+import { store as home_page_store } from "./Store/home_page_store.js";
+
 import { Head } from "@inertiajs/vue3";
 import BannerSection from "./Components/BannerSection.vue";
 // Common Components
@@ -102,6 +108,8 @@ import OurPrinciple from "../../GlobalComponent/OurPrinciple.vue";
 import ServiceSection from "../../GlobalComponent/ServiceSection.vue";
 import Testimonial from "../../GlobalComponent/Testimonial.vue";
 import WhyChoseUs from "../../GlobalComponent/WhyChoseUs.vue";
+import { mapActions, mapState } from "pinia";
+import { Comment } from "vue";
 
 export default {
   props: {
@@ -122,6 +130,25 @@ export default {
     Footer,
     VotePooll,
     BackToTop,
+  },
+  methods: {
+    ...mapActions(home_page_store, ["fetchAllHomePageData"]),
+  },
+  created: function () {
+    this.fetchAllHomePageData();
+  },
+  computed: {
+    ...mapState(home_page_store, [
+      "banner",
+      "services",
+      "whyChoseUs",
+      "principles",
+      "ourJourney",
+      "mediaCoverages",
+      "comments",
+      "loading",
+      "error",
+    ]),
   },
 };
 </script>

@@ -15,7 +15,7 @@
               <div v-for="item in journeyItems" :key="item.year" class="thumb">
                 <div
                   class="journey-bg"
-                  :style="{ backgroundImage: `url(${item.img})` }"
+                  :style="{ backgroundImage: `url(${item.image})` }"
                 >
                   <div
                     :class="
@@ -25,7 +25,7 @@
                     "
                   >
                     <h4 class="title">{{ item.title }}</h4>
-                    <p>{{ item.description }}</p>
+                    <p>{{ item.short_description }}</p>
                   </div>
                 </div>
               </div>
@@ -60,51 +60,51 @@ export default {
       type: Array,
       default: () => [
         {
-          img: "frontend/assets/img/Home-five/clining-city.png",
+          image: "frontend/assets/img/Home-five/clining-city.png",
           title: "Clean City Program",
-          description:
+          short_description:
             "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
           year: 2005,
         },
         {
-          img: "frontend/assets/img/Home-five/food-donation.png",
+          image: "frontend/assets/img/Home-five/food-donation.png",
           title: "Food Donation Program",
-          description:
+          short_description:
             "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
           year: 2006,
         },
         {
-          img: "frontend/assets/img/Home-five/blood-donation.jpg",
+          image: "frontend/assets/img/Home-five/blood-donation.jpg",
           title: "Blood Donation Program",
-          description:
+          short_description:
             "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
           year: 2007,
         },
         {
-          img: "frontend/assets/img/Home-five/charity-program.jpg",
+          image: "frontend/assets/img/Home-five/charity-program.jpg",
           title: "Charity Program",
-          description:
+          short_description:
             "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
           year: 2008,
         },
         {
-          img: "frontend/assets/img/Home-five/clild-education.jpg",
+          image: "frontend/assets/img/Home-five/clild-education.jpg",
           title: "Child Education Program",
-          description:
+          short_description:
             "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
           year: 2009,
         },
         {
-          img: "frontend/assets/img/Home-five/profesonal.jpg",
+          image: "frontend/assets/img/Home-five/profesonal.jpg",
           title: "Professional Training",
-          description:
+          short_description:
             "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
           year: 2010,
         },
         {
-          img: "frontend/assets/img/Home-five/save-animal.jpg",
+          image: "frontend/assets/img/Home-five/save-animal.jpg",
           title: "Save The animal Program",
-          description:
+          short_description:
             "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
           year: 2011,
         },

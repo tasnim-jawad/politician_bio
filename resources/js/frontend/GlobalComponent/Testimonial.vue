@@ -14,7 +14,11 @@
         <div class="col-lg-6 offset-lg-6">
           <div class="testimonial-carousel-area">
             <div class="testimonial-carousel-four">
-              <div class="people-say-single-item">
+              <div
+                class="people-say-single-item"
+                v-for="(item, index) in comments"
+                :key="index"
+              >
                 <img
                   src="frontend/assets/img/quotes.png"
                   class="quotes"
@@ -35,74 +39,12 @@
                   <p
                     class="description wow animate__animated animate__fadeInUp"
                   >
-                    " Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum
-                    Occaecat cupidatat non proident,sunt in culpa qui officia
-                    deserunt mollit anim id, sint occaecat cupidatat non
-                    proident, sunt in culpa qui "
+                    {{ item.description }}
                   </p>
                   <div
                     class="author-meta wow animate__animated animate__fadeInUp"
                   >
-                    <span class="author-name">William Smith</span>
-                    <span class="line"></span>
-                  </div>
-                </div>
-              </div>
-              <div class="people-say-single-item">
-                <img
-                  src="frontend/assets/img/quotes.png"
-                  class="quotes"
-                  alt=""
-                />
-                <div class="content">
-                  <div class="subtitle">
-                    <p>Public Comments</p>
-                    <div class="icon">
-                      <i class="icon-star"></i>
-                      <i class="icon-star"></i>
-                      <i class="icon-star"></i>
-                    </div>
-                  </div>
-                  <h4 class="title">People's Say About us</h4>
-                  <p class="description">
-                    " Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum
-                    Occaecat cupidatat non proident,sunt in culpa qui officia
-                    deserunt mollit anim id, sint occaecat cupidatat non
-                    proident, sunt in culpa qui "
-                  </p>
-                  <div class="author-meta">
-                    <span class="author-name">William Smith</span>
-                    <span class="line"></span>
-                  </div>
-                </div>
-              </div>
-              <div class="people-say-single-item">
-                <img
-                  src="frontend/assets/img/quotes.png"
-                  class="quotes"
-                  alt=""
-                />
-                <div class="content">
-                  <div class="subtitle">
-                    <p>Public Comments</p>
-                    <div class="icon">
-                      <i class="icon-star"></i>
-                      <i class="icon-star"></i>
-                      <i class="icon-star"></i>
-                    </div>
-                  </div>
-                  <h4 class="title">People's Say About us</h4>
-                  <p class="description">
-                    " Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum
-                    Occaecat cupidatat non proident,sunt in culpa qui officia
-                    deserunt mollit anim id, sint occaecat cupidatat non
-                    proident, sunt in culpa qui "
-                  </p>
-                  <div class="author-meta">
-                    <span class="author-name">William Smith</span>
+                    <span class="author-name">{{ item.author }}</span>
                     <span class="line"></span>
                   </div>
                 </div>
@@ -115,5 +57,28 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: {
+    comments: {
+      type: Array,
+      default: () => [
+        {
+          description:
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Occaecat cupidatat non proident,sunt in culpa qui officia deserunt mollit anim id, sint occaecat cupidatat non proident, sunt in culpa qui",
+          author: "William Smith 1",
+        },
+        {
+          description:
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Occaecat cupidatat non proident,sunt in culpa qui officia deserunt mollit anim id, sint occaecat cupidatat non proident, sunt in culpa qui",
+          author: "William Smith 2",
+        },
+        {
+          description:
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Occaecat cupidatat non proident,sunt in culpa qui officia deserunt mollit anim id, sint occaecat cupidatat non proident, sunt in culpa qui",
+          author: "William Smith 3",
+        },
+      ],
+    },
+  },
+};
 </script>

@@ -20,15 +20,7 @@ class FrontendController extends Controller
     // Home
     public function HomePage()
     {
-        // Store each dataset in the cache for 10 minutes (600 seconds)
-        cache()->put('home_banner', BannerModel::active()->latest()->first(), 600);
-        cache()->put('home_services', ServiceModel::active()->latest()->take(6)->get(), 600);
-        cache()->put('home_why_chose_us', WhyChoseUsModel::active()->latest()->take(3)->get(), 600);
-        cache()->put('home_principles', PrincipleModel::latest()->take(6)->get(), 600);
-        cache()->put('home_our_journey', OurJourneyModel::active()->latest()->get(), 600);
-        cache()->put('home_media_coverages', MediaCoverageModel::active()->latest()->take(3)->get(), 600);
-        cache()->put('home_comments', PublicCommentModel::active()->latest()->take(10)->get(), 600);
-
+ 
         return Inertia::render('HomePage/Index', [
             'event' => [
                 'title' => 'Home Page',

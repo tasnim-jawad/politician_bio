@@ -38,76 +38,28 @@
           </div>
         </div>
         <div class="row justify-content-center">
-          <div class="col-lg-4 col-md-6">
+          <div
+            class="col-lg-4 col-md-6"
+            v-for="(item, index) in mediaItems"
+            :key="index"
+          >
             <div class="media-item wow animate__animated animate__fadeInUp">
               <div class="media-thumb">
-                <img
-                  src="frontend/assets/img/elegant-director.png"
-                  alt="elegant"
-                />
+                <img :src="item.thumbnail_image" :alt="item.alt" />
                 <div class="media-thumb-video">
                   <a
                     class="video-play style-01 style-05 mfp-iframe"
-                    href="https://www.youtube.com/watch?v=-ZwQtICNbRc"
+                    :href="item.video_url"
                   >
                     <i class="fas fa-play"></i>
                   </a>
                 </div>
               </div>
               <div class="media-content">
-                <span class="category">technology</span>
-                <h3 class="title">
-                  Why are so many Canadian kids unvaccinated COVID-19
-                </h3>
+                <span class="category">{{ item.tag }}</span>
+                <h3 class="title">{{ item.title }}</h3>
                 <span class="date"
-                  ><i class="fas fa-calendar-alt"></i> JAN 14, 2022</span
-                >
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="media-item wow animate__animated animate__fadeInUp">
-              <div class="media-thumb">
-                <img
-                  src="frontend/assets/img/patriotism.png"
-                  alt="patriotism"
-                />
-                <div class="media-thumb-video">
-                  <a
-                    class="video-play style-01 style-05 mfp-iframe"
-                    href="https://www.youtube.com/watch?v=-ZwQtICNbRc"
-                  >
-                    <i class="fas fa-play"></i>
-                  </a>
-                </div>
-              </div>
-              <div class="media-content">
-                <span class="category">technology</span>
-                <h3 class="title">Thursday’s analyst upgrades and downgrade</h3>
-                <span class="date"
-                  ><i class="fas fa-calendar-alt"></i> JAN 14, 2022</span
-                >
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="media-item wow animate__animated animate__fadeInUp">
-              <div class="media-thumb">
-                <img src="frontend/assets/img/portrait.png" alt="portrait" />
-                <div class="media-thumb-video">
-                  <a
-                    class="video-play style-01 style-05 mfp-iframe"
-                    href="https://www.youtube.com/watch?v=-ZwQtICNbRc"
-                  >
-                    <i class="fas fa-play"></i>
-                  </a>
-                </div>
-              </div>
-              <div class="media-content">
-                <span class="category">technology</span>
-                <h3 class="title">Thursday’s analyst upgrades and downgrade</h3>
-                <span class="date"
-                  ><i class="fas fa-calendar-alt"></i> JAN 14, 2022</span
+                  ><i class="fas fa-calendar-alt"></i> {{ item.date }}</span
                 >
               </div>
             </div>
@@ -118,5 +70,48 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: {
+    mediaItems: {
+      type: Array,
+      default: () => [
+        {
+          thumbnail_image: "frontend/assets/img/elegant-director.png",
+          alt: "elegant",
+          video_url: "https://www.youtube.com/watch?v=-ZwQtICNbRc",
+          tag: "technology",
+          title: "Why are so many Canadian kids unvaccinated COVID-19",
+          date: "JAN 14, 2022",
+        },
+        {
+          img: "frontend/assets/img/patriotism.png",
+          alt: "patriotism",
+          videoUrl: "https://www.youtube.com/watch?v=-ZwQtICNbRc",
+          tag: "technology",
+          title: "Thursday’s analyst upgrades and downgrade",
+          date: "JAN 14, 2022",
+        },
+        {
+          img: "frontend/assets/img/portrait.png",
+          alt: "portrait",
+          videoUrl: "https://www.youtube.com/watch?v=-ZwQtICNbRc",
+          tag: "technology",
+          title: "Thursday’s analyst upgrades and downgrade",
+          date: "JAN 14, 2022",
+        },
+      ],
+    },
+  },
+  mounted() {
+    if (window.$ && window.$.fn.magnificPopup) {
+      window.$(".mfp-iframe").magnificPopup({
+        type: "iframe",
+        mainClass: "mfp-fade",
+        removalDelay: 160,
+        preloader: false,
+        fixedContentPos: false,
+      });
+    }
+  },
+};
 </script>
