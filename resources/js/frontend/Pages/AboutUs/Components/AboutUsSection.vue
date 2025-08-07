@@ -14,14 +14,20 @@
           >
             <div
               class="administrative-bg"
-              style="
-                background-image: url(/frontend/assets/img/business-people.png);
-              "
+              :style="{
+                backgroundImage:
+                  'url(' +
+                  (about_us.image || '/frontend/assets/img/about-bg.png') +
+                  ')',
+              }"
             >
               <div class="btn-wrapper administration">
                 <a
                   class="video-popup mfp-iframe"
-                  href="https://www.youtube.com/watch?v=-ZwQtICNbRc"
+                  :href="
+                    about_us.video_url ||
+                    'https://www.youtube.com/watch?v=-ZwQtICNbRc'
+                  "
                 >
                   <i class="fas fa-play"></i>
                 </a>
@@ -51,18 +57,24 @@
             </div>
             <div class="list-items wow animate__animated animate__fadeInUp">
               <ul>
-                <li v-for="(item,index) in about_us.features" :key="index">{{ item.title }}</li>
+                <li v-for="(item, index) in about_us.features" :key="index">
+                  {{ item.title }}
+                </li>
               </ul>
             </div>
             <div class="feedback wow animate__animated animate__fadeInUp">
-              <div class="feedback-single">
-                <span>99.8%</span>
-                <p>Positive Feedback From Peoples</p>
+              <div
+                class="feedback-single"
+                v-for="(item, index) in about_us.facts_figures"
+                :key="index"
+              >
+                <span>{{ item.number }}{{ item.unit }}</span>
+                <p>{{ item.title }}</p>
               </div>
-              <div class="feedback-single">
+              <!-- <div class="feedback-single">
                 <span>103</span>
                 <p>Board Member of Senatory</p>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -77,6 +89,51 @@ export default {
     about_us: {
       type: Object,
       required: true,
+    },
+  },
+  mounted() {
+    this.initMagnificPopup();
+  },
+  updated() {
+    this.initMagnificPopup();
+  },
+  methods: {
+    initMagnificPopup() {
+      if (window.$ && window.$.fn.magnificPopup) {
+        window.$(".mfp-iframe").magnificPopup({
+          type: "iframe",
+          mainClass: "mfp-fade",
+          removalDelay: 160,
+          preloader: false,
+          fixedContentPos: false,
+          iframe: {
+            markup:
+              '<div class="mfp-iframe-scaler">' +
+              '<div class="mfp-close"></div>' +
+              '<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>' +
+              "</div>",
+            patterns: {
+              youtube: {
+                index: "youtube.com/",
+                id: function (url) {
+                  var m = url.match(/[\?&]v=([^&]+)/);
+                  return m ? m[1] : null;
+                },
+                src: "https://www.youtube.com/embed/%id%?autoplay=1",
+              },
+              youtu_be: {
+                index: "youtu.be/",
+                id: function (url) {
+                  var m = url.match(/youtu.be\/([^?&]+)/);
+                  return m ? m[1] : null;
+                },
+                src: "https://www.youtube.com/embed/%id%?autoplay=1",
+              },
+            },
+            srcAction: "iframe_src",
+          },
+        });
+      }
     },
   },
 };

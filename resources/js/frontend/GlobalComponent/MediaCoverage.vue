@@ -45,11 +45,11 @@
           >
             <div class="media-item wow animate__animated animate__fadeInUp">
               <div class="media-thumb">
-                <img :src="item.thumbnail_image" :alt="item.alt" />
+                <img :src="item.thumbnail_image || item.img" :alt="item.alt" />
                 <div class="media-thumb-video">
                   <a
                     class="video-play style-01 style-05 mfp-iframe"
-                    :href="item.video_url"
+                    :href="item.video_url || item.videoUrl"
                   >
                     <i class="fas fa-play"></i>
                   </a>
@@ -86,7 +86,7 @@ export default {
         {
           img: "frontend/assets/img/patriotism.png",
           alt: "patriotism",
-          videoUrl: "https://www.youtube.com/watch?v=-ZwQtICNbRc",
+          video_url: "https://www.youtube.com/watch?v=-ZwQtICNbRc",
           tag: "technology",
           title: "Thursday’s analyst upgrades and downgrade",
           date: "JAN 14, 2022",
@@ -94,7 +94,7 @@ export default {
         {
           img: "frontend/assets/img/portrait.png",
           alt: "portrait",
-          videoUrl: "https://www.youtube.com/watch?v=-ZwQtICNbRc",
+          video_url: "https://www.youtube.com/watch?v=-ZwQtICNbRc",
           tag: "technology",
           title: "Thursday’s analyst upgrades and downgrade",
           date: "JAN 14, 2022",
@@ -103,15 +103,49 @@ export default {
     },
   },
   mounted() {
-    if (window.$ && window.$.fn.magnificPopup) {
-      window.$(".mfp-iframe").magnificPopup({
-        type: "iframe",
-        mainClass: "mfp-fade",
-        removalDelay: 160,
-        preloader: false,
-        fixedContentPos: false,
-      });
-    }
+    this.initMagnificPopup();
+  },
+  updated() {
+    this.initMagnificPopup();
+  },
+  methods: {
+    initMagnificPopup() {
+      if (window.$ && window.$.fn.magnificPopup) {
+        window.$(".mfp-iframe").magnificPopup({
+          type: "iframe",
+          mainClass: "mfp-fade",
+          removalDelay: 160,
+          preloader: false,
+          fixedContentPos: false,
+          iframe: {
+            markup:
+              '<div class="mfp-iframe-scaler">' +
+              '<div class="mfp-close"></div>' +
+              '<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>' +
+              "</div>",
+            patterns: {
+              youtube: {
+                index: "youtube.com/",
+                id: function (url) {
+                  var m = url.match(/[\?&]v=([^&]+)/);
+                  return m ? m[1] : null;
+                },
+                src: "https://www.youtube.com/embed/%id%?autoplay=1",
+              },
+              youtu_be: {
+                index: "youtu.be/",
+                id: function (url) {
+                  var m = url.match(/youtu.be\/([^?&]+)/);
+                  return m ? m[1] : null;
+                },
+                src: "https://www.youtube.com/embed/%id%?autoplay=1",
+              },
+            },
+            srcAction: "iframe_src",
+          },
+        });
+      }
+    },
   },
 };
 </script>

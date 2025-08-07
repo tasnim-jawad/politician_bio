@@ -9,7 +9,7 @@ class GetCustomData
     public static function execute()
     {
         try {
-            $data = self::$model::query()->active()->latest()->first();
+            $data = self::$model::query()->active()->latest()->take(10)->orderBy('id','desc')->get();
             if (!$data) {
                 return messageResponse('No data found', null, 404, 'error');
             }

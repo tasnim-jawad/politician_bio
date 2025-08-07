@@ -2830,6 +2830,9 @@ ul {
   position: relative;
   z-index: 99;
 }
+.volunteer-single-items .content .social-links a {
+  margin-right: 10px;
+}
 .volunteer-single-items .content .social-links i {
   width: 32px;
   height: 32px;

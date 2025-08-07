@@ -32,17 +32,13 @@
                       aria-expanded="false"
                       aria-controls="collapseOwo"
                     >
-                      Senatory Vision?
+                      Our Vision?
                     </a>
                   </h5>
                 </div>
                 <div id="collapseOwo" class="collapse" data-parent="#accordion">
                   <div class="card-body">
-                    Every pleasures is to welcomed pain avoided owing to the
-                    duty the Every pleasures is to welcomed pain avoided owing
-                    to the duty the obligations of business.Every pleasures is
-                    to welcomed pain avoided owing to the duty the obligations
-                    of business.
+                    {{ mission_vision?.vision?.description }}
                   </div>
                 </div>
               </div>
@@ -59,17 +55,13 @@
                       aria-expanded="false"
                       aria-controls="collapseOwo"
                     >
-                      Senatory Mission?
+                      Our Mission?
                     </a>
                   </h5>
                 </div>
                 <div id="collapseTwo" class="collapse" data-parent="#accordion">
                   <div class="card-body">
-                    Every pleasures is to welcomed pain avoided owing to the
-                    duty the Every pleasures is to welcomed pain avoided owing
-                    to the duty the obligations of business.Every pleasures is
-                    to welcomed pain avoided owing to the duty the obligations
-                    of business.
+                    {{ mission_vision?.mission?.description }}
                   </div>
                 </div>
               </div>
@@ -86,7 +78,7 @@
                       aria-expanded="false"
                       aria-controls="collapseOwo"
                     >
-                      Senatory Future Plan?
+                      Our Future Plan?
                     </a>
                   </h5>
                 </div>
@@ -96,11 +88,7 @@
                   data-parent="#accordion"
                 >
                   <div class="card-body">
-                    Every pleasures is to welcomed pain avoided owing to the
-                    duty the Every pleasures is to welcomed pain avoided owing
-                    to the duty the obligations of business.Every pleasures is
-                    to welcomed pain avoided owing to the duty the obligations
-                    of business.
+                    {{ mission_vision?.future_plan?.description }}
                   </div>
                 </div>
               </div>
@@ -114,5 +102,11 @@
 <script>
 export default {
   name: "MissionVision",
+  props: {
+    mission_vision: {
+      type: Array,
+      required: true,
+    },
+  },
 };
 </script>

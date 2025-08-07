@@ -5,8 +5,8 @@ export const store = defineStore("about_us_page", {
   state: () => ({
     about_us: null,
     whyChoseUs: [],
-    volunteer: [],
-    mission_vission: [],
+    volunteers: [],
+    mission_vision: [],
     counters: [],
     
     loading: false,
@@ -65,17 +65,17 @@ export const store = defineStore("about_us_page", {
         this.error = e;
       }
     },
-    async fetch_mission_vission() {
-      if (this._isCacheValid("mission_vission")) {
-        this.mission_vission = this._cache["mission_vission"].data;
+    async fetch_mission_vision() {
+      if (this._isCacheValid("mission_vision")) {
+        this.mission_vision = this._cache["mission_vision"].data;
         return;
       }
       try {
         const res = await axios.get("mission-visions/custom-data");
-        this.mission_vission = res.data;
+        this.mission_vision = res.data;
         console.log("Media coverages fetched:", res.data);
         
-        this._setCache("mission_vission", res.data);
+        this._setCache("mission_vision", res.data);
       } catch (e) {
         this.error = e;
       }
@@ -102,7 +102,7 @@ export const store = defineStore("about_us_page", {
           this.fetch_about_us(),
           this.fetch_why_chose_us(),
           this.fetch_volunteers(),
-          this.fetch_mission_vission(),
+          this.fetch_mission_vision(),
           this.fetch_counters()
         ]);
       } catch (e) {

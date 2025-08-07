@@ -29,15 +29,15 @@
   <!-- Why Choose us secion End here -->
 
   <!-- Volunteer Section Start -->
-   <volunteer-section />
+   <volunteer-section v-if="volunteers.length" :volunteers="volunteers"/>
   <!-- Volunteer Section End -->
 
   <!-- MissionVision section Start here -->
-   <mission-vision />
+   <mission-vision v-if="mission_vision" :mission_vision="mission_vision"/>
   <!-- MissionVision section end here -->
 
   <!-- AtAGlance Section Start -->
-   <at-a-glance />
+   <at-a-glance v-if="counters.length" :counters="counters"/>
   <!-- AtAGlance Section End -->
 </template>
 <script>
@@ -79,8 +79,8 @@ export default {
     ...mapState(about_us_store, [
       "about_us",
       "whyChoseUs",
-      "volunteer",
-      "mission_vission",
+      "volunteers",
+      "mission_vision",
       "counters",
       "loading",
       "error",

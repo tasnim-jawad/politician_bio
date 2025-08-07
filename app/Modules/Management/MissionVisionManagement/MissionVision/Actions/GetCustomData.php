@@ -9,7 +9,14 @@ class GetCustomData
     public static function execute()
     {
         try {
-            $data = self::$model::query()->active()->latest()->first();
+            $vision = self::$model::query()->active()->where('page_type','vision')->latest()->first();
+            $mission = self::$model::query()->active()->where('page_type','mission')->latest()->first();
+            $future_plan = self::$model::query()->active()->where('page_type','future_plan')->latest()->first();
+            $data = [
+                'vision' => $vision,
+                'mission' => $mission,
+                'future_plan' => $future_plan
+            ];
             if (!$data) {
                 return messageResponse('No data found', null, 404, 'error');
             }

@@ -23,17 +23,17 @@
           alt="Shape"
         />
         <div class="row justify-content-center">
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-3 col-md-6" v-for="(item, index) in counters" :key="index">
             <div class="single-counterup-01 style-04">
               <div class="content">
                 <div class="count-wrap">
-                  <span class="count-num">40</span>k+
+                  <span class="count-num">{{ item.number }}</span>{{ item.unit }}
                 </div>
-                <h4 class="title">Total Volunteer</h4>
+                <h4 class="title">{{ item.title }}</h4>
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6">
+          <!-- <div class="col-lg-3 col-md-6">
             <div class="single-counterup-01 style-02">
               <div class="content">
                 <div class="count-wrap">
@@ -62,7 +62,7 @@
                 <h4 class="title">Coverage Area</h4>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -72,5 +72,11 @@
 <script>
 export default {
   name: "AtAGlance",
+  props: {
+    counters: {
+      type: Array,
+      required: true,
+    },
+  },
 };
 </script>
