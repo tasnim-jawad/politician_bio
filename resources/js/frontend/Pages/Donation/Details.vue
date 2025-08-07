@@ -12,7 +12,8 @@
           <li><Link href="/donation">Donation</Link></li>
           <li>
             <Link href="/donation/details" class="active"
-              >Donation Details</Link>
+              >Donation Details</Link
+            >
           </li>
         </ul>
       </div>
@@ -23,9 +24,19 @@
             <div class="bg-wrapper home-six">
               <div
                 class="donation-bg"
-                style="
-                  background-image: url(/frontend/assets/img/home-six/donation-sinlge.png);
-                "
+                :style="{
+                  backgroundImage: donation_details?.data?.banner_image
+                    ? `url(${
+                        donation_details.data.banner_image.match(/^https?:\/\//)
+                          ? donation_details.data.banner_image
+                          : '/' +
+                            donation_details.data.banner_image.replace(
+                              /^\/?/,
+                              ''
+                            )
+                      })`
+                    : `url('/frontend/assets/img/home-six/donation-sinlge.png')`,
+                }"
               >
                 <div class="content">
                   <div class="progress-content">
@@ -35,13 +46,14 @@
                       </div>
                     </div>
                     <div class="goal">
-                      <h4 class="raised"><span>Target</span> $90,300</h4>
-                      <h4 class="raised"><span>Achived</span> $40,300</h4>
+                      <h4 class="raised"><span>Target</span> ${{ donation_details?.data?.target }}</h4>
+                      <h4 class="raised"><span>Achived</span> ${{ donation_details?.data?.achived }}</h4>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            {{ donation_details?.data }}
             <div class="content">
               <div class="author-meta">
                 <div class="thumb">
@@ -208,7 +220,10 @@
               <ul class="recent_post_item">
                 <li class="single-recent-post-item">
                   <div class="thumb">
-                    <img src="/frontend/assets/img/blog-01.png" alt="recent post" />
+                    <img
+                      src="/frontend/assets/img/blog-01.png"
+                      alt="recent post"
+                    />
                   </div>
                   <div class="content">
                     <span class="time">AUG 23,2021</span>
@@ -221,7 +236,10 @@
                 </li>
                 <li class="single-recent-post-item">
                   <div class="thumb">
-                    <img src="/frontend/assets/img/blog-02.png" alt="recent post" />
+                    <img
+                      src="/frontend/assets/img/blog-02.png"
+                      alt="recent post"
+                    />
                   </div>
                   <div class="content">
                     <span class="time">AUG 23,2021</span>
@@ -232,7 +250,10 @@
                 </li>
                 <li class="single-recent-post-item">
                   <div class="thumb">
-                    <img src="/frontend/assets/img/blog-03.png" alt="recent post" />
+                    <img
+                      src="/frontend/assets/img/blog-03.png"
+                      alt="recent post"
+                    />
                   </div>
                   <div class="content">
                     <span class="time">AUG 23,2021</span>
@@ -245,7 +266,10 @@
                 </li>
                 <li class="single-recent-post-item">
                   <div class="thumb">
-                    <img src="/frontend/assets/img/blog-04.png" alt="recent post" />
+                    <img
+                      src="/frontend/assets/img/blog-04.png"
+                      alt="recent post"
+                    />
                   </div>
                   <div class="content">
                     <span class="time">AUG 23,2021</span>
@@ -294,34 +318,40 @@
               <h3 class="widget-title style-03">category</h3>
               <ul>
                 <li>
-                  <img src="/frontend/assets/img/home-six/insta-01.png" alt="" /><i
-                    class="fab fa-instagram"
-                  ></i>
+                  <img
+                    src="/frontend/assets/img/home-six/insta-01.png"
+                    alt=""
+                  /><i class="fab fa-instagram"></i>
                 </li>
                 <li>
-                  <img src="/frontend/assets/img/home-six/insta-02.png" alt="" /><i
-                    class="fab fa-instagram"
-                  ></i>
+                  <img
+                    src="/frontend/assets/img/home-six/insta-02.png"
+                    alt=""
+                  /><i class="fab fa-instagram"></i>
                 </li>
                 <li>
-                  <img src="/frontend/assets/img/home-six/insta-03.png" alt="" /><i
-                    class="fab fa-instagram"
-                  ></i>
+                  <img
+                    src="/frontend/assets/img/home-six/insta-03.png"
+                    alt=""
+                  /><i class="fab fa-instagram"></i>
                 </li>
                 <li>
-                  <img src="/frontend/assets/img/home-six/insta-04.png" alt="" /><i
-                    class="fab fa-instagram"
-                  ></i>
+                  <img
+                    src="/frontend/assets/img/home-six/insta-04.png"
+                    alt=""
+                  /><i class="fab fa-instagram"></i>
                 </li>
                 <li>
-                  <img src="/frontend/assets/img/home-six/insta-05.png" alt="" /><i
-                    class="fab fa-instagram"
-                  ></i>
+                  <img
+                    src="/frontend/assets/img/home-six/insta-05.png"
+                    alt=""
+                  /><i class="fab fa-instagram"></i>
                 </li>
                 <li>
-                  <img src="/frontend/assets/img/home-six/insta-06.png" alt="" /><i
-                    class="fab fa-instagram"
-                  ></i>
+                  <img
+                    src="/frontend/assets/img/home-six/insta-06.png"
+                    alt=""
+                  /><i class="fab fa-instagram"></i>
                 </li>
               </ul>
             </div>
@@ -338,10 +368,14 @@
       <div class="row">
         <div class="col-lg-6">
           <div class="section-title">
-            <h4 class="title style-02 wow animate__animated animate__fadeInUp">More Donation Programs</h4>
-            <p class="description style-02 wow animate__animated animate__fadeInUp">
-              Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will
-              frequently.
+            <h4 class="title style-02 wow animate__animated animate__fadeInUp">
+              More Donation Programs
+            </h4>
+            <p
+              class="description style-02 wow animate__animated animate__fadeInUp"
+            >
+              Every pleasures is to welcomed pain avoided owing to the duty the
+              obligations of business it will frequently.
             </p>
           </div>
         </div>
@@ -349,9 +383,14 @@
       <div class="row">
         <div class="testimonial-carousel-six">
           <div class="issues-single-items home-six">
-            <div class="issue-img" style="background-image: url(/frontend/assets/img/dontion-03.png);">
+            <div
+              class="issue-img"
+              style="background-image: url(/frontend/assets/img/dontion-03.png)"
+            >
               <div class="content">
-                <h4 class="title">We Need You to Help Us Get the Approval of</h4>
+                <h4 class="title">
+                  We Need You to Help Us Get the Approval of
+                </h4>
                 <div class="progress-content">
                   <div class="progress-item">
                     <div class="single-progressbar">
@@ -367,9 +406,14 @@
             </div>
           </div>
           <div class="issues-single-items home-six">
-            <div class="issue-img" style="background-image: url(/frontend/assets/img/dontion-04.png);">
+            <div
+              class="issue-img"
+              style="background-image: url(/frontend/assets/img/dontion-04.png)"
+            >
               <div class="content">
-                <h4 class="title">Supporting the Local Activists Fighting Poor </h4>
+                <h4 class="title">
+                  Supporting the Local Activists Fighting Poor
+                </h4>
                 <div class="progress-content">
                   <div class="progress-item">
                     <div class="single-progressbar">
@@ -391,14 +435,34 @@
   <!-- More Donation Section Start Here -->
 </template>
 <script>
+import { mapActions, mapWritableState } from "pinia";
 import NavbarArea from "../../CommonComponents/NavbarArea.vue";
+import { store as donation_details_store } from "./Store/donation_details_store.js";
 
 export default {
   components: {
     NavbarArea,
   },
-  created:function () {
-    this.slug = this.$route.query.slug;
+  data() {
+    return {
+      slug: "",
+    };
+  },
+  created: async function () {
+    const params = new URLSearchParams(window.location.search);
+    this.slug = params.get("slug") || "";
+    if (this.slug) {
+      await this.fetch_donation_details(this.slug);
+    }
+  },
+  methods: {
+    ...mapActions(donation_details_store, ["fetch_donation_details"]),
+  },
+  computed: {
+    ...mapWritableState(donation_details_store, [
+      "donation_details",
+      "loading",
+    ]),
   },
 };
 </script>

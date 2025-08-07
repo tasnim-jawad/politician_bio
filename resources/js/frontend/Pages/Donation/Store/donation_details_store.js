@@ -3,41 +3,50 @@ import axios from "axios";
 
 export const store = defineStore("donation_details_page", {
   state: () => ({
-    donations: {
-      data: [],
-      current_page: 1,
-      last_page: 1,
-      total: 0,
-      per_page: 6,
-    },
+    donation_details: null,
     loading: false,
     error: null,
   }),
   actions: {
     _cache: {},
-    _isCacheValid(key) {
-      const entry = this._cache[key];
+    _cacheKeyPrefix: "donation_details_page_cache_",
+    async _isCacheValid(key) {
+      let entry = this._cache[key];
+      if (!entry && "caches" in window) {
+        try {
+          const cache = await caches.open(this._cacheKeyPrefix);
+          const match = await cache.match(key);
+          if (match) {
+            entry = await match.json();
+            this._cache[key] = entry;
+          }
+        } catch (e) {}
+      }
       if (!entry) return false;
       const now = Date.now();
-      // 10 minutes = 600000 ms
       return now - entry.timestamp < 600000;
     },
-    _setCache(key, data) {
-      this._cache[key] = { data, timestamp: Date.now() };
+    async _setCache(key, data) {
+      const entry = { data, timestamp: Date.now() };
+      this._cache[key] = entry;
+      if ("caches" in window) {
+        try {
+          const cache = await caches.open(this._cacheKeyPrefix);
+          const response = new Response(JSON.stringify(entry), {
+            headers: { "Content-Type": "application/json" },
+          });
+          await cache.put(key, response);
+        } catch (e) {}
+      }
     },
-    async fetch_donation_details({ page = 1 } = {}) {
-      const cacheKey = `donations_page_${page}`;
-      if (this._isCacheValid(cacheKey)) {
-        this.donations = this._cache[cacheKey].data;
+    async fetch_donation_details(slug) {
+      const cacheKey = `donation_details_${slug}`;
+      if (await this._isCacheValid(cacheKey)) {
+        this.donation_details = this._cache[cacheKey].data;
         return;
       }
       try {
-        const res = await axios.get("donation-details/", {
-          params: {
-            page,
-            limit: 6,
-          },
-        });
+        const res = await axios.get(`donation-details/${slug}`);
         // Normalize response for both paginated and non-paginated
         let result = res.data;
         if (!result.data) {
@@ -51,7 +60,7 @@ export const store = defineStore("donation_details_page", {
           };
         }
         this.donations = result;
-        this._setCache(cacheKey, this.donations);
+        await this._setCache(cacheKey, this.donations);
       } catch (e) {
         this.error = e;
       }
