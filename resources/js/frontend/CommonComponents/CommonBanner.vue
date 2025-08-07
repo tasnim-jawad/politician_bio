@@ -17,7 +17,7 @@
           >
             <ul>
               <li v-for="(item, idx) in breadcrumbs" :key="idx">
-                <a :href="item.url">{{ item.text }}</a>
+                <Link :href="item.url">{{ item.text }}</Link>
               </li>
             </ul>
           </div>

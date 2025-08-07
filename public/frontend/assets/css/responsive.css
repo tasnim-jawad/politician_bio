@@ -1641,9 +1641,9 @@
     .more-issue-section .section-title .description.style-02 {
         margin: 0;
     }
-    .blog-pagination {
+    /* .blog-pagination {
         padding-left: 40px;
-    }
+    } */
     .blog-pagination.style-01 {
         padding-left: 0px;
     }

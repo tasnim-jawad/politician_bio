@@ -397,5 +397,8 @@ export default {
   components: {
     NavbarArea,
   },
+  created:function () {
+    this.slug = this.$route.query.slug;
+  },
 };
 </script>

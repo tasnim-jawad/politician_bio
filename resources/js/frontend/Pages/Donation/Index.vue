@@ -28,76 +28,31 @@
           </div>
         </div>
       </div>
+      <!-- <p>{{ donations.data.last_page }}</p> -->
       <div class="row">
-        <div class="col-lg-6">
+        <div
+          class="col-lg-6"
+          v-for="(donation,index) in donations.data.data"
+          :key="index"
+        >
           <donation-single-item
-            img="frontend/assets/img/donation-01.png"
-            title="Donate to Help Us Get a Professional Politic"
-            detailsUrl="/donation/details"
-            raised="12,100"
-            goal="40,300"
-            unit="$"
-          />
-        </div>
-        <div class="col-lg-6">
-          <donation-single-item
-            img="frontend/assets/img/dontaion-02.png"
-            title="Medcare and Social Security"
-            detailsUrl="/donation/details"
-            raised="13,300"
-            goal="40,300"
-            unit="$"
-          />
-        </div>
-        <div class="col-lg-6">
-          <donation-single-item
-            img="frontend/assets/img/dontion-03.png"
-            title="Environment"
-            detailsUrl="/donation/details"
-            raised="17,300"
-            goal="40,300"
-            unit="$"
-          />
-        </div>
-        <div class="col-lg-6">
-          <donation-single-item
-            img="frontend/assets/img/dontion-04.png"
-            title="Balancing the Budget"
-            detailsUrl="/donation/details"
-            raised="33,300"
-            goal="40,300"
-            unit="$"
-          />
-        </div>
-        <div class="col-lg-6">
-          <donation-single-item
-            img="frontend/assets/img/dontion-05.png"
-            title="Criminal Justice"
-            detailsUrl="/donation/details"
-            raised="20,300"
-            goal="40,300"
-            unit="$"
-          />
-        </div>
-        <div class="col-lg-6">
-          <donation-single-item
-            img="frontend/assets/img/dontion-06.png"
-            title="Veterans"
-            detailsUrl="/donation/details"
-            raised="37,300"
-            goal="40,300"
-            unit="$"
+            :img="donation.banner_image || 'uploads/default.jpg'"
+            :title="donation.title"
+            :slug="donation.slug"
+            :raised="donation.achived"
+            :goal="donation.target"
+            :unit="donation.unit || '$'"
           />
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-9 col-12">
-          <Pagination
-            :currentPage="current"
-            :totalPages="4"
-            @prev="current--"
-            @next="current++"
-            @change="(page) => (current = page)"
+        <div class="col-lg-8 col-md-10 col-12">
+          <Pagination 
+            :currentPage="donations.data.current_page || 1"
+            :totalPages="donations.data.last_page || 1"
+            @prev="goToPage(donations.data.current_page - 1)"
+            @next="goToPage(donations.data.current_page + 1)"
+            @change="goToPage"
           />
         </div>
       </div>
@@ -111,8 +66,13 @@ import Pagination from "../../CommonComponents/Pagination.vue";
 import Donation from "../../GlobalComponent/Donation.vue";
 import DonationSingleItem from "./components/DonationSingleItem.vue";
 import CommonBanner from "../../CommonComponents/CommonBanner.vue";
+import { mapActions, mapState } from "pinia";
+import { store as donation_store } from "./Store/donation_store.js";
 
 export default {
+  props: {
+    event: Object,
+  },
   components: {
     NavbarArea,
     Pagination,
@@ -122,8 +82,38 @@ export default {
   },
   data() {
     return {
-      current: 3, // This is the current page
+      // current: 1, // Not needed, handled by store
     };
+  },
+  watched: {
+    donations: {
+      handler(newVal) {
+        console.log("newVal page updated to:", this.donations);
+        if (newVal && newVal.data && newVal.data.length > 0) {
+          this.current = newVal.current_page || 1;
+          
+        }
+      },
+      immediate: true,
+    },
+  },
+  methods: {
+    ...mapActions(donation_store, ["fetchAllDonationPageData"]),
+    goToPage(page) {
+      console.log("Going to page:", page);
+      if (page < 1 || page > (this.donations.data.last_page || 1)) return;
+      this.fetchAllDonationPageData({ page });
+    },
+  },
+  created:async function () {
+    await this.fetchAllDonationPageData();
+  },
+  computed: {
+    ...mapState(donation_store, [
+      "donations",
+      "loading", 
+      "error"
+    ]),
   },
 };
 </script>

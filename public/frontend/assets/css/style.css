@@ -942,12 +942,13 @@ code {
   margin: 0;
   padding: 0;
   list-style: none;
+  text-align: center;
 }
 
 .blog-pagination ul li a,
 .blog-pagination ul li span {
   display: block;
-  padding: 3px 25px;
+  padding: 3px 10px;
   border: 1px solid #e2e2e2;
   line-height: 40px;
   text-align: center;
@@ -15687,7 +15688,7 @@ ul.blocks-gallery-grid li:before {
 }
 .blog-pagination ul li span {
   display: block;
-  padding: 3px 25px;
+  padding: 3px 10px;
   border: none;
   line-height: 40px;
   border-radius: 30px;

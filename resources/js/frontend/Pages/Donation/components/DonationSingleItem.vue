@@ -3,7 +3,7 @@
     <div class="issue-img" :style="{ backgroundImage: `url(${img})` }">
       <div class="content">
         <h4 class="title">
-          <Link :href="detailsUrl">{{ title }}</Link>
+          <Link :href="`/donation/details?slug=${slug}`">{{ title }}</Link>
         </h4>
         <div class="progress-content">
           <div class="progress-item">
@@ -53,14 +53,16 @@ export default {
     img: {
       type: String,
       required: true,
+      default: "uploads/default.jpg",
     },
     title: {
       type: String,
       required: true,
     },
-    detailsUrl: {
+    slug: {
       type: String,
-      default: "/donation/details",
+      required: true,
+      default: "",
     },
     raised: {
       type: String,
@@ -77,9 +79,11 @@ export default {
   },
   computed: {
     percent() {
-      // Remove commas and convert to number
-      const raisedNum = parseFloat(this.raised.replace(/,/g, ""));
-      const goalNum = parseFloat(this.goal.replace(/,/g, ""));
+      // Remove commas and convert to number, handle undefined/null
+      const raisedStr = (this.raised || "0").toString();
+      const goalStr = (this.goal || "0").toString();
+      const raisedNum = parseFloat(raisedStr.replace(/,/g, ""));
+      const goalNum = parseFloat(goalStr.replace(/,/g, ""));
       if (!goalNum) return 0;
       return Math.min(100, Math.round((raisedNum / goalNum) * 100));
     },

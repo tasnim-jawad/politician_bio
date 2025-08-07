@@ -3,10 +3,15 @@ import { defineStore } from "pinia";
 export const site_settings_store = defineStore("site_settings_store", {
     state: () => ({
         website_settings_data: [],
+        is_true: false,
     }),
 
     actions: {
         async get_all_website_settings() {
+            if (this.is_true) {
+                return ;
+            }
+            this.is_true = true; // Prevent multiple calls
             try {
                 const response = await axios.get(
                     "/website-settings?get_all=1&limit=100"
