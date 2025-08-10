@@ -1,4 +1,5 @@
 <template>
+  <Head :title="event.title" />
   <NavbarArea />
   <!-- banner section start here -->
   <common-banner
@@ -41,7 +42,7 @@
             :slug="donation.slug"
             :raised="donation.achived"
             :goal="donation.target"
-            :unit="donation.unit || '$'"
+            :unit="donation.unit || '/='"
           />
         </div>
       </div>
@@ -61,6 +62,7 @@
   <!-- Donation Items Section Start Here -->
 </template>
 <script>
+import { Head } from "@inertiajs/vue3";
 import NavbarArea from "../../CommonComponents/NavbarArea.vue";
 import Pagination from "../../CommonComponents/Pagination.vue";
 import Donation from "../../GlobalComponent/Donation.vue";

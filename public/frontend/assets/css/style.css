@@ -6020,9 +6020,25 @@ ul {
 .donation-single-items .content .author-meta .thumb {
   margin-right: 20px;
 }
-.donation-single-items .content .author-meta .thumb img {
-  margin-right: 10px;
+.donation-single-items .content .author-meta .thumb a{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.donation-single-items .content .author-meta .thumb .image_container {
+  margin-right: 10px;
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+.donation-single-items .content .author-meta .thumb .image_container img {
+  height: 100%;
+}
+
 .donation-single-items .content .author-meta .thumb .author-name {
   font-size: 14px;
   line-height: 28px;

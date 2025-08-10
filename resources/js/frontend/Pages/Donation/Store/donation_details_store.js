@@ -43,6 +43,8 @@ export const store = defineStore("donation_details_page", {
       const cacheKey = `donation_details_${slug}`;
       if (await this._isCacheValid(cacheKey)) {
         this.donation_details = this._cache[cacheKey].data;
+        console.log("Using cached donation details for:", slug);
+        console.log("Cached donation details:", this.donation_details);
         return;
       }
       try {
@@ -59,22 +61,22 @@ export const store = defineStore("donation_details_page", {
             per_page: 6,
           };
         }
-        this.donations = result;
-        await this._setCache(cacheKey, this.donations);
+        this.donation_details = result;
+        await this._setCache(cacheKey, this.donation_details);
       } catch (e) {
         this.error = e;
       }
     },
-    async fetchAllDonationPageData({ page = 1 } = {}) {
-      this.loading = true;
-      this.error = null;
-      try {
-        await this.fetch_donations({ page });
-      } catch (e) {
-        this.error = e;
-      } finally {
-        this.loading = false;
-      }
-    },
+    // async fetchAllDonationPageData({ page = 1 } = {}) {
+    //   this.loading = true;
+    //   this.error = null;
+    //   try {
+    //     await this.fetch_donation_details({ page });
+    //   } catch (e) {
+    //     this.error = e;
+    //   } finally {
+    //     this.loading = false;
+    //   }
+    // },
   },
 });

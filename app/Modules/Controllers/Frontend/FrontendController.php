@@ -51,6 +51,11 @@ class FrontendController extends Controller
 
     public function DonationDetailsPage()
     {
+        $slug = request()->query('slug');
+        if (!$slug) {
+            return redirect()->back();
+        }
+
         return Inertia::render('Donation/Details', [
             'event' => [
                 'title' => 'Donation Details',
