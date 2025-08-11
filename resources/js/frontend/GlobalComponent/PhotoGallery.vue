@@ -102,49 +102,60 @@
 export default {
   name: "PhotoGallery",
   mounted() {
-    // Mount testimonial-carousel-seven Owl Carousel
-    if (
-      window.jQuery &&
-      window.jQuery(".testimonial-carousel-seven").length > 0
-    ) {
-      window.jQuery(".testimonial-carousel-seven").owlCarousel({
-        loop: true,
-        autoplay: false,
-        autoPlayTimeout: 1000,
-        margin: 30,
-        items: 2,
-        center: true,
-        dots: false,
-        nav: true,
-        navText: [
-          '<i class="fa fa-angle-left"></i>',
-          '<i class="fa fa-angle-right"></i>',
-        ],
-        animateOut: "fadeOut",
-        animateIn: "fadeIn",
-        responsive: {
-          0: { items: 1 },
-          460: { items: 1 },
-          599: { items: 2 },
-          768: { items: 2 },
-          960: { items: 3 },
-          1200: { items: 4 },
-        },
-      });
-      // Magnific Popup for every image
-      window.jQuery(".testimonial-carousel-seven .image-popup").magnificPopup({
-        type: "image",
-        gallery: {
-          enabled: true,
-        },
-        mainClass: "mfp-fade",
-        removalDelay: 300,
-        zoom: {
-          enabled: true,
-          duration: 300,
-        },
-      });
-    }
+    this.initSlider();
+  },
+  updated() {
+    this.initSlider();
+  },
+
+  methods: {
+    initSlider: function () {
+      // Mount testimonial-carousel-seven Owl Carousel
+      if (
+        window.jQuery &&
+        window.jQuery(".testimonial-carousel-seven").length > 0
+      ) {
+        window.jQuery(".testimonial-carousel-seven").owlCarousel({
+          loop: true,
+          autoplay: false,
+          autoPlayTimeout: 1000,
+          margin: 30,
+          items: 2,
+          center: true,
+          dots: false,
+          nav: true,
+          navText: [
+            '<i class="fa fa-angle-left"></i>',
+            '<i class="fa fa-angle-right"></i>',
+          ],
+          animateOut: "fadeOut",
+          animateIn: "fadeIn",
+          responsive: {
+            0: { items: 1 },
+            460: { items: 1 },
+            599: { items: 2 },
+            768: { items: 2 },
+            960: { items: 3 },
+            1200: { items: 4 },
+          },
+        });
+        // Magnific Popup for every image
+        window
+          .jQuery(".testimonial-carousel-seven .image-popup")
+          .magnificPopup({
+            type: "image",
+            gallery: {
+              enabled: true,
+            },
+            mainClass: "mfp-fade",
+            removalDelay: 300,
+            zoom: {
+              enabled: true,
+              duration: 300,
+            },
+          });
+      }
+    },
   },
 };
 </script>
