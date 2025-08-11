@@ -15,7 +15,7 @@
               <div v-for="item in journeyItems" :key="item.year" class="thumb">
                 <div
                   class="journey-bg"
-                  :style="{ backgroundImage: `url(${item.image})` }"
+                  :style="{ backgroundImage: `url(/${item.image})` }"
                 >
                   <div
                     :class="

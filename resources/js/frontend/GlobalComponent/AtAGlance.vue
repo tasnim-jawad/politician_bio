@@ -23,13 +23,24 @@
           alt="Shape"
         />
         <div class="row justify-content-center">
-          <div class="col-lg-3 col-md-6" v-for="(item, index) in counters" :key="index">
-            <div class="single-counterup-01 style-04">
+          <div
+            class="col-lg-3 col-md-6"
+            v-for="(item, index) in counters"
+            :key="index"
+          >
+            <div
+              :class="[
+                'single-counterup-01',
+                'style-04',
+                index === counters.length - 1 ? 'border-right-0' : '',
+              ]"
+            >
               <div class="content">
                 <div class="count-wrap">
-                  <span class="count-num">{{ item.number }}</span>{{ item.unit }}
+                  <span class="count-num">{{ item.number }}</span
+                  >{{ item.unit }}
                 </div>
-                <h4 class="title">{{ item.title }}</h4>
+                <h4 class="title px-2">{{ item.title }}</h4>
               </div>
             </div>
           </div>

@@ -8,8 +8,8 @@ import { Link } from '@inertiajs/vue3';
     <div class="container nav-container home-five">
       <div class="responsive-mobile-menu">
         <div class="logo-wrapper">
-          <a href="index.html" class="logo">
-            <img src="frontend/assets/img/Home-five/logo-white.png" alt="" />
+          <a href="/" class="logo">
+            <img src="/frontend/assets/img/Home-five/logo-white.png" alt="" />
           </a>
         </div>
         <button

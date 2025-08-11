@@ -13,18 +13,39 @@
   <!-- banner section End here -->
 
   <!-- Volunteer Team Section Start here -->
-  <team-section-area />
+  <team-section-area v-if="volunteers" :volunteers="volunteers?.data" />
   <!-- Volunteer Team Section Start here -->
 
+  <!-- Pagination -->
+  <!-- Pagination -->
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-12">
+      <Pagination
+        :currentPage="volunteers?.data?.current_page || 1"
+        :totalPages="volunteers?.data?.last_page || 1"
+        @prev="goToPage(volunteers?.data?.current_page - 1)"
+        @next="goToPage(volunteers?.data?.current_page + 1)"
+        @change="goToPage"
+      />
+    </div>
+  </div>
+  <!-- Pagination -->
+  <!-- Pagination -->
+
   <!-- Counter Section Start -->
-  <at-a-glance />
+  <at-a-glance v-if="counters" :counters="counters" />
   <!-- Counter Section End -->
 </template>
 <script>
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
 import AtAGlance from "../../../GlobalComponent/AtAGlance.vue";
-import TeamSectionArea from "./TeamSectionArea.vue";
+import TeamSectionArea from "./components/TeamSectionArea.vue";
+import Pagination from "../../../CommonComponents/Pagination.vue";
+import { Head } from "@inertiajs/vue3";
+
+import { mapActions, mapState } from "pinia";
+import { store as team_store } from "./Store/team_store.js";
 
 export default {
   components: {
@@ -32,6 +53,35 @@ export default {
     CommonBanner,
     AtAGlance,
     TeamSectionArea,
+    Pagination,
+  },
+  watched: {
+    volunteers: {
+      handler(newVal) {
+        console.log("newVal page updated to:", this.volunteers);
+        if (newVal && newVal.data && newVal.data.length > 0) {
+          this.current = newVal.current_page || 1;
+        }
+      },
+      immediate: true,
+    },
+  },
+  methods: {
+    ...mapActions(team_store, ["fetchAllTeamPageData"]),
+    goToPage(page) {
+      console.log("Going to page:", page);
+      if (page < 1 || page > (this.volunteers.data.last_page || 1)) return;
+      this.fetchAllTeamPageData({ page });
+    },
+  },
+  created: async function () {
+    await this.fetchAllTeamPageData();
+  },
+  computed: {
+    ...mapState(team_store, [
+      "volunteers",
+      "counters",
+    ]),
   },
 };
 </script>

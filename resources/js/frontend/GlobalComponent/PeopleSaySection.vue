@@ -19,6 +19,8 @@
               <div
                 class="people-say-single-item style-01"
                 style="background-image: url(/frontend/assets/img/line-03.png)"
+                v-for="(item, index) in comments"
+                :key="index"
               >
                 <img
                   src="/frontend/assets/img/quotes-02.png"
@@ -35,18 +37,17 @@
                     </div>
                   </div>
                   <h4 class="title">People's Say About us</h4>
-                  <p class="description">
-                    " Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum
-                    Occaecat cupidatat non proident,sunt in culpa qui officia
-                    deserunt mollit anim id, sint occaecat cupidatat non
-                    proident, sunt in culpa qui "
-                  </p>
+                  <p class="description" v-html="item?.comment"></p>
                   <div class="author-meta">
                     <div class="thumb">
-                      <img src="/frontend/assets/img/thumb.png" alt="" />
+                      <img
+                        :src="
+                          item?.thumb ? `/${item.thumb}` : '/uploads/avatar.jpg'
+                        "
+                        alt=""
+                      />
                     </div>
-                    <span class="author-name">William Smith</span>
+                    <span class="author-name">{{ item?.name }}</span>
                     <span class="line"></span>
                   </div>
                 </div>
@@ -143,36 +144,67 @@
 <script>
 export default {
   name: "PeopleSaySection",
-  mounted() {
-    // Ensure jQuery and Owl Carousel are available
-    if (
-      window.$ &&
-      typeof window.$(".testimonial-carousel-four").owlCarousel === "function"
-    ) {
-      window.$(".testimonial-carousel-four").owlCarousel({
-        loop: true,
-        autoplay: true,
-        autoPlayTimeout: 1000,
-        autoplaySpeed: 2500,
-        smartSpeed: 2500,
-        margin: 30,
-        items: 2,
-        dots: false,
-        nav: true,
-        navText: [
-          '<i class="fa fa-angle-left"></i>',
-          '<i class="fa fa-angle-right"></i>',
-        ],
-        responsive: {
-          0: { items: 1 },
-          460: { items: 1 },
-          599: { items: 1 },
-          768: { items: 1 },
-          960: { items: 1 },
-          1200: { items: 1 },
+  props: {
+    comments: {
+      type: Array,
+      default: () => [
+        {
+          comment:
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Occaecat cupidatat non proident,sunt in culpa qui officia deserunt mollit anim id, sint occaecat cupidatat non proident, sunt in culpa qui",
+          name: "William Smith 1",
         },
-      });
-    }
+        {
+          description:
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Occaecat cupidatat non proident,sunt in culpa qui officia deserunt mollit anim id, sint occaecat cupidatat non proident, sunt in culpa qui",
+          name: "William Smith 2",
+        },
+        {
+          description:
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Occaecat cupidatat non proident,sunt in culpa qui officia deserunt mollit anim id, sint occaecat cupidatat non proident, sunt in culpa qui",
+          name: "William Smith 3",
+        },
+      ],
+    },
+  },
+  mounted() {
+    this.initTestimonialCarousel();
+  },
+  updated() {
+    this.initTestimonialCarousel();
+  },
+  methods: {
+    initTestimonialCarousel() {
+      if (
+        window.$ &&
+        typeof window.$(".testimonial-carousel-four").owlCarousel === "function"
+      ) {
+        const $carousel = window.$(".testimonial-carousel-four");
+        $carousel.trigger("destroy.owl.carousel");
+        $carousel.owlCarousel({
+          loop: true,
+          autoplay: true,
+          autoPlayTimeout: 1000,
+          autoplaySpeed: 2500,
+          smartSpeed: 2500,
+          margin: 30,
+          items: 2,
+          dots: false,
+          nav: true,
+          navText: [
+            '<i class="fa fa-angle-left"></i>',
+            '<i class="fa fa-angle-right"></i>',
+          ],
+          responsive: {
+            0: { items: 1 },
+            460: { items: 1 },
+            599: { items: 1 },
+            768: { items: 1 },
+            960: { items: 1 },
+            1200: { items: 1 },
+          },
+        });
+      }
+    },
   },
 };
 </script>

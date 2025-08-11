@@ -131,6 +131,19 @@ export default {
           1200: { items: 4 },
         },
       });
+      // Magnific Popup for every image
+      window.jQuery(".testimonial-carousel-seven .image-popup").magnificPopup({
+        type: "image",
+        gallery: {
+          enabled: true,
+        },
+        mainClass: "mfp-fade",
+        removalDelay: 300,
+        zoom: {
+          enabled: true,
+          duration: 300,
+        },
+      });
     }
   },
 };

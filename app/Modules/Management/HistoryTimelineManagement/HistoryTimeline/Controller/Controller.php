@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Modules\Management\HistoryTimelineManagement\HistoryTimeline\Controller;
+
 use App\Modules\Management\HistoryTimelineManagement\HistoryTimeline\Actions\GetAllData;
 use App\Modules\Management\HistoryTimelineManagement\HistoryTimeline\Actions\DestroyData;
 use App\Modules\Management\HistoryTimelineManagement\HistoryTimeline\Actions\GetSingleData;
@@ -14,7 +15,7 @@ use App\Modules\Management\HistoryTimelineManagement\HistoryTimeline\Validations
 use App\Modules\Management\HistoryTimelineManagement\HistoryTimeline\Validations\DataStoreValidation;
 use App\Modules\Management\HistoryTimelineManagement\HistoryTimeline\Actions\BulkActions;
 use App\Http\Controllers\Controller as ControllersController;
-
+use App\Modules\Management\HistoryTimelineManagement\HistoryTimeline\Actions\GetCustomData;
 
 class Controller extends ControllersController
 {
@@ -71,6 +72,11 @@ class Controller extends ControllersController
     public function bulkAction(BulkActionsValidation $request)
     {
         $data = BulkActions::execute($request);
+        return $data;
+    }
+    public function getCustomData()
+    {
+        $data = GetCustomData::execute();
         return $data;
     }
 

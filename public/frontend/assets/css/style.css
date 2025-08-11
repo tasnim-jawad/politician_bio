@@ -2897,9 +2897,15 @@ ul {
   -webkit-transform: translateY(0px);
           transform: translateY(0px);
 }
+.volunteer-single-items-02 .thum  {
+  height: 265px;
+}
 .volunteer-single-items-02 .thum img {
   border-radius: 10px;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 .volunteer-single-items-02 .content {
   text-align: center;
@@ -3372,10 +3378,10 @@ ul {
   position: absolute;
   bottom: 15px;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   width: 88%;
-  /* padding: 0px 30px; */
+  padding: 0px 30px;
 }
 .news-single-items .content .title {
   font-size: 20px;
@@ -4787,6 +4793,12 @@ ul {
 }
 .people-say-single-item-02 .content .author-meta .thumb {
   margin-right: 20px;
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  overflow: hidden;
 }
 .people-say-single-item-02 .testimonial-carousel-four .owl-nav .owl-prev {
   font-size: 28px;
@@ -7693,6 +7705,8 @@ blockquote:not(.has-light-gray-color):not(.has-very-dark-gray-color):not(.is-sty
   background-size: contain;
   min-height: 285px;
   border-radius: 10px 10px 0px 0px;
+  background-size: cover;
+  background-position: center;
 }
 .history-single-item .history-single-item-content .content {
   padding: 30px;

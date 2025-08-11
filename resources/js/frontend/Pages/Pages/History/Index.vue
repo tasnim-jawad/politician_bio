@@ -1,4 +1,5 @@
 <template>
+  <!-- <Head :title="event.title" /> -->
   <NavbarArea />
   <!-- banner section start here -->
   <common-banner
@@ -13,23 +14,27 @@
   <!-- banner section End here -->
 
   <!-- Jour Journey Section Start Her -->
-  <our-journey :journeyItems="journeyItems" :contentPosition="'top_left'" />
+  <!-- <our-journey :journeyItems="journeyItems" :contentPosition="'top_left'" /> -->
+  <OurJourney v-if="ourJourney.length > 0" :journeyItems="ourJourney" :contentPosition="'top_left'"/>
   <!-- Jour Journey Section End Her -->
 
   <!-- Our History Timeline Section Start Here -->
-  <history-timeline :timelineItems="historyTimelineItems" />
+  <history-timeline v-if="history_timelines" :timelineItems="history_timelines" />
   <!-- Our History Timeline Section End Here -->
 
   <!-- Counter Section Start -->
-  <at-a-glance />
+  <at-a-glance v-if="counters" :counters="counters"/>
   <!-- Counter Section End -->
 </template>
 <script>
+// import { Head } from "@inertiajs/vue3";
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import OurJourney from "../../../GlobalComponent/OurJourney.vue";
 import HistoryTimeline from "../../../GlobalComponent/HistoryTimeline.vue";
 import AtAGlance from '../../../GlobalComponent/AtAGlance.vue'
 import CommonBanner from '../../../CommonComponents/CommonBanner.vue';
+import {store as history_page_store} from "./Store/history_store.js";
+import { mapActions , mapWritableState } from "pinia";
 
 export default {
   components: {
@@ -135,6 +140,19 @@ export default {
         },
       ],
     };
+  },
+  created: function () {
+    this.fetchAllHistoryPageData();
+  },
+  methods: {
+    ...mapActions(history_page_store, ["fetchAllHistoryPageData"]),
+  },
+  computed: {
+    ...mapWritableState(history_page_store, [
+      "ourJourney",
+      "history_timelines",
+      "counters",
+    ]),
   },
 
   // mounted() {

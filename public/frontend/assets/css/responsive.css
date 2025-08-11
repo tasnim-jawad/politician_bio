@@ -216,10 +216,10 @@
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
         min-height: 407px;
-        height: 407px;
+        /* height: 407px; */
     }
     .volunteer-single-items:hover {
-        height: 407px;
+        /* height: 407px; */
         min-height: 407px;
     }
     .header-area .lottie-shape {
@@ -351,10 +351,10 @@
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
         min-height: 351px;
-        height: 351px;
+        /* height: 351px; */
     }
     .volunteer-single-items:hover {
-        min-height: 351px;
+        /* min-height: 351px; */
         height: 351px;
     }
     .volunteer-single-items .content {
@@ -640,13 +640,13 @@
         margin-top: 120px;
     }
     .volunteer-single-items-02:hover {
-        height: 380px;
+        height: 490px;
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
         min-height: 442px;
     }
     .volunteer-single-items:hover {
-        height: 442px;
+        /* height: 442px; */
     }
     .header-area .lottie-shape {
         left: 4%;
@@ -936,11 +936,11 @@
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
         min-height: 413px;
-        height: 413px;
+        /* height: 413px; */
     }
     .volunteer-single-items:hover {
         min-height: 413px;
-        height: 413px;
+        /* height: 413px; */
     }
     .header-area .lottie-shape {
         left: 2%;
@@ -1083,11 +1083,11 @@
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
         min-height: 404px;
-        height: 404px;
+        /* height: 404px; */
     }
     .volunteer-single-items:hover {
         min-height: 404px;
-        height: 404px;
+        /* height: 404px; */
     }
     .header-top::after {
         width: 100%;
@@ -1352,11 +1352,12 @@
         width: 100%;
     }
     .team.style-01 .volunteer-single-items-02 {
-        width: calc(100%/2);
-        margin-right: 0px;
+        /* width: calc(100%/2);
+        margin-right: 0px; */
+        width: 313px;
     }
     .volunteer-single-items-02:hover {
-        height: 431px;
+        height: 450px;
     }
     .volunteer-single-items-02 .content {
         padding-top: 35px;
@@ -1387,6 +1388,7 @@
     }
     .history-single-item .history-single-item-content .thumb {
         background-size: cover;
+        background-position: center;
         min-height: 245px;
     }
     .history-single-item .history-year {
@@ -3163,14 +3165,14 @@
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
         min-height: 384px;
-        height: 384px;
+        /* height: 384px; */
     }
     .volunteer-single-items .content {
         padding-top: 25px;
     }
     .volunteer-single-items:hover {
         min-height: 384px;
-        height: 384;
+        /* height: 384; */
     }
     .header-area .lottie-shape {
         left: 6%;
@@ -3519,11 +3521,11 @@
         padding-left: 25px;
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
-        height: 525px;
+        /* height: 525px; */
     }
     .volunteer-single-items:hover {
         min-height: 525px;
-        height: 525px;
+        /* height: 525px; */
     }
     .header-area .lottie-shape {
         left: 0%;
@@ -3913,7 +3915,7 @@
         padding-left: 18px;
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
-        height: 492px;
+        /* height: 492px; */
     }
     .header-area .lottie-shape {
         left: 0%;
@@ -4092,7 +4094,7 @@
         display: block;
     }
     .people-say-single-item-02 .content .author-meta .thumb {
-        width: 60px;
+        /* width: 40px; */
         margin-bottom: 20px;
     }
     .people-say-single-item-02 .testimonial-carousel-four .owl-nav .owl-prev {
@@ -4259,7 +4261,7 @@
         height: 426px;
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
-        height: 460px;
+        /* height: 460px; */
     }
     .testimonial-section-area.testimonial-bg-02 {
         padding: 50px 0px 70px;
@@ -4464,7 +4466,7 @@
         height: 422px;
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
-        height: 450px;
+        /* height: 450px; */
     }
     .accoridion-section .section-title .title {
         font-size: 30px;
@@ -4819,7 +4821,7 @@
         height: 388px;
     }
     .testimonial-carousel-two .owl-item.center .volunteer-single-items {
-        height: 415px;
+        /* height: 415px; */
     }
     .header-area .lottie-shape {
         left: 0%;

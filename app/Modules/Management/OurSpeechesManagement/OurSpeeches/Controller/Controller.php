@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Modules\Management\OurSpeechesManagement\OurSpeeches\Controller;
+
 use App\Modules\Management\OurSpeechesManagement\OurSpeeches\Actions\GetAllData;
 use App\Modules\Management\OurSpeechesManagement\OurSpeeches\Actions\DestroyData;
 use App\Modules\Management\OurSpeechesManagement\OurSpeeches\Actions\GetSingleData;
@@ -14,7 +15,7 @@ use App\Modules\Management\OurSpeechesManagement\OurSpeeches\Validations\BulkAct
 use App\Modules\Management\OurSpeechesManagement\OurSpeeches\Validations\DataStoreValidation;
 use App\Modules\Management\OurSpeechesManagement\OurSpeeches\Actions\BulkActions;
 use App\Http\Controllers\Controller as ControllersController;
-
+use App\Modules\Management\OurSpeechesManagement\OurSpeeches\Actions\GetCustomData;
 
 class Controller extends ControllersController
 {
@@ -71,6 +72,11 @@ class Controller extends ControllersController
     public function bulkAction(BulkActionsValidation $request)
     {
         $data = BulkActions::execute($request);
+        return $data;
+    }
+    public function getCustomData()
+    {
+        $data = GetCustomData::execute();
         return $data;
     }
 
