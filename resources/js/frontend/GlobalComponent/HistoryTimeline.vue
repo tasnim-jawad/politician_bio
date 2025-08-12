@@ -36,7 +36,7 @@
       </div>
       <div class="history-item-wrap">
         <HistorySingleItem
-          v-for="(item, index) in timelineItems"
+          v-for="(item, index) in timelineItems?.data?.data"
           :key="index"
           :item="item"
           :contentClass="

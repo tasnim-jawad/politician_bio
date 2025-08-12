@@ -11,7 +11,11 @@
         "migrate": "php artisan migrate --path=app/Modules/*/*/*",
         "deploy:track": "node .deploy_tools/tracker.js",
         "deploy:project": "bash .deploy_tools/deploy_to_vps.sh",
-        "deploy:files": "bash .deploy_tools/deploy_to_vps_via_file_tracking.sh"
+        "deploy:files": "bash .deploy_tools/deploy_to_vps_via_file_tracking.sh",
+        "format:php": "./vendor/bin/pint",
+        "format:php-dry": "./vendor/bin/pint --test",
+        "format:php-cs-fixer": "./vendor/bin/php-cs-fixer fix",
+        "format:php-cs-fixer-dry": "./vendor/bin/php-cs-fixer fix --dry-run --diff"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",

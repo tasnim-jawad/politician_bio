@@ -23,22 +23,22 @@
           <div
             class="gallery-single-items wow animate__ animate__fadeInUp animated"
             style="visibility: visible; animation-name: fadeInUp"
+            v-for="(image, index) in photos.data"
+            :key="index"
           >
             <div class="thumb style-01">
               <img
-                src="/frontend/assets/img/photo-gallery.png"
-                alt="our work image"
+                :src="'/' + image.image"
+                :alt="image.title || 'Gallery image'"
               />
               <div class="cart-icon">
-                <a
-                  class="image-popup"
-                  href="/frontend/assets/img/photo-gallery.png"
+                <a class="image-popup" :href="'/' + image.image"
                   ><i class="fas fa-plus"></i
                 ></a>
               </div>
             </div>
           </div>
-          <div
+          <!-- <div
             class="gallery-single-items wow animate__ animate__fadeInUp animated"
             style="visibility: visible; animation-name: fadeInUp"
           >
@@ -91,7 +91,7 @@
                 ></a>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -100,60 +100,140 @@
 
 <script>
 export default {
+  props: {
+    photos: {
+      type: Array,
+      default: () => [],
+    },
+  },
   name: "PhotoGallery",
   mounted() {
-    this.initSlider();
+    this.initializeCarousel();
+    this.initializeMagnificPopup();
   },
   updated() {
-    this.initSlider();
+    this.initializeCarousel();
+    this.initializeMagnificPopup();
   },
-
+  activated() {
+    // For keep-alive components
+    this.$nextTick(() => {
+      this.initializeCarousel();
+      this.initializeMagnificPopup();
+    });
+  },
+  beforeDestroy() {
+    this.destroyCarousel();
+  },
+  deactivated() {
+    // For keep-alive components
+    this.destroyCarousel();
+  },
+  destroyed() {
+    this.destroyCarousel();
+  },
+  beforeUnmount() {
+    // Vue 3 compatibility
+    this.destroyCarousel();
+  },
+  unmounted() {
+    // Vue 3 compatibility
+    this.destroyCarousel();
+  },
   methods: {
-    initSlider: function () {
-      // Mount testimonial-carousel-seven Owl Carousel
-      if (
-        window.jQuery &&
-        window.jQuery(".testimonial-carousel-seven").length > 0
-      ) {
-        window.jQuery(".testimonial-carousel-seven").owlCarousel({
-          loop: true,
-          autoplay: false,
-          autoPlayTimeout: 1000,
-          margin: 30,
-          items: 2,
-          center: true,
-          dots: false,
-          nav: true,
-          navText: [
-            '<i class="fa fa-angle-left"></i>',
-            '<i class="fa fa-angle-right"></i>',
-          ],
-          animateOut: "fadeOut",
-          animateIn: "fadeIn",
-          responsive: {
-            0: { items: 1 },
-            460: { items: 1 },
-            599: { items: 2 },
-            768: { items: 2 },
-            960: { items: 3 },
-            1200: { items: 4 },
-          },
-        });
-        // Magnific Popup for every image
-        window
-          .jQuery(".testimonial-carousel-seven .image-popup")
-          .magnificPopup({
+    initializeCarousel() {
+      // Wait for DOM to be ready and ensure jQuery is available
+      this.$nextTick(() => {
+        if (typeof $ !== "undefined") {
+          const $TestimonialCarousel = $(".testimonial-carousel-seven");
+
+          if ($TestimonialCarousel.length > 0) {
+            // Always destroy existing carousel first
+            this.destroyCarousel();
+
+            // Small delay to ensure cleanup is complete
+            setTimeout(() => {
+              // Initialize new carousel
+              $TestimonialCarousel.owlCarousel({
+                loop: true,
+                autoplay: true,
+                autoPlayTimeout: 700,
+                margin: 30,
+                items: 2,
+                center: false,
+                dots: false,
+                nav: true,
+                navText: [
+                  '<i class="fa fa-angle-left"></i>',
+                  '<i class="fa fa-angle-right"></i>',
+                ],
+                animateOut: "fadeOut",
+                animateIn: "fadeIn",
+                responsive: {
+                  0: {
+                    items: 1,
+                  },
+                  460: {
+                    items: 1,
+                  },
+                  599: {
+                    items: 2,
+                  },
+                  768: {
+                    items: 2,
+                  },
+                  960: {
+                    items: 3,
+                  },
+                  1200: {
+                    items: 4,
+                  },
+                },
+              });
+            }, 100);
+          }
+        }
+      });
+    },
+    initializeMagnificPopup() {
+      this.$nextTick(() => {
+        if (typeof $ !== "undefined" && $.magnificPopup) {
+          // Initialize video popup
+          $(".video-play, .video-popup, .small-vide-play-btn").magnificPopup({
+            type: "iframe",
+            mainClass: "mfp-fade",
+            removalDelay: 160,
+            preloader: false,
+            fixedContentPos: false,
+          });
+
+          // Initialize image popup
+          $(".image-popup").magnificPopup({
             type: "image",
+            mainClass: "mfp-fade",
+            removalDelay: 160,
+            preloader: false,
+            fixedContentPos: false,
             gallery: {
               enabled: true,
-            },
-            mainClass: "mfp-fade",
-            removalDelay: 300,
-            zoom: {
-              enabled: true,
-              duration: 300,
+              navigateByImgClick: true,
+              preload: [0, 1], // Will preload 0 - before current, and 1 after the current image
             },
           });
+        }
+      });
+    },
+    destroyCarousel() {
+      if (typeof $ !== "undefined") {
+        const $TestimonialCarousel = $(".testimonial-carousel-seven");
+        if (
+          $TestimonialCarousel.length > 0 &&
+          $TestimonialCarousel.hasClass("owl-carousel")
+        ) {
+          $TestimonialCarousel.trigger("destroy.owl.carousel");
+          $TestimonialCarousel.removeClass("owl-carousel owl-loaded");
+          $TestimonialCarousel.find(".owl-stage-outer").children().unwrap();
+        }
       }
     },
   },

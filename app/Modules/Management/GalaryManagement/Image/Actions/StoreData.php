@@ -12,10 +12,10 @@ class StoreData
             $requestData = $request->validated();
 
             // Process file uploads for specific fields
-                            if ($request->hasFile('image')) {
-                    $file = $request->file('image');
-                    $requestData['image'] = uploader($file, 'uploads/GalaryManagement/Image');
-                }
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $requestData['image'] = uploader($file, 'uploads/GalaryManagement/Image');
+            }
           
             if ($data = self::$model::query()->create($requestData)) {
                 return messageResponse('Item added successfully', $data, 201);

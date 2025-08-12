@@ -3,7 +3,7 @@
     <div class="subtitle">{{ subtitle }}</div>
     <div v-for="(item, idx) in items" :key="idx" class="action-single-items">
       <h4 class="title">{{ item.title }}</h4>
-      <p>{{ item.desc }}</p>
+      <p>{{ item.description }}</p>
       <div
         class="action-shape"
         style="background-image: url(/frontend/assets/img/shape-07.png)"

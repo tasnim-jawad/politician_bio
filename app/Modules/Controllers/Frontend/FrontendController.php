@@ -125,6 +125,11 @@ class FrontendController extends Controller
     // Pages/Issues Details
     public function IssuesDetailsPage()
     {
+        $slug = request()->query('slug');
+        if (!$slug) {
+            return redirect()->back();
+        }
+
         return Inertia::render('Pages/Issues/Details', [
             'event' => [
                 'title' => 'Issues Details',
@@ -159,18 +164,14 @@ class FrontendController extends Controller
     // Pages/Services Details
     public function ServicesDetailsPage(Request $request)
     {
-        $slug = $request->query('slug');
-        $service = null;
-        if ($slug) {
-            $service = ServiceModel::where('slug', $slug)->first();
+        $slug = request()->query('slug');
+        if (!$slug) {
+            return redirect()->back();
         }
         return Inertia::render('Pages/Services/Details', [
             'event' => [
                 'title' => 'Service Details',
             ],
-            'data' => [
-                'service' => $service,
-            ]
         ]);
     }
 

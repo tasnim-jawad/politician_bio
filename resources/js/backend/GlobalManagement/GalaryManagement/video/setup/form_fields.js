@@ -12,4 +12,11 @@ export default [
 		type: "text",
 		value: "",
 	},
+	{
+		name: "thumbnail_image",
+		label: "Enter your thumbnail image",
+		type: "file",
+		multiple: "false",
+		value: "",
+	},
 ];

@@ -1,0 +1,89 @@
+import { defineStore } from "pinia";
+import axios from "axios";
+
+export const store = defineStore("service_details_page", {
+  state: () => ({
+    service_details: null,
+    loading: false,
+    error: null,
+  }),
+  actions: {
+    _cache: {},
+    _cacheKeyPrefix: "service_details_page_cache_",
+    async _isCacheValid(key) {
+      let entry = this._cache[key];
+      if (!entry && "caches" in window) {
+        try {
+          const cache = await caches.open(this._cacheKeyPrefix);
+          const match = await cache.match(key);
+          if (match) {
+            entry = await match.json();
+            this._cache[key] = entry;
+          }
+        } catch (e) {}
+      }
+      if (!entry) return false;
+      const now = Date.now();
+      return now - entry.timestamp < 600000;
+    },
+    async _setCache(key, data) {
+      const entry = { data, timestamp: Date.now() };
+      this._cache[key] = entry;
+      if ("caches" in window) {
+        try {
+          const cache = await caches.open(this._cacheKeyPrefix);
+          const response = new Response(JSON.stringify(entry), {
+            headers: { "Content-Type": "application/json" },
+          });
+          await cache.put(key, response);
+        } catch (e) {}
+      }
+    },
+    async fetch_service_details(slug) {
+      const cacheKey = `service_details_${slug}`;
+      if (await this._isCacheValid(cacheKey)) {
+        this.service_details = this._cache[cacheKey].data;
+        console.log("Using cached service details for:", slug);
+        console.log("Cached service details:", this.service_details);
+        return;
+      }
+      try {
+        const res = await axios.get(`services/${slug}`);
+        // Normalize response for both paginated and non-paginated
+        let result = res.data;
+        // if (!result.data) {
+        //   // If data is not present, fallback to array
+        //   result = {
+        //     data: Array.isArray(res.data) ? res.data : [],
+        //     current_page: 1,
+        //     last_page: 1,
+        //     total: Array.isArray(res.data) ? res.data.length : 0,
+        //     per_page: 6,
+        //   };
+        // }
+        
+        // Handle case when no data is found
+        if (!result.data || (Array.isArray(result.data) && result.data.length === 0)) {
+          this.service_details = null;
+          this.error = "Service not found";
+          return;
+        }
+        this.service_details = result;
+        await this._setCache(cacheKey, this.service_details);
+      } catch (e) {
+        this.error = e;
+      }
+    },
+    // async fetchAllDonationPageData({ page = 1 } = {}) {
+    //   this.loading = true;
+    //   this.error = null;
+    //   try {
+    //     await this.fetch_donation_details({ page });
+    //   } catch (e) {
+    //     this.error = e;
+    //   } finally {
+    //     this.loading = false;
+    //   }
+    // },
+  },
+});

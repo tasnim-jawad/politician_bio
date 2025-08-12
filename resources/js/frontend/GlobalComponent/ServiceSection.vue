@@ -42,8 +42,8 @@
               </p>
             </div>
             <div class="btn-wrapper">
-              <a :href="item.url" class="boxed-btn event-btn"
-                ><i class="fas fa-arrow-right"></i>Read More</a
+              <Link :href="item.url" class="boxed-btn event-btn"
+                ><i class="fas fa-arrow-right"></i>Read More</Link
               >
             </div>
           </div>
@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import { Link } from '@inertiajs/vue3';
+
 export default {
   props: {
     sectionTitle: {
@@ -75,50 +77,7 @@ export default {
     },
     serviceItems: {
       type: Array,
-      default: () => [
-        {
-          icon: "icon-school",
-          title: "School & University",
-          url: "services-single.html",
-          description:
-            "Efficiently orchestrate resource sucking human capital whereas future-proof",
-        },
-        {
-          icon: "icon-sweet-hone",
-          title: "City Traffic & Parking",
-          url: "services-single.html",
-          description:
-            "Efficiently orchestrate resource sucking human capital whereas future-proof",
-        },
-        {
-          icon: "icon-kids-house",
-          title: "Parks & Recreation",
-          url: "services-single.html",
-          description:
-            "Efficiently orchestrate resource sucking human capital whereas future-proof",
-        },
-        {
-          icon: "icon-school",
-          title: "School & University",
-          url: "services-single.html",
-          description:
-            "Efficiently orchestrate resource sucking human capital whereas future-proof",
-        },
-        {
-          icon: "icon-sweet-hone",
-          title: "City Traffic & Parking",
-          url: "services-single.html",
-          description:
-            "Efficiently orchestrate resource sucking human capital whereas future-proof",
-        },
-        {
-          icon: "icon-kids-house",
-          title: "Parks & Recreation",
-          url: "services-single.html",
-          description:
-            "Efficiently orchestrate resource sucking human capital whereas future-proof",
-        },
-      ],
+      required: true,
     },
   },
   computed: {

@@ -1,4 +1,5 @@
 <template>
+  <Head :title="event.title" />
   <NavbarArea />
   <!-- banner section start here -->
   <common-banner
@@ -18,6 +19,8 @@
     :sectionDescription="'Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.'"
     :serviceMarginTop="'0px'"
     :serviceMarginBottom="'90px'"
+    v-if="services"
+    :serviceItems="services"
   />
   <!-- Services Single Section Start here -->
 
@@ -35,13 +38,19 @@
 </template>
 
 <script>
+import { Head } from "@inertiajs/vue3";
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
 import ServiceSection from "../../../GlobalComponent/ServiceSection.vue";
 import PeopleSaySection from "../../../GlobalComponent/PeopleSaySection.vue";
 import News from "../../../GlobalComponent/News.vue";
 import ProjectPlanSection from "../../../GlobalComponent/ProjectPlanSection.vue";
+import { store as service_store } from "./Store/service_store.js";
+import { mapActions, mapWritableState } from "pinia";
 export default {
+  props: {
+    event: Object,
+  },
   components: {
     NavbarArea,
     CommonBanner,
@@ -49,6 +58,15 @@ export default {
     PeopleSaySection,
     News,
     ProjectPlanSection,
+  },
+  created() {
+    this.fetchAllServicesPageData();
+  },
+  methods: {
+    ...mapActions(service_store, ["fetchAllServicesPageData"]),
+  },
+  computed: {
+    ...mapWritableState(service_store, ["services", "comments", "news"]),
   },
 };
 </script>

@@ -30,7 +30,7 @@
           >
             <div
               class="news-bg"
-              :style="'background-image: url(' + lead_news.banner_image + ');'"
+              :style="'background-image: url(/' + lead_news.banner_image + ');'"
             >
               <span class="even">Event</span>
               <div class="content">
@@ -55,7 +55,7 @@
               :key="index"
             >
               <div class="thumb">
-                <img :src="news.banner_image" alt="" />
+                <img :src="'/' + news.banner_image" alt="" />
               </div>
               <div class="content">
                 <span class="date">{{ formatDate(news.date) }}</span>

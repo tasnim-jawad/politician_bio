@@ -40,6 +40,9 @@
 </template>
 
 <script>
+import { Head } from "@inertiajs/vue3";
+import { mapActions, mapWritableState } from "pinia";
+import { store as service_details_store } from "./Store/service_details_store.js";
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
 import WhyChoseUs from "../../../GlobalComponent/WhyChoseUs.vue";

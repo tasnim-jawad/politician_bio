@@ -25,39 +25,12 @@
             ></div>
           </div>
           <div class="content">
-            <h4 class="title">Criminal Justice</h4>
+            <h4 class="title">{{ issue_details?.data?.title }}</h4>
             <h6 class="subtitle">Description</h6>
-            <p class="description">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              in magna ac tellus fringilla eleifend. Mauris et velit risus.
-              Phasellus nisi ipsum, fermentum eget consequat non, molestie at
-              augue. Proin rutrum sem a rutrum ultricies. Nunc felis neque,
-              dictum ut porta a, ullamcorper vel ante. Quisque non consequat
-              ligula. Pellentesque porttitor eu nisi eu bibendum. In non
-              faucibus justo, et viverra lectus. Fusce sodales mauris et velit
-              accumsan vulputate.
-            </p>
-            <p class="description">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              in magna ac tellus fringilla eleifend. Mauris et velit risus.
-              Phasellus nisi ipsum, fermentum eget consequat non, molestie at
-              augue. Proin rutrum sem a rutrum ultricies.
-            </p>
-            <p class="description">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              in magna ac tellus fringilla eleifend. Mauris et velit risus.
-              Phasellus nisi ipsum, fermentum eget consequat non, molestie at
-              augue. Proin rutrum sem a rutrum ultricies. Nunc felis neque,
-              dictum ut porta a, ullamcorper vel ante. Quisque non consequat
-              ligula. Pellentesque porttitor eu nisi eu bibendum. In non
-              faucibus justo, et viverra lectus. Fusce sodales mauris et velit
-              accumsan vulputate.Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. Vivamus in magna ac tellus fringilla eleifend.
-              Mauris et velit risus. Phasellus nisi ipsum, fermentum eget
-              consequat non, molestie at augue..
-            </p>
+            <p class="description" v-html="issue_details?.data?.description"></p>
+
           </div>
-          <numbered-list :subtitle="actionSubtitle" :items="actionItems" />
+          <numbered-list :subtitle="actionSubtitle" :items="issue_details?.data?.taking_action" />
         </div>
       </div>
     </div>
@@ -69,7 +42,13 @@
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
 import NumberedList from "../../../GlobalComponent/NumberedList.vue";
+import { store as issue_details_store } from "./Store/issue_details_store.js";
+import { mapActions, mapWritableState } from "pinia";
+
 export default {
+  props: {
+    event: Object,
+  },
   components: {
     NavbarArea,
     CommonBanner,
@@ -77,26 +56,29 @@ export default {
   },
   data() {
     return {
+      slug: "",
       actionSubtitle: "Taking action on this issue",
-      actionItems: [
-        {
-          title: "The Politics of Selecting Decision Makers",
-          desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in magna ac tellus fringilla eleifend. Mauris et velit risus. Phasellus nisi ipsum, fermentum eget consequat non, molestie at augue.",
-        },
-        {
-          title: "The Politics of Law Making",
-          desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in magna ac tellus fringilla eleifend. Mauris et velit risus. Phasellus nisi ipsum, fermentum eget consequat non, molestie at augue.",
-        },
-        {
-          title: "The Politics of Policing",
-          desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in magna ac tellus fringilla eleifend. Mauris et velit risus. Phasellus nisi ipsum, fermentum eget consequat non, molestie at augue.",
-        },
-        {
-          title: "The Politics of Prosecution",
-          desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in magna ac tellus fringilla eleifend. Mauris et velit risus. Phasellus nisi ipsum, fermentum eget consequat non, molestie at augue.",
-        },
-      ],
     };
+  },
+  created: async function () {
+    const params = new URLSearchParams(window.location.search);
+    this.slug = params.get("slug") || "";
+    console.log("slug from detail created:before condition", this.slug);
+
+    if (this.slug) {
+      console.log("slug from detail created:", this.slug);
+
+      await this.fetch_issue_details(this.slug);
+      console.log("issue_details after fetch:", this.issue_details);
+    }
+  },
+  methods: {
+    ...mapActions(issue_details_store, ["fetch_issue_details"]),
+  },
+  computed: {
+    ...mapWritableState(issue_details_store, [
+      "issue_details",
+    ]),
   },
 };
 </script>

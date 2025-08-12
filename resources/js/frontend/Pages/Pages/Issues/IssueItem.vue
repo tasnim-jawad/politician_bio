@@ -1,11 +1,11 @@
 <template>
     <div class="issues-single-items style-01">
-      <div class="issue-img" :style="{ backgroundImage: `url(${img})` }">
+      <div class="issue-img" :style="{ backgroundImage: `url(/${item.image})` }">
         <div class="content">
           <h4 class="title">
-            <a :href="url">{{ title }}</a>
+            <Link :href="`/pages/issues/details?slug=${item.slug}`">{{ item.title }}</Link>
           </h4>
-          <p>{{ desc }}</p>
+          <p v-html="item.short_description"></p>
         </div>
       </div>
     </div>
@@ -15,10 +15,7 @@
 export default {
   name: "IssueItem",
   props: {
-    img: String,
-    title: String,
-    url: String,
-    desc: String,
+    item: Object,
   },
 };
 </script>

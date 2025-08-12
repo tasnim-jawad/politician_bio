@@ -57,13 +57,30 @@ export const store = defineStore("history_page", {
       }
     },
 
+    // async fetch_history_timelines() {
+    //   if (await this._isCacheValid("history_timelines")) {
+    //     this.history_timelines = this._cache["history_timelines"].data;
+    //     return;
+    //   }
+    //   try {
+    //     const res = await axios.get("history-timelines/custom-data");
+    //     this.history_timelines = res.data;
+    //     await this._setCache("history_timelines", res.data);
+    //   } catch (e) {
+    //     this.error = e;
+    //   }
+    // },
     async fetch_history_timelines() {
       if (await this._isCacheValid("history_timelines")) {
         this.history_timelines = this._cache["history_timelines"].data;
         return;
       }
       try {
-        const res = await axios.get("history-timelines/custom-data");
+        const res = await axios.get("history-timelines", {
+          params: {
+            latest_by_month: true,
+          },
+        });
         this.history_timelines = res.data;
         await this._setCache("history_timelines", res.data);
       } catch (e) {

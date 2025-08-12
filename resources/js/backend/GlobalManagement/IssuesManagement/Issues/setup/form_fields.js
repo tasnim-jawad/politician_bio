@@ -5,21 +5,6 @@ export default [
 		type: "text",
 		value: "",
 	},
-
-	{
-		name: "short_description",
-		label: "Enter your short description",
-		type: "textarea",
-		value: "",
-	},
-
-	{
-		name: "description",
-		label: "Enter your description",
-		type: "textarea",
-		value: "",
-	},
-
 	{
 		name: "image",
 		label: "Enter your image",
@@ -27,19 +12,34 @@ export default [
 		multiple: "false",
 		value: "",
 	},
-
-	{
-		name: "taking_action",
-		label: "Enter your taking action",
-		type: "textarea",
-		placeholder: "Enter JSON data",
-		value: "",
-	},
-
 	{
 		name: "tag",
 		label: "Enter your tag",
 		type: "text",
 		value: "",
 	},
+	{
+		name: "short_description",
+		label: "Enter your short description",
+		type: "textarea",
+		value: "",
+		row_col_class: "col-md-12",
+	},
+	{
+		name: "description",
+		label: "Enter your description",
+		type: "textarea",
+		value: "",
+		row_col_class: "col-md-12",
+	},
+	{
+		name: "taking_action",
+		label: "Enter your taking action",
+		type: "textarea",
+		placeholder: "Enter JSON data",
+		value: "",
+		row_col_class: "col-md-12",
+	},
+
+	
 ];
