@@ -5,13 +5,13 @@
   >
     <div
       class="trafic-bg-02"
-      style="background-image: url(/frontend/assets/img/tranfic-jam.png)"
+      :style="`background-image: url(/${service?.data?.image || '/uploads/default.jpg'})`"
     ></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8">
           <div class="inner-section-title">
-            <h4 class="title">About City Traffic & Parking</h4>
+            <h4 class="title">{{ service?.data?.title }}</h4>
             <p>
               Every pleasures is to welcomed pain avoided owing to the duty the
               obligations of business it will frequently.
@@ -80,6 +80,12 @@
 
 <script>
 export default {
+  props: {
+    service: {
+      type: Object,
+      required: true
+    }
+  },
   name: "ServiceSection2",
 };
 </script>

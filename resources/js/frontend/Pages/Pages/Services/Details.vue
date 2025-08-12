@@ -15,7 +15,7 @@
   <!-- banner section End here -->
 
   <!-- ServiceDetailsSection Start here -->
-  <service-details-section />
+  <service-details-section v-if="service_details" :service="service_details"/>
   <!-- ServiceDetailsSection End here -->
 
   <!-- service-slider Section Start -->
@@ -53,14 +53,42 @@ import ServiceSlider from "../../../GlobalComponent/ServiceSlider.vue";
 import ServiceDetailsSection from "./components/ServiceDetailsSection.vue";
 
 export default {
-  components: { 
-    NavbarArea, 
+  props: {
+    event: Object,
+  },
+  components: {
+    NavbarArea,
     CommonBanner,
-    WhyChoseUs, 
-    MissionVision, 
+    WhyChoseUs,
+    MissionVision,
     AtAGlance,
     ServiceSlider,
     ServiceDetailsSection,
-   },
+  },
+  data() {
+    return {
+      slug: "",
+    };
+  },
+  created: async function () {
+    const params = new URLSearchParams(window.location.search);
+    this.slug = params.get("slug") || "";
+    console.log("slug from detail created:before condition", this.slug);
+
+    if (this.slug) {
+      console.log("slug from detail created:", this.slug);
+
+      await this.fetch_service_details(this.slug);
+      console.log("service_details after fetch:", this.service_details);
+    }
+  },
+  methods: {
+    ...mapActions(service_details_store, ["fetch_service_details"]),
+  },
+  computed: {
+    ...mapWritableState(service_details_store, [
+      "service_details",
+    ])
+  },
 };
 </script>
