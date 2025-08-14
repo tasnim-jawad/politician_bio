@@ -21,11 +21,11 @@
           <div class="bg-wrapper">
             <div
               class="issue-details-bg"
-              style="background-image: url(/frontend/assets/img/judges-bg.png)"
+              :style="`background-image: url(/${issue_details?.data?.image || '/uploads/default.jpg'})`"
             ></div>
           </div>
           <div class="content">
-            <h4 class="title">{{ issue_details?.data?.title }}</h4>
+            <h4 class="title my-3">{{ issue_details?.data?.title }}</h4>
             <h6 class="subtitle">Description</h6>
             <p class="description" v-html="issue_details?.data?.description"></p>
 

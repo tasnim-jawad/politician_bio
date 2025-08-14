@@ -42,8 +42,9 @@ class DataStoreValidation extends FormRequest
     public function rules(): array
     {
         return [
-            'planing_staps' => 'required | sometimes',
+            'planning_steps' => 'required | sometimes',
             'statistics' => 'required | sometimes',
+            'image'=> 'required | sometimes',
             'status' => ['sometimes', Rule::in(['active', 'inactive'])],
         ];
     }

@@ -25,6 +25,9 @@ class FrontendController extends Controller
         return Inertia::render('HomePage/Index', [
             'event' => [
                 'title' => 'Home Page',
+                'meta'  => [
+                    'description' => 'test description',
+                ]
             ]
         ]);
     }

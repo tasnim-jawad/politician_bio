@@ -25,15 +25,15 @@
   <!-- Services Single Section Start here -->
 
   <!-- People say section-02 start here -->
-  <people-say-section />
+  <people-say-section v-if="comments.length > 0" :comments="comments" />
   <!-- People say section-02 end here -->
 
   <!-- Project Planing Section Start Here -->
-  <project-plan-section />
+  <project-plan-section v-if="project_planings" :project_planings="project_planings"/>
   <!-- Project Planing Section Start Here -->
 
   <!-- News Section Start -->
-  <news />
+  <News v-if="news" :lead_news="news.lead_news" :side_news="news.side_news" />
   <!-- News Section End  -->
 </template>
 
@@ -66,7 +66,7 @@ export default {
     ...mapActions(service_store, ["fetchAllServicesPageData"]),
   },
   computed: {
-    ...mapWritableState(service_store, ["services", "comments", "news"]),
+    ...mapWritableState(service_store, ["services", "comments", "project_planings", "news"]),
   },
 };
 </script>

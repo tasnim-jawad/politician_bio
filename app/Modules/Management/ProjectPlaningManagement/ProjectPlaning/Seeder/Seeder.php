@@ -18,7 +18,7 @@ class Seeder extends SeederClass
         self::$model::truncate();
 
         for ($i = 1; $i <= 100; $i++) {
-            self::$model::create([                'planing_staps' => json_encode([$faker->word, $faker->word]),
+            self::$model::create([                'planning_steps' => json_encode([$faker->word, $faker->word]),
                 'statistics' => json_encode([$faker->word, $faker->word]),
             ]);
         }

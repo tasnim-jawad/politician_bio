@@ -19,7 +19,8 @@ const setup: setup_type = {
 
     select_fields: [
         "id",
-        "planing_staps",
+        "image",
+        "planning_steps",
             "statistics",
         "status",
         "slug",
@@ -29,28 +30,32 @@ const setup: setup_type = {
 
     sort_by_cols: [
         "id",
-        "planing_staps",
+        "image",
+        "planning_steps",
             "statistics",
         "status",
         "created_at",
     ],
     table_header_data: [
         "id",
-        "planing_staps",
+        "image",
+        "planning_steps",
             "statistics",
         "status",
         "created_at",
     ],
     table_row_data: [
         "id",
-        "planing_staps",
+        "image",
+        "planning_steps",
             "statistics",
         "status",
         "created_at",
     ],
     quick_view_data: [
         "id",
-        "planing_staps",
+        "image",
+        "planning_steps",
             "statistics",
         "status",
         "created_at",

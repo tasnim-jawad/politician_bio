@@ -4,6 +4,10 @@ import axios from "axios";
 export const store = defineStore("service_details_page", {
   state: () => ({
     service_details: null,
+    whyChoseUs: [],
+    mission_vision: [],
+    counters: [],
+    services: [],
     loading: false,
     error: null,
   }),
@@ -51,17 +55,6 @@ export const store = defineStore("service_details_page", {
         const res = await axios.get(`services/${slug}`);
         // Normalize response for both paginated and non-paginated
         let result = res.data;
-        // if (!result.data) {
-        //   // If data is not present, fallback to array
-        //   result = {
-        //     data: Array.isArray(res.data) ? res.data : [],
-        //     current_page: 1,
-        //     last_page: 1,
-        //     total: Array.isArray(res.data) ? res.data.length : 0,
-        //     per_page: 6,
-        //   };
-        // }
-        
         // Handle case when no data is found
         if (!result.data || (Array.isArray(result.data) && result.data.length === 0)) {
           this.service_details = null;
@@ -74,16 +67,73 @@ export const store = defineStore("service_details_page", {
         this.error = e;
       }
     },
-    // async fetchAllDonationPageData({ page = 1 } = {}) {
-    //   this.loading = true;
-    //   this.error = null;
-    //   try {
-    //     await this.fetch_donation_details({ page });
-    //   } catch (e) {
-    //     this.error = e;
-    //   } finally {
-    //     this.loading = false;
-    //   }
-    // },
+    async fetch_why_chose_us() {
+      if (await this._isCacheValid("whyChoseUs")) {
+        this.whyChoseUs = this._cache["whyChoseUs"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("why-chose-uses/custom-data");
+        this.whyChoseUs = res.data;
+        await this._setCache("whyChoseUs", res.data);
+      } catch (e) {
+        this.error = e;
+      }
+    },
+     async fetch_mission_vision() {
+      if (await this._isCacheValid("mission_vision")) {
+        this.mission_vision = this._cache["mission_vision"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("mission-visions/custom-data");
+        this.mission_vision = res.data;
+        await this._setCache("mission_vision", res.data);
+      } catch (e) {
+        this.error = e;
+      }
+    },
+    async fetch_counters() {
+      if (await this._isCacheValid("counters")) {
+        this.counters = this._cache["counters"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("counters/custom-data");
+        this.counters = res.data;
+        await this._setCache("counters", res.data);
+      } catch (e) {
+        this.error = e;
+      }
+    },
+    async fetch_services() {
+      if (await this._isCacheValid("services")) {
+        this.services = this._cache["services"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("services/custom-data");
+        this.services = res.data;
+        await this._setCache("services", res.data);
+      } catch (e) {
+        this.error = e;
+      }
+    },
+    async fetchAllServiceDetailsPageData() {
+      this.loading = true;
+      this.error = null;
+      try {
+        await Promise.all([
+          this.fetch_why_chose_us(),
+          this.fetch_mission_vision(),
+          this.fetch_counters(),
+          this.fetch_services(),
+        ]);
+      } catch (e) {
+        this.error = e;
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 });

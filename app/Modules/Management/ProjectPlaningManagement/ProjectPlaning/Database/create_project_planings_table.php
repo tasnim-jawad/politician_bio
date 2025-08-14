@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('project_planings', function (Blueprint $table) {
             $table->id();
-            $table->json('planing_staps')->nullable();
+            $table->json('planning_steps')->nullable();
             $table->json('statistics')->nullable();
 
             $table->bigInteger('creator')->unsigned()->nullable();

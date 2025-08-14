@@ -69,7 +69,7 @@ php artisan make:module GetInvolvedManagement/GetInvolved [first_name:string-50,
 |--------------------------------------------------------------------------
 */
 php artisan make:module ServicesManagement/Services [icon:string-30,title:string-100,short_title:string-100,description:longtext,image:file,statistics:json] --vue
-php artisan make:module ProjectPlaningManagement/ProjectPlaning [planing_staps:json,statistics:json] --vue
+php artisan make:module ProjectPlaningManagement/ProjectPlaning [planning_steps:json,statistics:json,image:string-100] --vue
 /*
 |--------------------------------------------------------------------------
 | Faq

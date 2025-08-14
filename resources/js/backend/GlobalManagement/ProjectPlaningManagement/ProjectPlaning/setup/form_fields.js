@@ -1,6 +1,14 @@
 export default [
 	{
-		name: "planing_staps",
+		name: "image",
+		label: "Enter your image",
+		type: "file",
+		multiple: "false",
+		value: "",
+	},
+	
+	{
+		name: "planning_steps",
 		label: "Enter your planing staps",
 		type: "textarea",
 		placeholder: "Enter JSON data",

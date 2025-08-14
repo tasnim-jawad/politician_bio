@@ -11,7 +11,7 @@ class Model extends EloquentModel
     protected $table = "project_planings";
     protected $guarded = [];
                 protected $casts = [
-                    'planing_staps' => 'array',
+                    'planning_steps' => 'array',
                     'statistics' => 'array'
                 ];
     protected static function booted()

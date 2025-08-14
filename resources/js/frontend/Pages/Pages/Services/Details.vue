@@ -19,23 +19,24 @@
   <!-- ServiceDetailsSection End here -->
 
   <!-- service-slider Section Start -->
-  <service-slider />
+  <service-slider v-if="services.length" :services="services"/>
   <!-- service-slider section end -->
 
   <!-- Why Choose us secion Start here -->
-  <why-chose-us
+  <WhyChoseUs
     :position="'right'"
     :main-bg="'/frontend/assets/img/group-activity-02.png'"
     :side-bg="'/frontend/assets/img/ceo.png'"
+    :whyChooseItems="whyChoseUs"
   />
   <!-- Why Choose us secion End here -->
 
   <!-- Faq section Start here -->
-  <mission-vision />
+  <mission-vision v-if="mission_vision" :mission_vision="mission_vision"/>
   <!-- Faq section end here -->
 
   <!-- Counter Section Start -->
-  <at-a-glance />
+  <at-a-glance v-if="counters.length" :counters="counters"/>
   <!-- Counter Section End -->
 </template>
 
@@ -71,23 +72,27 @@ export default {
     };
   },
   created: async function () {
+    await this.fetchAllServiceDetailsPageData();
     const params = new URLSearchParams(window.location.search);
     this.slug = params.get("slug") || "";
-    console.log("slug from detail created:before condition", this.slug);
-
     if (this.slug) {
-      console.log("slug from detail created:", this.slug);
-
       await this.fetch_service_details(this.slug);
       console.log("service_details after fetch:", this.service_details);
     }
   },
   methods: {
-    ...mapActions(service_details_store, ["fetch_service_details"]),
+    ...mapActions(service_details_store, [
+      "fetch_service_details",
+      "fetchAllServiceDetailsPageData"
+    ]),
   },
   computed: {
     ...mapWritableState(service_details_store, [
       "service_details",
+      "whyChoseUs",
+      "mission_vision",
+      "counters",
+      "services"
     ])
   },
 };

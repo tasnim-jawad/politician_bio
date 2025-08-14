@@ -2,7 +2,6 @@
 <html lang="en">
 
 
-<!-- Mirrored from themeim.com/demo/senatory/index-05.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 08 Jul 2025 12:03:40 GMT -->
 
 <head>
     <meta charset="UTF-8" />
@@ -33,6 +32,7 @@
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/style.css" />
     <!-- responsive Stylesheet -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/responsive.css" />
+    
     @inertiaHead
 </head>
 

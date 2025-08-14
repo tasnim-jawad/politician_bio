@@ -5,6 +5,7 @@ export const store = defineStore("services_page", {
   state: () => ({
     services: [],
     comments: [],
+    project_planings: null,
     news: [],
     loading: false,
     error: null,
@@ -68,6 +69,23 @@ export const store = defineStore("services_page", {
         this.error = e;
       }
     },
+    async fetch_project_planings() {
+      if (await this._isCacheValid("project_planings")) {
+        this.project_planings = this._cache["project_planings"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("project-planings", {
+          params: {
+            latest_data:true,
+          },
+        });
+        this.project_planings = res.data;
+        await this._setCache("project_planings", res.data);
+      } catch (e) {
+        this.error = e;
+      }
+    },
     async fetch_news() {
       if (await this._isCacheValid("news")) {
         this.news = this._cache["news"].data;
@@ -88,6 +106,7 @@ export const store = defineStore("services_page", {
         await Promise.all([
           this.fetch_services(),
           this.fetch_comments(),
+          this.fetch_project_planings(),
           this.fetch_news(),
         ]);
       } catch (e) {

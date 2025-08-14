@@ -3,19 +3,19 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
-          <div
+            <div
             class="single-items-wrapper planing-bg"
-            style="background-image: url(/frontend/assets/img/woman-hands.png)"
+            :style="`background-image: url(/${project_planings?.data?.image || '/frontend/assets/img/woman-hands.png'})`"
           >
             <div
-              v-for="(item, idx) in planingItems"
+              v-for="(item, idx) in project_planings?.data?.statistics"
               :key="idx"
               :class="[
                 'planing-item-wrapper',
                 'wow',
                 'animate__animated',
                 'animate__fadeInLeft',
-                item.delay,
+                getDelayClass(idx),
               ]"
             >
               <div
@@ -26,7 +26,7 @@
                 </div>
                 <div class="content">
                   <h6 class="title">{{ item.title }}</h6>
-                  <p>{{ item.value }}</p>
+                  <p>{{ item.number }}{{ item.unit }}</p>
                 </div>
               </div>
             </div>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-lg-6">
           <div
-            v-for="(item, idx) in principleItems"
+            v-for="(item, idx) in project_planings?.data?.planning_steps"
             :key="idx"
             :class="[
               'princilple-single-items',
@@ -42,7 +42,7 @@
               'wow',
               'animate__animated',
               'animate__fadeInUp',
-              item.delay,
+              getDelayClass(idx),
             ]"
           >
             <div class="icon style-01">
@@ -50,7 +50,7 @@
             </div>
             <div class="content">
               <h4 class="title style-01">{{ item.title }}</h4>
-              <p class="style-01">{{ item.desc }}</p>
+              <p class="style-01">{{ item.description }}</p>
             </div>
           </div>
         </div>
@@ -61,10 +61,24 @@
 
 <script>
 export default {
+  props: {
+    project_planings: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   name: "ProjectPlanSection",
+  methods: {
+    getDelayClass(index) {
+      // Generate delay class based on index
+      // First item has no delay, subsequent items have incremental delays
+      if (index === 0) return "";
+      return `animate__delay-${index}s`;
+    },
+  },
   data() {
     return {
-      planingItems: [
+      planning_statistics: [
         {
           icon: "icon-manager",
           title: "Management",
@@ -84,7 +98,7 @@ export default {
           delay: "animate__delay-2s",
         },
       ],
-      principleItems: [
+      planning_staps: [
         {
           icon: "icon-resource",
           title: "Project Planing",

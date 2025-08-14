@@ -1,5 +1,8 @@
 <template>
-  <Head :title="event.title" />
+
+  <Head :title="event.title">
+    <meta head-key="description" name="description" :content="event.meta.description" />
+  </Head>
   <!-- Header Single Section Start here -->
   <!-- Header Single Section Start here -->
   <div class="header-style-05">
@@ -227,6 +230,7 @@ export default {
     event: Object,
     data: Object,
   },
+  
   components: {
     Head,
     Header,
