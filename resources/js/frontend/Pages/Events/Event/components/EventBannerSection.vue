@@ -12,15 +12,17 @@
             <div class="bg-wrapper">
               <div
                 class="event-bg"
-                style="
-                  background-image: url(/frontend/assets/img/event-single-bg.png);
+                :style="
+                  'background-image: url(/' +
+                  (event?.banner_image || '/uploads/default.jpg') +
+                  ');'
                 "
               >
                 <div class="post-mate style-01">
-                  <h2 class="post-date">04</h2>
-                  <div class="post-month">feb</div>
+                  <h2 class="post-date">{{ getDay(event.date_time) }}</h2>
+                  <div class="post-month">{{ getMonth(event.date_time) }}</div>
                 </div>
-                <my-countdown :date-time="'2025-09-23 13:00:00'" />
+                <my-countdown :date-time="event.date_time" />
               </div>
             </div>
             <div class="content style-01">
@@ -29,47 +31,31 @@
                   <div class="icon">
                     <i class="icon-location"></i>
                   </div>
-                  <p>684 Ann St. FL 34608</p>
+                  <p>{{ event.place_address }}</p>
                 </div>
                 <div class="time">
                   <div class="icon">
                     <i class="icon-clock"></i>
                   </div>
-                  <p>12:00 am</p>
+                  <p>{{ getTime(event.date_time) }}</p>
                 </div>
               </div>
               <h4 class="title wow animate__animated animate__fadeInUp">
-                The Economy of the US: What are the Weakest Spots?
+                {{ event.title }}
               </h4>
-              <p class="description wow animate__animated animate__fadeInUp">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-                in magna ac tellus fringilla eleifend. Mauris et velit risus.
-                Phasellus nisi ipsum, fermentum egetosse consequat non, molestie
-                at augue. Proin rutrum sem a rutrum ultricies. Nunc felis neque,
-                dictum ut porta a, ullamcorper vel ante. Quisque non consequat
-                ligula. Be to Pellentesque porttitor eu nisi eu bibendum. In non
-                faucibus justo, et viverra lectus. Fusce sodales mauris et velit
-                accumsan vulputate.Lorem ipsum dolor sit amet, set consectetur
-                adipiscing elit. Vivamus in magna ac tellus fringilla eleifend.
-              </p>
-              <p class="description wow animate__animated animate__fadeInUp">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-                in magna ac tellus fringilla eleifend. Mauris et velit risus.
-                Phasellus nisi ipsum, fermentum egetosse consequat non, molestie
-                at augue. Proin rutrum sem a rutrum ultricies. Nunc felis neque,
-                dictum ut porta a, ullamcorper vel ante. Quisque non consequat
-                ligula. Be to Pellentesque porttitor eu nisi eu bibendum. In non
-                faucibus justo.
-              </p>
+              <p
+                class="description wow animate__animated animate__fadeInUp"
+                v-html="event.description"
+              ></p>
             </div>
           </div>
           <div class="event-location">
             <div class="row">
               <div class="col-lg-4">
-                <join-the-event />
+                <join-the-event :event_id="event.id" />
               </div>
               <div class="col-lg-8">
-                <location-map />
+                <location-map :location="event.location_link" />
               </div>
             </div>
           </div>
@@ -83,11 +69,52 @@ import MyCountdown from "./MyCountdown.vue";
 import JoinTheEvent from "./JoinTheEvent.vue";
 import LocationMap from "../../../../GlobalComponent/LocationMap.vue";
 export default {
+  props: {
+    event: Object,
+  },
   name: "EventBannerSection",
   components: {
     MyCountdown,
     JoinTheEvent,
     LocationMap,
+  },
+  created: function () {
+    // This method can be used to fetch additional data if needed
+    console.log("Event details", this.event);
+  },
+  methods: {
+    getDay(dateTime) {
+      if (!dateTime) return "";
+      const date = new Date(dateTime);
+      return date.getDate().toString().padStart(2, "0");
+    },
+    getMonth(dateTime) {
+      if (!dateTime) return "";
+      const date = new Date(dateTime);
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      return months[date.getMonth()];
+    },
+    getTime(dateTime) {
+      if (!dateTime) return "";
+      const date = new Date(dateTime);
+      return date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    },
   },
 };
 </script>

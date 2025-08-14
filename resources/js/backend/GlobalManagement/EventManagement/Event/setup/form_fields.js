@@ -1,5 +1,12 @@
 export default [
 	{
+		name: "banner_image",
+		label: "Enter your banner image",
+		type: "file",
+		multiple: "false",
+		value: "",
+	},
+	{
 		name: "date_time",
 		label: "Enter your date time",
 		type: "datetime-local",

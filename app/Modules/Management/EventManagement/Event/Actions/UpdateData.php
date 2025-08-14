@@ -13,6 +13,13 @@ class UpdateData
                 return messageResponse('Data not found...',$data, 404, 'error');
             }
             $requestData = $request->validated();
+            
+            // Process file uploads for specific fields
+            if ($request->hasFile('banner_image')) {
+                $file = $request->file('banner_image');
+                $requestData['banner_image'] = uploader($file, 'uploads/EventManagement/Event');
+            }
+
             $data->update($requestData);
             return messageResponse('Item updated successfully',$data, 201);
         } catch (\Exception $e) {

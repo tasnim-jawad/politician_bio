@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->string('banner_image', 100)->nullable();
             $table->datetime('date_time')->nullable();
             $table->string('place_address', 200)->nullable();
             $table->string('title', 100)->nullable();

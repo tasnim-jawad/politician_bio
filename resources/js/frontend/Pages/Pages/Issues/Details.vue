@@ -63,13 +63,8 @@ export default {
   created: async function () {
     const params = new URLSearchParams(window.location.search);
     this.slug = params.get("slug") || "";
-    console.log("slug from detail created:before condition", this.slug);
-
     if (this.slug) {
-      console.log("slug from detail created:", this.slug);
-
       await this.fetch_issue_details(this.slug);
-      console.log("issue_details after fetch:", this.issue_details);
     }
   },
   methods: {

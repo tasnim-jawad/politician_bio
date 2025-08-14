@@ -200,6 +200,10 @@ class FrontendController extends Controller
 
     public function EventDetailsPage()
     {
+        $slug = request()->query('slug');
+        if (!$slug) {
+            return redirect()->back();
+        }
         return Inertia::render('Events/Event/Details', [
             'event' => [
                 'title' => 'Event Details',

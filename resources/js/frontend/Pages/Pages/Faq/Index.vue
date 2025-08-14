@@ -32,7 +32,7 @@
             </div>
             <div class="content">
               <span class="title">Email</span>
-              <p>information1667@senatory.com</p>
+              <p>{{ getFirstSettingValueByTitle("emails") }}</p>
             </div>
           </div>
           <div class="icon-box-item-02">
@@ -41,7 +41,12 @@
             </div>
             <div class="content">
               <span class="title">Phone</span>
-              <p>+1009-215-5599</p>
+              <p>
+                {{
+                  getFirstSettingValueByTitle("phone_numbers") ||
+                  "+1009-215-5599"
+                }}
+              </p>
             </div>
           </div>
         </div>
@@ -49,8 +54,8 @@
           <div class="accordion-wrapper-three">
             <div id="accordion">
               <FaqCard
-                v-for="(faq, idx) in faqList"
-                :key="faq.id"
+                v-for="(faq, idx) in faqs?.data"
+                :key="idx"
                 :faq="faq"
                 :index="idx"
               />
@@ -66,8 +71,13 @@
 <script>
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
-import FaqCard from "./FaqCard.vue";
+import FaqCard from "./components/FaqCard.vue";
+import { store as faqs_store } from "./Store/faq_store.js";
+import { mapActions, mapState } from "pinia";
 export default {
+  props: {
+    event: Object,
+  },
   components: {
     NavbarArea,
     CommonBanner,
@@ -77,8 +87,8 @@ export default {
     return {
       faqList: [
         {
-          id: "collapseOwo",
-          headerId: "headingOwo",
+          id: "collapseOne",
+          headerId: "headingOne",
           question: "Is this policy applicable globally?",
           answer: `No, ads cannot reference past, current, or proposed referenda Yes, this policy, enacted end November 2019, political policies. We will iterate on this new Privacy Policy to include. People can report content in the Twitter timeline or through this Help Cen.`,
         },
@@ -130,6 +140,49 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    ...mapActions(faqs_store, ["fetchAllFaqsPageData"]),
+
+    getSettingValuesByTitle(title) {
+      if (
+        !this.website_settings?.data ||
+        typeof this.website_settings.data !== "object"
+      ) {
+        return [];
+      }
+      console.log("2nd title:", title);
+      // Find the setting item with matching title in the object
+      const settingItem = Object.values(this.website_settings.data).find(
+        (item) => item.title === title
+      );
+      if (
+        !settingItem ||
+        !settingItem.setting_values ||
+        !Array.isArray(settingItem.setting_values)
+      ) {
+        return [];
+      }
+
+      // Extract all values from setting_values array
+      return settingItem.setting_values.map((setting) => setting.value);
+    },
+
+    getFirstSettingValueByTitle(title) {
+      const values = this.getSettingValuesByTitle(title);
+      return values.length > 0 ? values[0] : "";
+    },
+  },
+  created: async function () {
+    await this.fetchAllFaqsPageData();
+    console.log(
+      "FAQ page created, fetching data...",
+      this.faqs,
+      this.website_settings
+    );
+  },
+  computed: {
+    ...mapState(faqs_store, ["faqs", "website_settings"]),
   },
 };
 </script>

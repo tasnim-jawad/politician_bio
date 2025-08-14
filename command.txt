@@ -81,7 +81,7 @@ php artisan make:module FaqManagement/Faq [question:longtext,answer:longtext] --
 | Event
 |--------------------------------------------------------------------------
 */
-php artisan make:module EventManagement/Event [date_time:datetime,place_address:string-200,title:string-100,short_description:text,description:longtext,location_link:string-250] --vue
+php artisan make:module EventManagement/Event [banner_image:string-100,date_time:datetime,place_address:string-200,title:string-100,short_description:text,description:longtext,location_link:string-250] --vue
 php artisan make:module EventManagement/Speakers [event_id:bigint{EventManagement/Event},name:string-50,designation:string-50,image:file,social_link:json] --vue
 php artisan make:module EventManagement/EventFacilities [event_id:bigint{EventManagement/Event},video_url:string-250,facility:json] --vue
 php artisan make:module EventManagement/JoinEvent [event_id:bigint{EventManagement/Event},name:string-100,email:string-100,mobile_number:string-20,comment:text] --vue

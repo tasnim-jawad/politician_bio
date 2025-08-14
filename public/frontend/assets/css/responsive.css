@@ -2572,7 +2572,7 @@
     /* Help And Faq */
     .accordion-wrapper-three .card .card-header a {
         font-size: 17px;
-        padding: 15px 15px;
+        padding: 15px 45px 15px 15px;
     }
     .accordion-wrapper-three .card .card-header a::before {
         right: 40px;

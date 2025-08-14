@@ -11,6 +11,12 @@ class StoreData
         try {
             $requestData = $request->validated();
 
+            // Process file uploads for specific fields
+            if ($request->hasFile('banner_image')) {
+                $file = $request->file('banner_image');
+                $requestData['banner_image'] = uploader($file, 'uploads/EventManagement/Event');
+            }
+
             if ($data = self::$model::query()->create($requestData)) {
                 return messageResponse('Item added successfully', $data, 201);
             }

@@ -14,7 +14,7 @@
   <!-- banner section End here -->
 
   <!-- Event Content Section Start here -->
-  <event-banner-section />
+  <event-banner-section v-if="event_details" :event="event_details?.data" />
   <!-- Event Content Section Start here -->
 
   <!-- speaker Section Start Here -->
@@ -37,6 +37,9 @@ import SpeakerSlider from "../../../GlobalComponent/SpeakerSlider.vue";
 import EventFacilitiesSection from "./components/EventFacilitiesSection.vue";
 import EventSlider from "../../../GlobalComponent/EventSlider.vue";
 
+import { store as event_details_store } from "./Store/event_details_store.js";
+import { mapActions, mapWritableState } from "pinia";
+
 export default {
   components: {
     NavbarArea,
@@ -49,6 +52,7 @@ export default {
   },
   data() {
     return {
+      slug: "",
       speakers: [
         {
           img: "/frontend/assets/img/member-01.png",
@@ -85,6 +89,22 @@ export default {
         },
       ],
     };
+  },
+  created: async function () {
+    const params = new URLSearchParams(window.location.search);
+    this.slug = params.get("slug") || "";
+    if (this.slug) {
+      await this.fetch_event_details(this.slug);
+      console.log("event_details after fetch:", this.event_details);
+    }
+  },
+  methods: {
+    ...mapActions(event_details_store, ["fetch_event_details"]),
+  },
+  computed: {
+    ...mapWritableState(event_details_store, [
+      "event_details",
+    ]),
   },
 };
 </script>

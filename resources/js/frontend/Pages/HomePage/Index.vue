@@ -1,7 +1,11 @@
 <template>
-
+  
   <Head :title="event.title">
-    <meta head-key="description" name="description" :content="event.meta.description" />
+    <meta
+      head-key="description"
+      name="description"
+      :content="event.meta.description"
+    />
   </Head>
   <!-- Header Single Section Start here -->
   <!-- Header Single Section Start here -->
@@ -230,7 +234,7 @@ export default {
     event: Object,
     data: Object,
   },
-  
+
   components: {
     Head,
     Header,

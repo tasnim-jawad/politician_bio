@@ -18,12 +18,14 @@ class Seeder extends SeederClass
         self::$model::truncate();
 
         for ($i = 1; $i <= 100; $i++) {
-            self::$model::create([                'date_time' => $faker->dateTime,
-                'place_address' => $faker->text(200),
-                'title' => $faker->text(100),
+            self::$model::create([
+                'banner_image'      => 'uploads/default.jpg',
+                'date_time'         => $faker->dateTime,
+                'place_address'     => $faker->text(200),
+                'title'             => $faker->text(100),
                 'short_description' => $faker->paragraph,
-                'description' => $faker->text,
-                'location_link' => $faker->text(250),
+                'description'       => $faker->text,
+                'location_link'     => $faker->text(250),
             ]);
         }
     }
