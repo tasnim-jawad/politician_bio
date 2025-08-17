@@ -18,7 +18,7 @@ class GetAllData
             $start_date = request()->input('start_date');
             $end_date = request()->input('end_date');
 
-                            $with = [];
+            $with = [];
 
             $condition = [];
 
@@ -27,23 +27,23 @@ class GetAllData
             if (request()->has('search') && request()->input('search')) {
                 $searchKey = request()->input('search');
                 $data = $data->where(function ($q) use ($searchKey) {
-    $q->where('date_time', 'like', '%' . $searchKey . '%');    
+                    $q->where('date_time', 'like', '%' . $searchKey . '%');
 
-    $q->orWhere('place_address', 'like', '%' . $searchKey . '%');    
+                    $q->orWhere('place_address', 'like', '%' . $searchKey . '%');
 
-    $q->orWhere('title', 'like', '%' . $searchKey . '%');    
+                    $q->orWhere('title', 'like', '%' . $searchKey . '%');
 
-    $q->orWhere('short_description', 'like', '%' . $searchKey . '%');    
+                    $q->orWhere('short_description', 'like', '%' . $searchKey . '%');
 
-    $q->orWhere('description', 'like', '%' . $searchKey . '%');    
+                    $q->orWhere('description', 'like', '%' . $searchKey . '%');
 
-    $q->orWhere('location_link', 'like', '%' . $searchKey . '%');              
+                    $q->orWhere('location_link', 'like', '%' . $searchKey . '%');
 
                 });
             }
 
             if ($start_date && $end_date) {
-                 if ($end_date > $start_date) {
+                if ($end_date > $start_date) {
                     $data->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59']);
                 } elseif ($end_date == $start_date) {
                     $data->whereDate('created_at', $start_date);
@@ -54,7 +54,19 @@ class GetAllData
                 $data = $data->trased();
             }
 
-            if (request()->has('get_all') && (int)request()->input('get_all') === 1) {
+            if (request()->has('latest_data') && request()->input('latest_data')) {
+                $data = $data->orderBy('created_at', 'desc')
+                    ->active()
+                    ->with($with)
+                    ->select($fields)
+                    ->where('status', $status)
+                    ->limit(10)
+                    ->get();
+
+                return entityResponse($data);
+            }
+
+            if (request()->has('get_all') && (int) request()->input('get_all') === 1) {
                 $data = $data
                     ->with($with)
                     ->select($fields)
@@ -63,7 +75,7 @@ class GetAllData
                     ->limit($pageLimit)
                     ->orderBy($orderByColumn, $orderByType)
                     ->get();
-                     return entityResponse($data);
+                return entityResponse($data);
             } else if ($status == 'trased') {
                 $data = $data
                     ->with($with)
@@ -83,9 +95,9 @@ class GetAllData
 
             return entityResponse([
                 ...$data->toArray(),
-                "active_data_count" => self::$model::active()->count(),
+                "active_data_count"   => self::$model::active()->count(),
                 "inactive_data_count" => self::$model::inactive()->count(),
-                "trased_data_count" => self::$model::trased()->count(),
+                "trased_data_count"   => self::$model::trased()->count(),
             ]);
 
         } catch (\Exception $e) {

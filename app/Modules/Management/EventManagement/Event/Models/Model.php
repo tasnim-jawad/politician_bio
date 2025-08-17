@@ -5,6 +5,8 @@ namespace App\Modules\Management\EventManagement\Event\Models;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Modules\Management\EventManagement\EventFacilities\Models\Model as EventFacilitiesModel;
+use App\Modules\Management\EventManagement\Speakers\Models\Model as SpeakerModel;
 class Model extends EloquentModel
 {
     use SoftDeletes;
@@ -24,6 +26,15 @@ class Model extends EloquentModel
             }
             $data->save();
         });
+    }
+
+    public function event_facilities()
+    {
+        return $this->hasOne(EventFacilitiesModel::class, 'event_id', 'id');
+    }
+    public function event_speakers()
+    {
+        return $this->hasMany(SpeakerModel::class, 'event_id', 'id');
     }
 
     public function scopeActive($q)

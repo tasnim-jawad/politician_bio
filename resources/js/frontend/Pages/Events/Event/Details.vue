@@ -18,14 +18,17 @@
   <!-- Event Content Section Start here -->
 
   <!-- speaker Section Start Here -->
-  <speaker-slider :speakers="speakers" />
+  <speaker-slider v-if="event_details" :speakers="event_details?.data?.event_speakers" />
   <!-- speaker Section End Here -->
 
   <!-- Event Facilities Section Star Here -->
-  <event-facilities-section />
+  <event-facilities-section
+    v-if="event_details"
+    :facilities="event_details?.data?.event_facilities"
+  />
   <!-- Event Event Section End Here -->
   <!-- More Issue Section Start Here -->
-  <event-slider />
+  <event-slider v-if="latest_events" :events="latest_events?.data" />
   <!-- More Event Section Start Here -->
 </template>
 <script>
@@ -97,13 +100,19 @@ export default {
       await this.fetch_event_details(this.slug);
       console.log("event_details after fetch:", this.event_details);
     }
+    await this.fetchAllEventDetailsPageData();
+    console.log("latest_events after fetch:", this.latest_events);
   },
   methods: {
-    ...mapActions(event_details_store, ["fetch_event_details"]),
+    ...mapActions(event_details_store, [
+      "fetch_event_details",
+      "fetchAllEventDetailsPageData",
+    ]),
   },
   computed: {
     ...mapWritableState(event_details_store, [
       "event_details",
+      "latest_events",
     ]),
   },
 };

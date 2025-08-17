@@ -209,7 +209,5 @@ export default {
 };
 </script>
 <style scoped>
-.owl-carousel .owl-stage-outer {
-  height: unset !important;
-}
+
 </style>

@@ -84,7 +84,7 @@
     overflow: hidden;
     /* fix for flashing background */
     -webkit-transform: translate3d(0px, 0px, 0px);
-    height: 480px;
+    /* height: 480px; */
 }
 
 .owl-carousel .owl-controls .owl-nav .owl-prev,
