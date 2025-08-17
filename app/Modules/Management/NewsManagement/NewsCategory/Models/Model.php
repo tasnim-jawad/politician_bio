@@ -31,11 +31,17 @@ class Model extends EloquentModel
         return $q->where('status', 'active');
     }
 
-     public function scopeInactive($q)
+    public function scopeInactive($q)
     {
         return $q->where('status', 'inactive');
     }
-     public function scopeTrased($q)
+    public function scopeTrased($q)
     {
         return $q->onlyTrashed();
-    }}
+    }
+
+    public function news()
+    {
+        return $this->hasMany("App\Modules\Management\NewsManagement\News\Models\Model", "news_category_id");
+    }
+}

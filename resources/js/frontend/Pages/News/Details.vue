@@ -141,10 +141,10 @@
             <!-- Recent posts section -->
             
             <!-- Category section -->
-            <CategorySection />
+            <!-- <CategorySection /> -->
             <!-- Category section -->
             <!-- Tags section -->
-            <TagsSection />
+            <!-- <TagsSection /> -->
             <!-- Tags section -->
 
           </div>

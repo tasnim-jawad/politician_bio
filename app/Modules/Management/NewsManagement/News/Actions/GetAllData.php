@@ -18,7 +18,7 @@ class GetAllData
             $start_date = request()->input('start_date');
             $end_date = request()->input('end_date');
 
-                            $with = ['news_category_id'];
+            $with = ['news_category_id'];
 
             $condition = [];
 
@@ -27,21 +27,21 @@ class GetAllData
             if (request()->has('search') && request()->input('search')) {
                 $searchKey = request()->input('search');
                 $data = $data->where(function ($q) use ($searchKey) {
-    $q->where('banner_image', 'like', '%' . $searchKey . '%');    
+                    $q->where('banner_image', 'like', '%' . $searchKey . '%');
 
-    $q->orWhere('news_category_id', 'like', '%' . $searchKey . '%');    
+                    $q->orWhere('news_category_id', 'like', '%' . $searchKey . '%');
 
-    $q->orWhere('title', 'like', '%' . $searchKey . '%');    
+                    $q->orWhere('title', 'like', '%' . $searchKey . '%');
 
-    $q->orWhere('content', 'like', '%' . $searchKey . '%');    
+                    $q->orWhere('content', 'like', '%' . $searchKey . '%');
 
-    $q->orWhere('tags', 'like', '%' . $searchKey . '%');              
+                    $q->orWhere('tags', 'like', '%' . $searchKey . '%');
 
                 });
             }
 
             if ($start_date && $end_date) {
-                 if ($end_date > $start_date) {
+                if ($end_date > $start_date) {
                     $data->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59']);
                 } elseif ($end_date == $start_date) {
                     $data->whereDate('created_at', $start_date);
@@ -52,7 +52,52 @@ class GetAllData
                 $data = $data->trased();
             }
 
-            if (request()->has('get_all') && (int)request()->input('get_all') === 1) {
+            if (request()->has('get_unique_tags') && (int) request()->input('get_unique_tags') === 1) {
+                $tags = self::$model::where('status', 'active')
+                    ->whereNotNull('tags')
+                    ->where('tags', '!=', '')
+                    ->pluck('tags')
+                    ->flatMap(function ($tag) {
+                        return explode(',', $tag);
+                    })
+                    ->map(function ($tag) {
+                        return trim($tag);
+                    })
+                    ->filter(function ($tag) {
+                        return !empty($tag);
+                    })
+                    ->unique()
+                    ->values();
+
+                return entityResponse($tags);
+            }
+
+            if (request()->has('get_categories') && (int) request()->input('get_categories') === 1) {
+                $categories = \App\Modules\Management\NewsManagement\NewsCategory\Models\Model::active()
+                    ->select('id', 'title', 'slug')
+                    ->withCount([
+                        'news' => function ($q) {
+                            $q->where('status', 'active');
+                        }
+                    ])
+                    ->orderBy('title', 'asc')
+                    ->get();
+
+                return entityResponse($categories);
+            }
+
+            if (request()->has('tag_name') && request()->input('tag_name')) {
+                $tag_name = request()->input('tag_name');
+                $data = $data->where('tags', 'like', '%' . $tag_name . '%');
+            }
+
+            if (request()->has('category_id') && request()->input('category_id')) {
+                $category_id = request()->input('category_id');
+                $data = $data->where('news_category_id', $category_id);
+            }
+
+
+            if (request()->has('get_all') && (int) request()->input('get_all') === 1) {
                 $data = $data
                     ->with($with)
                     ->select($fields)
@@ -61,7 +106,7 @@ class GetAllData
                     ->limit($pageLimit)
                     ->orderBy($orderByColumn, $orderByType)
                     ->get();
-                     return entityResponse($data);
+                return entityResponse($data);
             } else if ($status == 'trased') {
                 $data = $data
                     ->with($with)
@@ -81,9 +126,9 @@ class GetAllData
 
             return entityResponse([
                 ...$data->toArray(),
-                "active_data_count" => self::$model::active()->count(),
+                "active_data_count"   => self::$model::active()->count(),
                 "inactive_data_count" => self::$model::inactive()->count(),
-                "trased_data_count" => self::$model::trased()->count(),
+                "trased_data_count"   => self::$model::trased()->count(),
             ]);
 
         } catch (\Exception $e) {

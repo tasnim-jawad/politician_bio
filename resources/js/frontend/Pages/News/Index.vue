@@ -20,6 +20,7 @@
         <div class="col-lg-6">
           <div class="section-title">
             <h4 class="title">Read Our Daily blog</h4>
+
             <p class="description wow animate__ animate__fadeInUp animated">
               Every pleasures is to welcomed pain avoided owing to the duty the
               obligations of business it will frequently.
@@ -41,31 +42,48 @@
         </div>
         <div class="col-lg-4">
           <div class="widget-area">
+            <!-- Show current filter -->
+            <div
+              v-if="currentFilter.type === 'tag'"
+              class="current-filter mb-3"
+            >
+              <span class="w-100 text-start">
+                Filtered by tag:
+                <span class="badge badge-primary text-white">{{
+                  currentFilter.tag_name
+                }}</span>
+                <button
+                  @click="clearFilter"
+                  class="btn btn-outline-danger btn-sm p-1 ml-2 square-close-btn"
+                >
+                  ×
+                </button>
+              </span>
+            </div>
             <!-- Search section -->
             <SearchSection />
             <!-- Search section -->
             <!-- Recent posts section -->
             <RecentPostSection />
             <!-- Recent posts section -->
-            
+
             <!-- Category section -->
             <CategorySection />
             <!-- Category section -->
             <!-- Tags section -->
             <TagsSection />
             <!-- Tags section -->
-
           </div>
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-12">
-          <Pagination 
+          <Pagination
             :currentPage="news?.data?.current_page || 1"
             :totalPages="news?.data?.last_page || 1"
-            @prev="goToPage(news?.data?.current_page - 1)"
-            @next="goToPage(news?.data?.current_page + 1)"
-            @change="goToPage"
+            @prev="handlePageChange(news?.data?.current_page - 1)"
+            @next="handlePageChange(news?.data?.current_page + 1)"
+            @change="handlePageChange"
             :shape="'squer'"
           />
         </div>
@@ -105,7 +123,7 @@ export default {
   },
   data() {
     return {
-      current: 1, 
+      current: 1,
       // newsItems: [
       //   {
       //     bg: "/frontend/assets/img/businessmen-shaking-hands.png",
@@ -192,18 +210,38 @@ export default {
     },
   },
   methods: {
-    ...mapActions(news_store, ["fetchAllNewsPageData"]),
-    goToPage(page) {
+    ...mapActions(news_store, [
+      "fetchAllNewsPageData",
+      "goToPage",
+      "filterByTag",
+      "filterByCategory",
+      "clearFilter",
+    ]),
+    handlePageChange(page) {
       console.log("Going to page:", page);
       if (page < 1 || page > (this.news.data.last_page || 1)) return;
-      this.fetchAllNewsPageData({ page });
+      this.goToPage(page);
     },
   },
   created: async function () {
     await this.fetchAllNewsPageData();
   },
   computed: {
-    ...mapState(news_store, ["news"]),
+    ...mapState(news_store, ["news", "tags", "categories", "currentFilter"]),
   },
 };
 </script>
+
+<style scoped>
+.square-close-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 0;
+  font-size: 12px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+}
+</style>

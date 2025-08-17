@@ -4,30 +4,28 @@
   >
     <h3 class="widget-title style-02">category</h3>
     <ul>
+      <li v-if="categories.length === 0">
+        <span>No categories available</span>
+      </li>
       <li v-for="(cat, idx) in categories" :key="idx">
-        <Link :href="cat.url"
-          >{{ cat.name }} <span>({{ cat.count }})</span></Link
+        <a href="#" @click.prevent="filterByCategory(cat.id)"
+          >{{ cat.title }} <span>({{ cat.news_count || 0 }})</span></a
         >
       </li>
     </ul>
   </div>
 </template>
 <script>
-import { Link } from '@inertiajs/vue3';
+import { mapActions, mapState } from "pinia";
+import { store as news_store } from "../Store/news_store.js";
 
 export default {
   name: "CategorySection",
-  data: function() {
-    return {
-      categories: [
-        { name: "Business Analysis", count: 4, url: "#" },
-        { name: "Business Strategy", count: 5, url: "#" },
-        { name: "Stock Investment", count: 1, url: "#" },
-        { name: "Marketing Analysis", count: 3, url: "#" },
-        { name: "Business Analysis", count: 4, url: "#" },
-        { name: "Business Analysis", count: 4, url: "#" },
-      ],
-    };
+  computed: {
+    ...mapState(news_store, ["categories"]),
+  },
+  methods: {
+    ...mapActions(news_store, ["filterByCategory"]),
   },
 };
 </script>
