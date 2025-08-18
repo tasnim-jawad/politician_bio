@@ -94,6 +94,11 @@
             :news="related_news"
             v-if="related_news && related_news.length > 0"
           />
+          <NewsSlider
+            :title="`Latest News`"
+            :news="latest_news"
+            v-else-if="latest_news && latest_news.length > 0"
+          />
           <div
             v-else-if="news_details?.news_category_id?.id"
             class="no-related-news"
@@ -102,8 +107,6 @@
               No related news found in category:
               {{ news_details?.news_category_id?.title }}
             </p>
-            <p>Debug - Category ID: {{ news_details?.news_category_id?.id }}</p>
-            <p>Debug - Related news array: {{ related_news }}</p>
           </div>
           <!-- Top Related Section End Here -->
           <!-- Top Related Section End Here -->
@@ -215,7 +218,7 @@ export default {
       }
     }
     await this.fetchAllNewsDetailsPageData();
-    console.log("recent_news after fetch:", this.recent_news);
+    console.log("recent_news after fetch:", this.latest_news);
   },
   methods: {
     ...mapActions(news_details_store, [
@@ -229,6 +232,7 @@ export default {
     ...mapWritableState(news_details_store, [
       "news_details",
       "recent_news",
+      "latest_news",
       "related_news",
     ]),
     getTagsList() {
@@ -237,6 +241,7 @@ export default {
         .split(",")
         .filter((tag) => tag.trim() !== "");
     },
+    
   },
 };
 </script>

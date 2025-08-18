@@ -5,6 +5,7 @@ export const store = defineStore("news_details_page", {
   state: () => ({
     news_details: null,
     recent_news: [],
+    latest_news: [],
     related_news: [],
     loading: false,
     error: null,
@@ -83,6 +84,29 @@ export const store = defineStore("news_details_page", {
       } catch (e) {
         this.error = e;
         this.recent_news = [];
+      }
+    },
+
+    async fetch_latest_news(limit = 10) {
+      const cacheKey = `latest_news`;
+      if (await this._isCacheValid(cacheKey)) {
+        this.latest_news = this._cache[cacheKey].data;
+        console.log("cache latest news:", this.latest_news);
+        return;
+      }
+      try {
+        const res = await axios.get("news", {
+          params: {
+            get_latest: 1,
+            latest_limit: limit,
+          },
+        });
+        this.latest_news = res.data.data || [];
+        console.log("Fetched latest news:", this.latest_news);
+        await this._setCache(cacheKey, this.latest_news);
+      } catch (e) {
+        this.error = e;
+        this.latest_news = [];
       }
     },
 
@@ -170,6 +194,8 @@ export const store = defineStore("news_details_page", {
       this.error = null;
       try {
         await this.fetch_recent_news();
+        await this.fetch_latest_news();
+        
       } catch (e) {
         this.error = e;
       } finally {

@@ -91,6 +91,19 @@ class GetAllData
                 return entityResponse($recentNews);
             }
 
+            if (request()->has('get_latest') && (int) request()->input('get_latest') === 1) {
+                $latestLimit = request()->input('latest_limit') ?? 5;
+                $latestNews = self::$model::where('status', 'active')
+                    ->whereNotNull('date')
+                    ->orderBy('date', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->limit($latestLimit)
+                    ->with($with)
+                    ->get();
+
+                return entityResponse($latestNews);
+            }
+
             if (request()->has('get_prev_next') && (int) request()->input('get_prev_next') === 1) {
                 $currentId = request()->input('current_id');
                 $currentNews = self::$model::find($currentId);

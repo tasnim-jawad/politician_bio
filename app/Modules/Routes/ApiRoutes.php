@@ -64,3 +64,4 @@ include_once base_path("app/Modules/Management/EventManagement/Event/Routes/Rout
 include_once base_path("app/Modules/Management/OurJourneyManagement/OurJourney/Routes/Route.php");
 include_once base_path("app/Modules/Management/CounterManagement/Counter/Routes/Route.php");
 include_once base_path("app/Modules/Management/NewsManagement/NewsComment/Routes/Route.php");
+include_once base_path("app/Modules/Management/VolunteerManagement/VolunteerApplication/Routes/Route.php");
