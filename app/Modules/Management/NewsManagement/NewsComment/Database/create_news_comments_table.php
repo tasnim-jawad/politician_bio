@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     php artisan migrate --path='\App\Modules\Management\NewsManagement\News\Database\create_news_comments_table.php'
+     php artisan migrate --path='/app/Modules/Management/NewsManagement/NewsComment/Database/create_news_comments_table.php'
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('news_comments', function (Blueprint $table) {
             $table->id();
-            $table->string('news_id', 100)->nullable();
+            $table->bigInteger('news_id')->nullable();
             $table->string('name', 50)->nullable();
             $table->string('email', 50)->nullable();
             $table->longtext('comment')->nullable();

@@ -21,7 +21,7 @@ class FrontendController extends Controller
     // Home
     public function HomePage()
     {
- 
+
         return Inertia::render('HomePage/Index', [
             'event' => [
                 'title' => 'Home Page',
@@ -158,7 +158,7 @@ class FrontendController extends Controller
             'event' => [
                 'title' => 'Services',
             ],
-            'data' => [
+            'data'  => [
                 'services' => $services,
             ]
         ]);
@@ -226,6 +226,15 @@ class FrontendController extends Controller
         return Inertia::render('News/Details', [
             'event' => [
                 'title' => 'News Details',
+            ],
+        ]);
+    }
+
+    public function NewsCommentsDebugPage()
+    {
+        return Inertia::render('News/CommentDebugPage', [
+            'event' => [
+                'title' => 'Comment System Debug',
             ],
         ]);
     }

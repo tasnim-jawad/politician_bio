@@ -110,7 +110,7 @@
 
           <!-- Comment Form Section Start Here -->
           <!-- Comment Form Section Start Here -->
-          <comment-form-section />
+          <comment-form-section :news-id="news_details?.id" />
           <!-- Comment Form Section End Here -->
           <!-- Comment Form Section End Here -->
         </div>

@@ -92,7 +92,9 @@ php artisan make:module EventManagement/JoinEvent [event_id:bigint{EventManageme
 */
 php artisan make:module NewsManagement/NewsCategory [title:string-50] --vue
 php artisan make:module NewsManagement/News [banner_image:file,news_category_id:bigint{NewsManagement/NewsCategory},title:string-100,content:longtext,tags:string-20,date:date,author:string-80] --vue
-php artisan make:table NewsManagement/News/NewsComment [news_id:bigint,name:string-50,email:string-50,comment:longtext] --model
+php artisan make:module NewsManagement/NewsComment [news_id:bigint,name:string-50,email:string-50,comment:longtext]
+
+
 /*
 |--------------------------------------------------------------------------
 | Contact

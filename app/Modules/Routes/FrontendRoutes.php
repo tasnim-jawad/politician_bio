@@ -31,6 +31,7 @@ Route::get('/events/event/details', [FrontendController::class, 'EventDetailsPag
 // News
 Route::get('/news', [FrontendController::class, 'NewsPage'])->name('news');
 Route::get('/news/details', [FrontendController::class, 'NewsDetailsPage'])->name('news.details');
+Route::get('/news/debug-comments', [FrontendController::class, 'NewsCommentsDebugPage'])->name('news.debug-comments');
 // Contact Us
 Route::get('/contact-us', [FrontendController::class, 'ContactUsPage'])->name('ContactUsPage');
 //single pages
