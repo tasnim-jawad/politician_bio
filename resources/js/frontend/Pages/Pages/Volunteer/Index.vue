@@ -33,22 +33,48 @@
       <div class="row justify-content-center">
         <div class="col-lg-10">
           <div class="volunteer-form">
-            <div class="contact-form style-01">
-              <form
-                action="https://themeim.com/demo/senatory/request.html"
-                class="contact-page-form"
-                novalidate="novalidate"
-              >
+            <!-- Success Message -->
+            <div
+              v-if="success_message"
+              class="alert alert-success"
+              role="alert"
+            >
+              {{ success_message }}
+            </div>
+
+            <!-- General Error Message -->
+            <div v-if="error" class="alert alert-danger" role="alert">
+              {{ error }}
+            </div>
+
+            <!-- Validation Error Messages -->
+            <div
+              v-if="has_validation_errors"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <ul class="mb-0">
+                <li v-for="(error, field) in errors" :key="field">
+                  {{ error[0] }}
+                </li>
+              </ul>
+            </div>
+
+            <form @submit.prevent="submit_form" class="contact-page-form">
+              <div class="contact-form style-01">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <input
                         type="text"
-                        name="fname"
+                        :value="form_data.first_name"
+                        @input="
+                          update_form_field('first_name', $event.target.value)
+                        "
                         placeholder="First Name*"
                         class="form-control"
-                        required=""
-                        aria-required="true"
+                        :class="{ 'is-invalid': errors.first_name }"
+                        required
                       />
                     </div>
                   </div>
@@ -56,11 +82,14 @@
                     <div class="form-group">
                       <input
                         type="text"
-                        name="lname"
+                        :value="form_data.last_name"
+                        @input="
+                          update_form_field('last_name', $event.target.value)
+                        "
                         placeholder="Last Name*"
                         class="form-control"
-                        required=""
-                        aria-required="true"
+                        :class="{ 'is-invalid': errors.last_name }"
+                        required
                       />
                     </div>
                   </div>
@@ -68,10 +97,12 @@
                     <div class="form-group">
                       <input
                         type="email"
-                        class="form-control"
+                        :value="form_data.email"
+                        @input="update_form_field('email', $event.target.value)"
                         placeholder="Email*"
-                        required=""
-                        aria-required="true"
+                        class="form-control"
+                        :class="{ 'is-invalid': errors.email }"
+                        required
                       />
                     </div>
                   </div>
@@ -79,162 +110,278 @@
                     <div class="form-group">
                       <input
                         type="text"
-                        name="telephone"
+                        :value="form_data.phone_number"
+                        @input="
+                          update_form_field('phone_number', $event.target.value)
+                        "
                         placeholder="Phone Number*"
                         class="form-control"
-                        required=""
-                        aria-required="true"
+                        :class="{ 'is-invalid': errors.phone_number }"
+                        required
                       />
                     </div>
                   </div>
                 </div>
-              </form>
-            </div>
-            <div class="form-question">
-              <h6 class="title">How would you like to help?</h6>
-              <div class="check-box-wrapper">
-                <div class="check-box">
-                  <label class="container-box">
-                    Telephone Calls
-                    <input type="checkbox" checked="checked" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box">
-                  <label class="container-box">
-                    Distribute Signs
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box style-01">
-                  <label class="container-box">
-                    Voter Registration
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box">
-                  <label class="container-box">
-                    Other
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
+              </div>
+
+              <div class="form-question">
+                <h6 class="title">How would you like to help?</h6>
+                <div class="check-box-wrapper">
+                  <div class="check-box">
+                    <label class="container-box">
+                      Telephone Calls
+                      <input
+                        type="checkbox"
+                        :checked="
+                          form_data.help_types.includes('Telephone Calls')
+                        "
+                        @change="toggle_help_type('Telephone Calls')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box">
+                    <label class="container-box">
+                      Distribute Signs
+                      <input
+                        type="checkbox"
+                        :checked="
+                          form_data.help_types.includes('Distribute Signs')
+                        "
+                        @change="toggle_help_type('Distribute Signs')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box style-01">
+                    <label class="container-box">
+                      Voter Registration
+                      <input
+                        type="checkbox"
+                        :checked="
+                          form_data.help_types.includes('Voter Registration')
+                        "
+                        @change="toggle_help_type('Voter Registration')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box">
+                    <label class="container-box">
+                      Other
+                      <input
+                        type="checkbox"
+                        :checked="form_data.help_types.includes('Other')"
+                        @change="toggle_help_type('Other')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-question">
-              <h6 class="title">How would you like to help?</h6>
-              <div class="check-box-wrapper">
-                <div class="check-box">
-                  <label class="container-box">
-                    Morning
-                    <input type="checkbox" checked="checked" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box">
-                  <label class="container-box">
-                    Afternoon
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box">
-                  <label class="container-box">
-                    Evening
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div class="form-question">
-              <h6 class="title">How would you like to help?</h6>
-              <div class="check-box-wrapper">
-                <div class="check-box">
-                  <label class="container-box">
-                    Sun
-                    <input type="checkbox" checked="checked" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box">
-                  <label class="container-box">
-                    Mon
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box">
-                  <label class="container-box">
-                    Tue
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box">
-                  <label class="container-box">
-                    Wed
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box">
-                  <label class="container-box">
-                    Thu
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box">
-                  <label class="container-box">
-                    Fri
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="check-box">
-                  <label class="container-box">
-                    Sat
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                  </label>
+
+              <div class="form-question">
+                <h6 class="title">What time slots work best for you?</h6>
+                <div class="check-box-wrapper">
+                  <div class="check-box">
+                    <label class="container-box">
+                      Morning
+                      <input
+                        type="checkbox"
+                        :checked="form_data.time_slots.includes('Morning')"
+                        @change="toggle_time_slot('Morning')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box">
+                    <label class="container-box">
+                      Afternoon
+                      <input
+                        type="checkbox"
+                        :checked="form_data.time_slots.includes('Afternoon')"
+                        @change="toggle_time_slot('Afternoon')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box">
+                    <label class="container-box">
+                      Evening
+                      <input
+                        type="checkbox"
+                        :checked="form_data.time_slots.includes('Evening')"
+                        @change="toggle_time_slot('Evening')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-question">
-              <h6 class="title">Additional comments</h6>
-              <div class="col-md-12 p-0">
-                <div class="form-group">
-                  <textarea
-                    class="form-control"
-                    rows="3"
-                    placeholder="type here...."
-                  ></textarea>
+
+              <div class="form-question">
+                <h6 class="title">Which days are you available?</h6>
+                <div class="check-box-wrapper">
+                  <div class="check-box">
+                    <label class="container-box">
+                      Sun
+                      <input
+                        type="checkbox"
+                        :checked="form_data.week_days.includes('Sunday')"
+                        @change="toggle_week_day('Sunday')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box">
+                    <label class="container-box">
+                      Mon
+                      <input
+                        type="checkbox"
+                        :checked="form_data.week_days.includes('Monday')"
+                        @change="toggle_week_day('Monday')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box">
+                    <label class="container-box">
+                      Tue
+                      <input
+                        type="checkbox"
+                        :checked="form_data.week_days.includes('Tuesday')"
+                        @change="toggle_week_day('Tuesday')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box">
+                    <label class="container-box">
+                      Wed
+                      <input
+                        type="checkbox"
+                        :checked="form_data.week_days.includes('Wednesday')"
+                        @change="toggle_week_day('Wednesday')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box">
+                    <label class="container-box">
+                      Thu
+                      <input
+                        type="checkbox"
+                        :checked="form_data.week_days.includes('Thursday')"
+                        @change="toggle_week_day('Thursday')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box">
+                    <label class="container-box">
+                      Fri
+                      <input
+                        type="checkbox"
+                        :checked="form_data.week_days.includes('Friday')"
+                        @change="toggle_week_day('Friday')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="check-box">
+                    <label class="container-box">
+                      Sat
+                      <input
+                        type="checkbox"
+                        :checked="form_data.week_days.includes('Saturday')"
+                        @change="toggle_week_day('Saturday')"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="btn-wrapper">
-              <a href="#" class="boxed-btn btn-sanatory volunteer"
-                ><i class="fas fa-arrow-right"></i>Join Our Team</a
-              >
-            </div>
+
+              <div class="form-question">
+                <h6 class="title">Additional comments</h6>
+                <div class="col-md-12 p-0">
+                  <div class="form-group">
+                    <textarea
+                      :value="form_data.comment"
+                      @input="update_form_field('comment', $event.target.value)"
+                      class="form-control"
+                      rows="3"
+                      placeholder="type here...."
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="btn-wrapper">
+                <button
+                  type="submit"
+                  class="boxed-btn btn-sanatory volunteer"
+                  :disabled="is_submitting"
+                >
+                  <i class="fas fa-arrow-right"></i>
+                  {{ is_submitting ? "Submitting..." : "Join Our Team" }}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Volunteer Form Section Start Here -->
+  <!-- Volunteer Form Section End Here -->
 </template>
 
 <script>
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
+import { mapActions, mapState } from "pinia";
+import { store } from "./Store/volunteer_store.js";
+
 export default {
-  components: { 
+  components: {
     NavbarArea,
     CommonBanner,
+  },
+
+  computed: {
+    ...mapState(store, [
+      "form_data",
+      "errors",
+      "error",
+      "success_message",
+      "is_submitting",
+      "has_validation_errors",
+    ]),
+  },
+
+  methods: {
+    ...mapActions(store, [
+      "submit_volunteer_application",
+      "update_form_field",
+      "toggle_help_type",
+      "toggle_time_slot",
+      "toggle_week_day",
+      "clear_messages",
+    ]),
+
+    async submit_form() {
+      try {
+        await this.submit_volunteer_application();
+      } catch (error) {
+        // Error handling is done in the store
+        console.error("Form submission error:", error);
+      }
+    },
+  },
+
+  mounted() {
+    // Clear any existing messages when component mounts
+    this.clear_messages();
   },
 };
 </script>
