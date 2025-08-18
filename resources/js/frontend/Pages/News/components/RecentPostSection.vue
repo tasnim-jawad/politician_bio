@@ -2,7 +2,7 @@
   <div
     class="widget widget_recent_posts wow animate__animated animate__fadeInRight animate__delay-1s"
   >
-    <h4 class="widget-title style-02">Recent Post</h4>
+    <h4 class="widget-title style-02">Recent News</h4>
     <ul class="recent_post_item">
       <li
         class="single-recent-post-item"

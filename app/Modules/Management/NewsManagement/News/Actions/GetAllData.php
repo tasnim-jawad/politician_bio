@@ -27,15 +27,7 @@ class GetAllData
             if (request()->has('search') && request()->input('search')) {
                 $searchKey = request()->input('search');
                 $data = $data->where(function ($q) use ($searchKey) {
-                    $q->where('banner_image', 'like', '%' . $searchKey . '%');
-
-                    $q->orWhere('news_category_id', 'like', '%' . $searchKey . '%');
-
                     $q->orWhere('title', 'like', '%' . $searchKey . '%');
-
-                    $q->orWhere('content', 'like', '%' . $searchKey . '%');
-
-                    $q->orWhere('tags', 'like', '%' . $searchKey . '%');
 
                 });
             }
