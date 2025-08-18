@@ -50,7 +50,7 @@
             :key="item.id || index"
             class="search-result-item"
           >
-            <a
+            <Link
               :href="`/news/details?slug=${item.slug}`"
               class="search-result-link"
               @click="handleResultClick"
@@ -64,7 +64,7 @@
                   {{ formatDate(item.date || item.created_at) }}
                 </span>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
 

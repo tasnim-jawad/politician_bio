@@ -78,6 +78,52 @@ class GetAllData
                 return entityResponse($categories);
             }
 
+            if (request()->has('get_recent') && (int) request()->input('get_recent') === 1) {
+                $recentLimit = request()->input('recent_limit') ?? 5;
+                $recentNews = self::$model::where('status', 'active')
+                    ->whereNotNull('date')
+                    ->orderBy('date', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->limit($recentLimit)
+                    ->with($with)
+                    ->get();
+
+                return entityResponse($recentNews);
+            }
+
+            if (request()->has('get_prev_next') && (int) request()->input('get_prev_next') === 1) {
+                $currentId = request()->input('current_id');
+                $currentNews = self::$model::find($currentId);
+
+                $prevNext = [
+                    'prev_news' => null,
+                    'next_news' => null,
+                ];
+
+                if ($currentNews) {
+                    // Get previous news (older)
+                    $prevNews = self::$model::where('status', 'active')
+                        ->where('id', '<', $currentId)
+                        ->orderBy('id', 'desc')
+                        ->select('id', 'title', 'slug')
+                        ->first();
+
+                    // Get next news (newer)
+                    $nextNews = self::$model::where('status', 'active')
+                        ->where('id', '>', $currentId)
+                        ->orderBy('id', 'asc')
+                        ->select('id', 'title', 'slug')
+                        ->first();
+
+                    $prevNext = [
+                        'prev_news' => $prevNews,
+                        'next_news' => $nextNews,
+                    ];
+                }
+
+                return entityResponse($prevNext);
+            }
+
             if (request()->has('tag_name') && request()->input('tag_name')) {
                 $tag_name = request()->input('tag_name');
                 $data = $data->where('tags', 'like', '%' . $tag_name . '%');
@@ -87,6 +133,8 @@ class GetAllData
                 $category_id = request()->input('category_id');
                 $data = $data->where('news_category_id', $category_id);
             }
+
+
 
 
             if (request()->has('get_all') && (int) request()->input('get_all') === 1) {

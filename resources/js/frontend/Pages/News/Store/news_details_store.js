@@ -1,16 +1,17 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-export const store = defineStore("event_details_page", {
+export const store = defineStore("news_details_page", {
   state: () => ({
-    event_details: null,
-    latest_events: [],
+    news_details: null,
+    recent_news: [],
+    related_news: [],
     loading: false,
     error: null,
   }),
   actions: {
     _cache: {},
-    _cacheKeyPrefix: "event_details_page_cache_",
+    _cacheKeyPrefix: "news_details_page_cache_",
     async _isCacheValid(key) {
       let entry = this._cache[key];
       if (!entry && "caches" in window) {
@@ -40,57 +41,135 @@ export const store = defineStore("event_details_page", {
         } catch (e) {}
       }
     },
-    async fetch_event_details(slug) {
-      const cacheKey = `event_details_${slug}`;
+    async fetch_news_details(slug) {
+      const cacheKey = `news_details_${slug}`;
       if (await this._isCacheValid(cacheKey)) {
-        this.event_details = this._cache[cacheKey].data;
-        console.log("Using cached event details for:", slug);
-        console.log("Cached event details:", this.event_details);
+        this.news_details = this._cache[cacheKey].data;
+        console.log("Using cached news details for:", slug);
+        console.log("Cached news details:", this.news_details);
         return;
       }
       try {
-        const res = await axios.get(`events/${slug}`);
-        // Normalize response for both paginated and non-paginated
+        const res = await axios.get(`news/${slug}`);
+        // Handle the API response structure
         let result = res.data;
-        if (!result.data) {
-          // If data is not present, fallback to array
-          result = {
-            data: Array.isArray(res.data) ? res.data : [],
-            current_page: 1,
-            last_page: 1,
-            total: Array.isArray(res.data) ? res.data.length : 0,
-            per_page: 6,
-          };
+        if (result.data) {
+          this.news_details = result.data;
+        } else {
+          this.news_details = result;
         }
-        this.event_details = result;
-        await this._setCache(cacheKey, this.event_details);
+        await this._setCache(cacheKey, this.news_details);
       } catch (e) {
         this.error = e;
       }
     },
-    async fetch_latest_events() {
-      if (await this._isCacheValid("latest_events")) {
-        this.latest_events = this._cache["latest_events"].data;
+    async fetch_recent_news(limit = 5) {
+      const cacheKey = `recent_news`;
+      if (await this._isCacheValid(cacheKey)) {
+        this.recent_news = this._cache[cacheKey].data;
+        console.log("cache recent news:", this.recent_news);
         return;
       }
       try {
-        const res = await axios.get("events", {
+        const res = await axios.get("news", {
           params: {
-            latest_data: 1,
+            get_recent: 1,
+            recent_limit: limit,
           },
         });
-        this.latest_events = res.data;
-        await this._setCache("latest_events", res.data);
+        this.recent_news = res.data.data || [];
+        console.log("Fetched recent news:", this.recent_news);
+        await this._setCache(cacheKey, this.recent_news);
       } catch (e) {
         this.error = e;
+        this.recent_news = [];
       }
     },
 
-    async fetchAllEventDetailsPageData() {
+    async fetch_prev_next_news(currentNewsId) {
+      try {
+        console.log('Fetching prev/next news for ID:', currentNewsId);
+        const res = await axios.get("news", {
+          params: {
+            get_prev_next: 1,
+            current_id: currentNewsId,
+          },
+        });
+        
+        // Handle the API response structure
+        let results = res.data;
+        if (results.data) {
+          return {
+            prev_news: results.data.prev_news || null,
+            next_news: results.data.next_news || null,
+          };
+        } else {
+          return {
+            prev_news: null,
+            next_news: null,
+          };
+        }
+      } catch (e) {
+        console.error('Prev/next news error:', e);
+        return {
+          prev_news: null,
+          next_news: null,
+        };
+      }
+    },
+
+    async fetch_related_news(categoryId, currentNewsId, limit = 10) {
+      const cacheKey = `related_news_${categoryId}_${currentNewsId}`;
+      if (await this._isCacheValid(cacheKey)) {
+        this.related_news = this._cache[cacheKey].data;
+        return;
+      }
+      try {
+        console.log('Fetching related news for category:', categoryId, 'excluding news ID:', currentNewsId);
+        const res = await axios.get("news", {
+          params: {
+            category_id: categoryId,
+            limit: limit,
+          },
+        });
+        
+        console.log('Related news API response:', res);
+        console.log('Related news API response data:', res.data);
+        
+        // Handle the API response structure
+        let results = res.data;
+        if (results.data && results.data.data && Array.isArray(results.data.data)) {
+          // Laravel API wrapped response: res.data.data.data
+          console.log('Using results.data.data (Laravel wrapped):', results.data.data);
+          this.related_news = results.data.data.filter(news => news.id !== currentNewsId);
+        } else if (results.data && Array.isArray(results.data)) {
+          // Direct data array: res.data.data
+          console.log('Using results.data:', results.data);
+          this.related_news = results.data.filter(news => news.id !== currentNewsId);
+        } else if (Array.isArray(results)) {
+          // Direct array: res.data
+          console.log('Using results directly:', results);
+          this.related_news = results.filter(news => news.id !== currentNewsId);
+        } else {
+          console.log('No valid results structure found:', results);
+          this.related_news = [];
+        }
+        
+        console.log('Final related news after filtering:', this.related_news);
+        await this._setCache(cacheKey, this.related_news);
+      } catch (e) {
+        console.error('Related news error:', e);
+        console.error('Error response:', e.response);
+        this.error = e;
+        this.related_news = [];
+      }
+    },
+
+    async fetchAllNewsDetailsPageData(slug) {
       this.loading = true;
       this.error = null;
       try {
-        await this.fetch_latest_events();
+        await this.fetch_recent_news();
       } catch (e) {
         this.error = e;
       } finally {

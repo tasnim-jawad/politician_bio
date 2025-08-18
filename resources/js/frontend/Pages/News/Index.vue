@@ -64,7 +64,7 @@
             <SearchSection />
             <!-- Search section -->
             <!-- Recent posts section -->
-            <RecentPostSection />
+            <RecentPostSection v-if="recent_news" :news="recent_news" />
             <!-- Recent posts section -->
 
             <!-- Category section -->
@@ -216,6 +216,7 @@ export default {
       "filterByTag",
       "filterByCategory",
       "clearFilter",
+
     ]),
     handlePageChange(page) {
       console.log("Going to page:", page);
@@ -227,7 +228,7 @@ export default {
     await this.fetchAllNewsPageData();
   },
   computed: {
-    ...mapState(news_store, ["news", "tags", "categories", "currentFilter"]),
+    ...mapState(news_store, ["news", "tags", "categories", "currentFilter", "recent_news"]),
   },
 };
 </script>

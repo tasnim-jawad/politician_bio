@@ -6,6 +6,7 @@ export const store = defineStore("news_page", {
     news: [],
     tags: [],
     categories: [],
+    recent_news: [],
     searchResults: [],
     searchTerm: '',
     isSearching: false,
@@ -222,25 +223,7 @@ export const store = defineStore("news_page", {
         this.error = e;
       }
     },
-    async fetchAllNewsPageData({ page = 1, tag_name = null, category_id = null } = {}) {
-      this.loading = true;
-      this.error = null;
-      try {
-        if (category_id) {
-          await this.fetch_news_by_category({ category_id, page });
-        } else if (tag_name) {
-          await this.fetch_news_by_tag({ tag_name, page });
-        } else {
-          await this.fetch_news({ page });
-        }
-        await this.fetch_tags();
-        await this.fetch_categories();
-      } catch (e) {
-        this.error = e;
-      } finally {
-        this.loading = false;
-      }
-    },
+    
     async goToPage(page) {
       if (this.currentFilter.type === 'category' && this.currentFilter.category_id) {
         await this.fetchAllNewsPageData({ page, category_id: this.currentFilter.category_id });
@@ -345,11 +328,53 @@ export const store = defineStore("news_page", {
       }
     },
 
+    async fetch_recent_news(limit = 5) {
+      const cacheKey = `recent_news`;
+      if (await this._isCacheValid(cacheKey)) {
+        this.recent_news = this._cache[cacheKey].data;
+        return;
+      }
+      try {
+        const res = await axios.get("news", {
+          params: {
+            get_recent: 1,
+            recent_limit: limit,
+          },
+        });
+        this.recent_news = res.data.data || [];
+        await this._setCache(cacheKey, this.recent_news);
+      } catch (e) {
+        this.error = e;
+        this.recent_news = [];
+      }
+    },
+
     clearSearch() {
       this.searchTerm = '';
       this.searchResults = [];
       this.showSearchResults = false;
       this.isSearching = false;
+    },
+
+    async fetchAllNewsPageData({ page = 1, tag_name = null, category_id = null } = {}) {
+      this.loading = true;
+      this.error = null;
+      try {
+        if (category_id) {
+          await this.fetch_news_by_category({ category_id, page });
+        } else if (tag_name) {
+          await this.fetch_news_by_tag({ tag_name, page });
+        } else {
+          await this.fetch_news({ page });
+        }
+        await this.fetch_tags();
+        await this.fetch_categories();
+        await this.fetch_recent_news();
+      } catch (e) {
+        this.error = e;
+      } finally {
+        this.loading = false;
+      }
     },
   },
 });
