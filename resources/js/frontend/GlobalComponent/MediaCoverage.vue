@@ -45,7 +45,7 @@
           >
             <div class="media-item wow animate__animated animate__fadeInUp">
               <div class="media-thumb">
-                <img :src="item.thumbnail_image || item.img" :alt="item.alt" />
+                <img :src="( '/' + item?.thumbnail_image || '/uploads/default.jpg') " :alt="item?.alt || 'media'" />
                 <div class="media-thumb-video">
                   <a
                     class="video-play style-01 style-05 mfp-iframe"

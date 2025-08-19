@@ -42,21 +42,24 @@ import { Link } from '@inertiajs/vue3';
               <li><Link href="/pages/team">Team</Link></li>
               <li><Link href="/pages/media">Media</Link></li>
               <li><Link href="/pages/issues">Issues</Link></li>
-              <li><Link href="/pages/issues/details">Issues details</Link></li>
+              <!-- <li><Link href="/pages/issues/details">Issues details</Link></li> -->
               <li><Link href="/pages/volunteer">Volunteer</Link></li>
               <li><Link href="/pages/services">Services</Link></li>
-              <li><Link href="/pages/services/details">Services Single</Link></li>
+              <!-- <li><Link href="/pages/services/details">Services Single</Link></li> -->
               <li><Link href="/pages/faq">Help & Faq</Link></li>
-              <li><Link href="/pages/comming-soon">Comming Soon</Link></li>
+              <!-- <li><Link href="/pages/comming-soon">Comming Soon</Link></li> -->
             </ul>
           </li>
           <li class="menu-item-has-children">
+            <Link href="/events/event">Events</Link>
+          </li>
+          <!-- <li class="menu-item-has-children">
             <a href="#">Events</a>
             <ul class="sub-menu ">
-              <li><Link href="/events/event">Event</Link></li>
+              <li><Link href="/events/event">Events</Link></li>
               <li><Link href="/events/event/details">Event Details</Link></li>
             </ul>
-          </li>
+          </li> -->
           <li class="menu-item-has-children">
             <Link href="/news">News</Link>
           </li>

@@ -26,15 +26,15 @@
       <div class="row">
         <div
           class="col-lg-4 col-md-6"
-          v-for="(address, idx) in officeAddresses"
+          v-for="(address, idx) in addresses"
           :key="idx"
         >
           <single-testimonial-item-02
             :title="address.title"
             :icon="address.icon"
-            :flag-img="address.flagImg"
+            flag-img="/frontend/assets/img/flag-shape.png"
             :address="address.address"
-            :phone="address.phone"
+            :phone="address.phone_number"
             :email="address.email"
             :delay="address.delay"
           />
@@ -61,42 +61,10 @@ export default {
       default:
         "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
     },
-  },
-  data: function () {
-    return {
-      officeAddresses: [
-        {
-          id: 1,
-          title: "California",
-          icon: "icon-bridge",
-          flagImg: "assets/img/flag-shape.png",
-          address: "Woods Avenue (East LA), 380/6, San Morni CA",
-          phone: "009-215-5599",
-          email: "info@yourmail.com",
-          delay: "",
-        },
-        {
-          id: 2,
-          title: "New York",
-          icon: "icon-building",
-          flagImg: "assets/img/flag-shape.png",
-          address: "Woods Avenue (East LA), 380/6, San Morni CA",
-          phone: "009-215-5599",
-          email: "info@yourmail.com",
-          delay: "animate__delay-1s",
-        },
-        {
-          id: 3,
-          title: "Florida",
-          icon: "icon-avenue",
-          flagImg: "assets/img/flag-shape.png",
-          address: "Woods Avenue (East LA), 380/6, San Morni CA",
-          phone: "009-215-5599",
-          email: "info@yourmail.com",
-          delay: "animate__delay-2s",
-        },
-      ],
-    };
+    addresses: {
+      type: Array,
+      default: () => [],
+    },
   },
 };
 </script>

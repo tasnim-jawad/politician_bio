@@ -56,28 +56,75 @@
             <div class="col-lg-4 offset-lg-1 col-md-12">
               <div
                 class="footer-widget widget widget_subscribe subscribe-bg"
-                style="background-image: url(/frontend/assets/img/Mask-flag.png)"
+                style="
+                  background-image: url(/frontend/assets/img/Mask-flag.png);
+                "
               >
                 <div class="shape-01"></div>
                 <div class="shape-02"></div>
                 <div class="header-content">
                   <h4 class="title">Join Our Newsletter</h4>
                 </div>
-                <form
-                  class="subscribe-form"
-                  action="https://themeim.com/demo/senatory/index.html"
+
+                <!-- Success Message with transition -->
+                <transition name="fade">
+                  <div
+                    v-if="newsletterStore.successMessage"
+                    class="alert alert-success mb-3"
+                  >
+                    {{ newsletterStore.successMessage }}
+                  </div>
+                </transition>
+
+                <!-- General Error Message -->
+                <div
+                  v-if="newsletterStore.errors.general"
+                  class="alert alert-danger mb-3"
                 >
-                  <div class="form-group">
+                  <div
+                    v-for="error in newsletterStore.errors.general"
+                    :key="error"
+                  >
+                    {{ error }}
+                  </div>
+                </div>
+
+                <form class="subscribe-form" @submit.prevent="handleSubscribe">
+                  <div class="form-group d-flex flex-column">
                     <input
-                      type="text"
+                      v-model="newsletterStore.email"
+                      type="email"
                       class="form-control"
+                      :class="{ 'is-invalid': newsletterStore.errors.email }"
                       placeholder="Enter Email"
+                      :disabled="newsletterStore.loading"
                     />
+                    <!-- Email validation errors -->
+                    <div
+                      v-if="newsletterStore.errors.email"
+                      class="invalid-feedback d-block text-white"
+                    >
+                      <div
+                        v-for="error in newsletterStore.errors.email"
+                        :key="error"
+                      >
+                        {{ error }}
+                      </div>
+                    </div>
                   </div>
                   <div class="btn-wrapper">
-                    <a href="#" class="boxed-btn btn-sanatory style-03"
-                      >Subscribe Now <i class="icon-paper-plan"></i
-                    ></a>
+                    <button
+                      type="submit"
+                      class="boxed-btn btn-sanatory style-03"
+                      :disabled="newsletterStore.loading"
+                    >
+                      <span v-if="newsletterStore.loading">
+                        <i class="fas fa-spinner fa-spin"></i> Subscribing...
+                      </span>
+                      <span v-else>
+                        Subscribe Now <i class="icon-paper-plan"></i>
+                      </span>
+                    </button>
                   </div>
                 </form>
               </div>
@@ -218,7 +265,95 @@
 </template>
 
 <script>
-export default {};
+import { useNewsletterStore } from "../Store/newsletter_store.js";
+
+export default {
+  setup() {
+    const newsletterStore = useNewsletterStore();
+
+    const handleSubscribe = async () => {
+      await newsletterStore.subscribe();
+    };
+
+    return {
+      newsletterStore,
+      handleSubscribe,
+    };
+  },
+};
 </script>
 
-<style></style>
+<style scoped>
+.alert {
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+/* Fade out animation for success message */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #dc3545;
+}
+
+.form-control:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-sanatory:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

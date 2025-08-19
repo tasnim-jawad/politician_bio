@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('address', 200)->nullable();
             $table->string('phone_number', 20)->nullable();
             $table->string('email', 50)->nullable();
-            $table->string('map_link', 250)->nullable();
+            $table->text('map_link')->nullable();
 
             $table->bigInteger('creator')->unsigned()->nullable();
             $table->string('slug', 50)->nullable();

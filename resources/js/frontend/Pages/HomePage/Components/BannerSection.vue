@@ -2,7 +2,7 @@
   <div
     class="header-area header-sanatory header-bg-04"
     :style="{
-      backgroundImage: `url(/${data.background_image || '/uploads/default.jpg'})`,
+      backgroundImage: `url(/${data?.background_image || 'uploads/default.jpg'})`,
     }"
     
   >
@@ -12,13 +12,13 @@
           <div class="col-lg-6">
             <div class="header-inner-02">
               <h4 class="subtitle">
-                {{ data.slogan }}<i class="icon-star"></i
+                {{ data?.slogan }}<i class="icon-star"></i
                 ><i class="icon-star"></i><i class="icon-star"></i>
-                <span>{{ data.election_type }}</span>
+                <span>{{ data?.election_type }}</span>
               </h4>
-              <h1 class="title">{{ data.main_title }}</h1>
+              <h1 class="title">{{ data?.main_title }}</h1>
               <p>
-                {{ data.short_title }}
+                {{ data?.short_title }}
               </p>
               <div class="btn-wrapper">
                 <Link href="/about-us" class="boxed-btn read-btn"
@@ -29,7 +29,7 @@
           <div class="col-lg-5 offset-lg-1">
             <div class="thumbnail">
                 <img
-                :src="data.image || '/uploads/default.jpg'"
+                :src="data?.image || '/uploads/default.jpg'"
                 alt="mayor image"
                 />
             </div>
@@ -48,7 +48,17 @@ import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 
 export default {
   props: {
-    data: Object,
+    data: {
+      type: Object,
+      default: () => ({
+        background_image: '',
+        image: '',
+        slogan: '',
+        election_type: '',
+        main_title: '',
+        short_title: ''
+      })
+    },
   },
   components: {
     NavbarArea,

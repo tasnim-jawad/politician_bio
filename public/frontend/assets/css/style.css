@@ -9678,7 +9678,7 @@ input[type=checkbox] {
 .navbar-area.nav-style-03.nav-fixed {
   position: fixed !important;
   top: 0 !important;
-  z-index: 8 !important;
+  z-index: 9999 !important;
   -webkit-transition: 0.5s all ease;
   transition: 0.5s all ease;
   width: 100%;

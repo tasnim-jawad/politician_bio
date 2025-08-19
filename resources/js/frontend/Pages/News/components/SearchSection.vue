@@ -39,7 +39,7 @@
           class="debug-info"
           style="padding: 8px; background: #f0f0f0; font-size: 11px"
         >
-          Debug: searchTerm="{{ searchTerm }}", results count={{
+          searched by "{{ searchTerm }}", results {{
             searchResults.length
           }}
         </div>

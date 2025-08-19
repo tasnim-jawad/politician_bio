@@ -21,7 +21,7 @@ class DataStoreValidation extends FormRequest
      */
     public function validateError($data)
     {
-        $errorPayload =  $data->getMessages();
+        $errorPayload = $data->getMessages();
         return response(['status' => 'validation_error', 'errors' => $errorPayload], 422);
     }
 
@@ -42,12 +42,12 @@ class DataStoreValidation extends FormRequest
     public function rules(): array
     {
         return [
-            'event_id' => 'required | sometimes',
-            'name' => 'required | sometimes',
-            'email' => 'required | sometimes',
-            'mobile_number' => 'required | sometimes',
-            'comment' => 'required | sometimes',
-            'status' => ['sometimes', Rule::in(['active', 'inactive'])],
+            'event_id'      => 'required',
+            'name'          => 'required|string|max:100',
+            'email'         => 'required|email|max:100',
+            'mobile_number' => 'required|string|max:20',
+            'comment'       => 'nullable|string',
+            'status'        => ['sometimes', Rule::in(['active', 'inactive'])],
         ];
     }
 }

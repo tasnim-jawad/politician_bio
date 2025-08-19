@@ -38,6 +38,8 @@ export default {
   },
   computed: {
     validLocation() {
+      console.log("Validating location:", this.location);
+      
       // Return empty if no location provided
       if (!this.location || this.location.trim() === "") {
         return null;

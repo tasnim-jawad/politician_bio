@@ -15,7 +15,8 @@
       </div>
       <div class="row">
         <div class="col-lg-12">
-          <location-map :src="mapSrc" />
+          <p>First Address location</p>
+          <location-map :location="mapSrc" />
         </div>
       </div>
     </div>
