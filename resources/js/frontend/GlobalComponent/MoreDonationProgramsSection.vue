@@ -33,9 +33,9 @@
             >
               <div class="content">
                 <h4 class="title">
-                  <Link :href="`/donation/details?slug=${donation?.slug}`"
-                    >{{ donation?.title }}</Link
-                  >
+                  <Link :href="`/donation/details?slug=${donation?.slug}`">{{
+                    donation?.title
+                  }}</Link>
                   <!-- {{ donation?.title }} -->
                 </h4>
                 <div class="progress-content">
@@ -65,18 +65,6 @@ export default {
   name: "MoreDonationProgramsSection",
   created: async function () {
     await this.fetch_donations();
-  },
-  methods: {
-    ...mapActions(donationStore, ["fetch_donations"]),
-  },
-  computed: {
-    ...mapWritableState(donationStore, ["donations"]),
-  },
-  mounted() {
-    this.initTestimonialCarousel();
-  },
-  updated() {
-    this.initTestimonialCarousel();
   },
   methods: {
     ...mapActions(donationStore, ["fetch_donations"]),
@@ -111,6 +99,59 @@ export default {
         }
       }
     },
+    destroyCarousel() {
+      if (window.$ && window.$.fn.owlCarousel) {
+        const $TestimonialCarousel = window.$(".testimonial-carousel-six");
+        if (
+          $TestimonialCarousel.length > 0 &&
+          $TestimonialCarousel.hasClass("owl-loaded")
+        ) {
+          $TestimonialCarousel.trigger("destroy.owl.carousel");
+          $TestimonialCarousel.removeClass("owl-drag owl-grab");
+        }
+      }
+    },
+  },
+  computed: {
+    ...mapWritableState(donationStore, ["donations"]),
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.initTestimonialCarousel();
+    });
+  },
+  updated() {
+    this.$nextTick(() => {
+      this.initTestimonialCarousel();
+    });
+  },
+  activated() {
+    // For keep-alive components
+    this.$nextTick(() => {
+      this.initTestimonialCarousel();
+    });
+  },
+  beforeUpdate() {
+    this.destroyCarousel();
+  },
+  beforeUnmount() {
+    this.destroyCarousel();
+  },
+  beforeDestroy() {
+    // Vue 2 compatibility
+    this.destroyCarousel();
+  },
+  deactivated() {
+    // For keep-alive components
+    this.destroyCarousel();
+  },
+  destroyed() {
+    // Vue 2 compatibility
+    this.destroyCarousel();
+  },
+  unmounted() {
+    // Vue 3 compatibility
+    this.destroyCarousel();
   },
 };
 </script>
