@@ -32,14 +32,5 @@ export default [
 		value: "",
 		row_col_class: "col-md-12",
 	},
-	{
-		name: "taking_action",
-		label: "Enter your taking action",
-		type: "textarea",
-		placeholder: "Enter JSON data",
-		value: "",
-		row_col_class: "col-md-12",
-	},
 
-	
 ];

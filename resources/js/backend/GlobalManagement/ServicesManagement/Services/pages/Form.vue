@@ -65,7 +65,7 @@
                 v-for="(statistics, index) in statistics_data"
                 :key="index"
               >
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="">title</label>
                     <div class="mt-1 mb-3">
@@ -97,19 +97,19 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="">Value</label>
+                    <label for="">percent</label>
                     <div class="mt-1 mb-3">
                       <input
                         class="form-control form-control-square mb-2"
                         type="text"
-                        :name="`statistics[${index}][value]`"
-                        v-model="statistics.value"
-                        id="value"
+                        :name="`statistics[${index}][percent]`"
+                        v-model="statistics.percent"
+                        id="percent"
                         :class="{
                           custom_error:
                             errors['statistics'] &&
                             errors['statistics'][index] &&
-                            errors['statistics'][index].value,
+                            errors['statistics'][index].percent,
                         }"
                       />
                     </div>
@@ -117,41 +117,11 @@
                       v-if="
                         errors['statistics'] &&
                         errors['statistics'][index] &&
-                        errors['statistics'][index].value
+                        errors['statistics'][index].percent
                       "
                       class="text-danger small"
                     >
-                      {{ errors["statistics"][index].value }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="">Unit</label>
-                    <div class="mt-1 mb-3">
-                      <input
-                        class="form-control form-control-square mb-2"
-                        type="text"
-                        :name="`statistics[${index}][unit]`"
-                        v-model="statistics.unit"
-                        id="unit"
-                        :class="{
-                          custom_error:
-                            errors['statistics'] &&
-                            errors['statistics'][index] &&
-                            errors['statistics'][index].unit,
-                        }"
-                      />
-                    </div>
-                    <div
-                      v-if="
-                        errors['statistics'] &&
-                        errors['statistics'][index] &&
-                        errors['statistics'][index].unit
-                      "
-                      class="text-danger small"
-                    >
-                      {{ errors["statistics"][index].unit }}
+                      {{ errors["statistics"][index].percent }}
                     </div>
                   </div>
                 </div>
@@ -164,8 +134,7 @@
                       width: '50%',
                       marginTop:
                         !errors['statistics']?.[index]?.title &&
-                        !errors['statistics']?.[index]?.value &&
-                        !errors['statistics']?.[index]?.unit
+                        !errors['statistics']?.[index]?.percent 
                           ? '30px'
                           : '0',
                     }"
@@ -209,14 +178,12 @@ export default {
 
     statistics_data_object: {
       title: "",
-      value: "",
-      unit: "",
+      percent: "",
     },
     statistics_data: [
       {
         title: "",
-        value: "",
-        unit: "",
+        percent: "",
       },
     ],
 
@@ -266,8 +233,7 @@ export default {
         if (this.item.statistics) {
           this.statistics_data = this.item.statistics.map((statistics) => ({
             title: statistics.title,
-            value: statistics.value,
-            unit: statistics.unit,
+            percent: statistics.percent,
           }));
         }
       }
@@ -357,22 +323,12 @@ export default {
           statisticsErrors.title = "title is required";
           valid = false;
         }
-        // Validate value field
-        if (!statistics.value || String(statistics.value).trim() === "") {
-          statisticsErrors.value = "value is required";
+        // Validate percent field
+        if (!statistics.percent || String(statistics.percent).trim() === "") {
+          statisticsErrors.percent = "percent is required";
           valid = false;
-        }
-        // Validate value field
-        if (!statistics.value || String(statistics.value).trim() === "") {
-          statisticsErrors.value = "value is required";
-          valid = false;
-        } else if (isNaN(String(statistics.value).trim()) || String(statistics.value).trim() === "") {
-          statisticsErrors.value = "value must be a number";
-          valid = false;
-        }
-        // Validate unit field
-        if (!statistics.unit || String(statistics.unit).trim() === "") {
-          statisticsErrors.unit = "unit is required";
+        } else if (isNaN(String(statistics.percent).trim()) || String(statistics.percent).trim() === "") {
+          statisticsErrors.percent = "percent must be a number";
           valid = false;
         }
 

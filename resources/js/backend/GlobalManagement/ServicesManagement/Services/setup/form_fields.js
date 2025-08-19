@@ -38,11 +38,4 @@ export default [
 		row_col_class: "col-md-12",
 	},
 
-	// {
-	// 	name: "statistics",
-	// 	label: "Enter your statistics",
-	// 	type: "textarea",
-	// 	placeholder: "Enter JSON data",
-	// 	value: "",
-	// },
 ];

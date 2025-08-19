@@ -17,7 +17,11 @@
             <div class="description" v-html="service?.data?.description"></div>
           </div>
           <div class="percentage-of-trafic">
-            <div class="content" v-for="(item, index) in service?.data?.statistics" :key="index">
+            <div
+              class="content"
+              v-for="(item, index) in service?.data?.statistics"
+              :key="index"
+            >
               <div class="title">{{ item.title }}</div>
               <div class="progress-content">
                 <div class="progress-item">
@@ -33,18 +37,20 @@
                       >
                         <div
                           class="proggress"
-                          :style="
-                            Object.assign(
-                              {
-                                backgroundColor: 'rgb(175, 15, 21)',
-                                height: '5px',
-                                borderRadius: '8px',
-                              },
-                              percentStyle
-                            )"
+                          :style="{
+                            backgroundColor: 'rgb(175, 15, 21)',
+                            height: '5px',
+                            borderRadius: '8px',
+                            width: getPercent(item?.percent) + '%',
+                          }"
                         ></div>
-                        <div class="percentCount" :style="percentCountStyle">
-                          {{ percent(item?.percent) }}%
+                        <div
+                          class="percentCount"
+                          :style="{
+                            left: `calc(${getPercent(item?.percent)}% - 20px)`,
+                          }"
+                        >
+                          {{ getPercent(item?.percent) }}%
                         </div>
                       </div>
                     </div>
@@ -75,27 +81,12 @@ export default {
       required: true,
     },
   },
-  data:function () {
-    return {
-      percent_number:0,
-    };
+  data: function () {
+    return {};
   },
   name: "ServiceSection2",
-  computed: {
-    percentStyle() {
-      return {
-        width: this.percent_number + "%",
-      };
-    },
-    percentCountStyle() {
-      return {
-        left: `calc(${this.percent_number}% - 20px)`,
-      };
-    },
-  },
   methods: {
-    percent(number) {
-      
+    getPercent(number) {
       // Convert to number if it's a string
       const num = parseFloat(number);
 
@@ -112,8 +103,8 @@ export default {
       if (num > 100) {
         return 100;
       }
-      this.percent_number = Math.round(num);
-      return this.percent_number;
+      
+      return Math.round(num);
     },
   },
 };
