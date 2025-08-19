@@ -7,28 +7,13 @@ export default [
 	},
 
 	{
-		name: "description",
-		label: "Enter your description",
-		type: "textarea",
-		value: "",
-	},
-
-	{
 		name: "quotation",
 		label: "Enter your quotation",
 		type: "text",
 		value: "",
 	},
 
-	{
-		name: "features",
-		label: "Enter your features",
-		type: "textarea",
-		placeholder: "Enter JSON data",
-		value: "",
-	},
-
-	{
+		{
 		name: "video_url",
 		label: "Enter your video url",
 		type: "text",
@@ -44,10 +29,11 @@ export default [
 	},
 
 	{
-		name: "facts_figures",
-		label: "Enter your facts figures",
+		name: "description",
+		label: "Enter your description",
 		type: "textarea",
-		placeholder: "Enter JSON data",
 		value: "",
+		row_col_class: "col-md-12",
 	},
+
 ];

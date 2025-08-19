@@ -12,15 +12,7 @@ export default [
 		type: "text",
 		value: "",
 	},
-
-	{
-		name: "social_link",
-		label: "Enter your social link",
-		type: "textarea",
-		placeholder: "Enter JSON data",
-		value: "",
-	},
-
+	
 	{
 		name: "image",
 		label: "Enter your image",
