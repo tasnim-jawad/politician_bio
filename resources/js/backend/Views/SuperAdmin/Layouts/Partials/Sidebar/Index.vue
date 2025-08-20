@@ -337,6 +337,21 @@
           },
         ]"
 />
+<side-bar-drop-down-menus
+        :icon="`fa fa-plus`"
+        :menu_title="`PollManagement`"
+        :menus="[
+          {
+            route_name: `AllPoll`,
+            title: `Poll`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },          {
+            route_name: `AllPollOption`,
+            title: `PollOption`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+        ]"
+/>
 <!-- Management end -->
     </ul>
   </div>

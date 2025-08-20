@@ -87,29 +87,29 @@ export default {
     },
   },
   // Vue lifecycle hooks for confirmation
-  beforeCreate() {
-    console.log("VotePooll lifecycle: beforeCreate");
-  },
-  created() {
-    console.log("VotePooll lifecycle: created");
-  },
-  beforeMount() {
-    console.log("VotePooll lifecycle: beforeMount");
-  },
-  mounted() {
-    console.log("VotePooll lifecycle: mounted");
-  },
-  beforeUpdate() {
-    console.log("VotePooll lifecycle: beforeUpdate");
-  },
-  updated() {
-    console.log("VotePooll lifecycle: updated");
-  },
-  beforeUnmount() {
-    console.log("VotePooll lifecycle: beforeUnmount");
-  },
-  unmounted() {
-    console.log("VotePooll lifecycle: unmounted");
-  },
+  // beforeCreate() {
+  //   console.log("VotePooll lifecycle: beforeCreate");
+  // },
+  // created() {
+  //   console.log("VotePooll lifecycle: created");
+  // },
+  // beforeMount() {
+  //   console.log("VotePooll lifecycle: beforeMount");
+  // },
+  // mounted() {
+  //   console.log("VotePooll lifecycle: mounted");
+  // },
+  // beforeUpdate() {
+  //   console.log("VotePooll lifecycle: beforeUpdate");
+  // },
+  // updated() {
+  //   console.log("VotePooll lifecycle: updated");
+  // },
+  // beforeUnmount() {
+  //   console.log("VotePooll lifecycle: beforeUnmount");
+  // },
+  // unmounted() {
+  //   console.log("VotePooll lifecycle: unmounted");
+  // },
 };
 </script>
