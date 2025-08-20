@@ -46,12 +46,12 @@
                 :row_col_class="form_field.row_col_class"
               />
             </template>
-            <!-- for facts_and_features list input start-->
+            <!-- for social_link list input start-->
             <div class="col-md-12 pt-3">
               <div
                 class="d-flex justify-content-between align-items-center pb-2 section-title"
               >
-                <h5 class="m-0">Add facts and features</h5>
+                <h5 class="m-0">Add Social link</h5>
                 <button
                   class="btn btn-sm btn-outline-success"
                   @click.prevent="add_row('social_link')"
@@ -194,7 +194,7 @@ export default {
       },
     ],
 
-    //----------- for facts_and_features list input ----------
+    //----------- for social_link list input ----------
   }),
   created: async function () {
     let id = (this.param_id = this.$route.params.id);
@@ -215,6 +215,9 @@ export default {
       this.form_fields.forEach((item) => {
         item.value = "";
       });
+
+      // Reset JSON data arrays
+      this.social_link_data = [{ ...this.social_link_data_object }];
     },
     set_fields: async function (id) {
       this.param_id = id;
@@ -261,6 +264,10 @@ export default {
         // await this.get_all();
         if ([200, 201].includes(response.status)) {
           $event.target.reset();
+
+          // Reset JSON data arrays
+          this.social_link_data = [{ ...this.social_link_data_object }];
+
           // Clear summernote editors for all textarea fields
           this.form_fields.forEach((field) => {
             if (field.type === "textarea" && $(`#${field.name}`).length) {
@@ -331,7 +338,6 @@ export default {
           social_linkErrors.link = "Link is required";
           valid = false;
         }
-        
 
         this.errors["social_link"][index] = social_linkErrors;
       });

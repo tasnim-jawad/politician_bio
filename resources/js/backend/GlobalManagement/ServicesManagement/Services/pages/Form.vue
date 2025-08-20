@@ -134,7 +134,7 @@
                       width: '50%',
                       marginTop:
                         !errors['statistics']?.[index]?.title &&
-                        !errors['statistics']?.[index]?.percent 
+                        !errors['statistics']?.[index]?.percent
                           ? '30px'
                           : '0',
                     }"
@@ -199,7 +199,6 @@ export default {
     if (id) {
       this.set_fields(id);
     }
-    
   },
   methods: {
     ...mapActions(store, {
@@ -213,6 +212,9 @@ export default {
       this.form_fields.forEach((item) => {
         item.value = "";
       });
+
+      // Reset JSON data arrays
+      this.statistics_data = [{ ...this.statistics_data_object }];
     },
     set_fields: async function (id) {
       this.param_id = id;
@@ -258,6 +260,8 @@ export default {
         // await this.get_all();
         if ([200, 201].includes(response.status)) {
           $event.target.reset();
+          // Reset JSON data arrays
+          this.statistics_data = [{ ...this.statistics_data_object }];
           // Clear summernote editors for all textarea fields
           this.form_fields.forEach((field) => {
             if (field.type === "textarea" && $(`#${field.name}`).length) {
@@ -327,7 +331,10 @@ export default {
         if (!statistics.percent || String(statistics.percent).trim() === "") {
           statisticsErrors.percent = "percent is required";
           valid = false;
-        } else if (isNaN(String(statistics.percent).trim()) || String(statistics.percent).trim() === "") {
+        } else if (
+          isNaN(String(statistics.percent).trim()) ||
+          String(statistics.percent).trim() === ""
+        ) {
           statisticsErrors.percent = "percent must be a number";
           valid = false;
         }

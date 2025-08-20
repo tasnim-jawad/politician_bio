@@ -170,7 +170,7 @@ export default {
   data: () => ({
     setup,
     form_fields,
-      param_id: null,
+    param_id: null,
     errors: {},
 
     //----------- for taking_action list input ----------
@@ -207,6 +207,9 @@ export default {
       this.form_fields.forEach((item) => {
         item.value = "";
       });
+
+      // Reset JSON data arrays
+      this.taking_action_data = [{ ...this.taking_action_data_object }];
     },
     set_fields: async function (id) {
       this.param_id = id;
@@ -254,6 +257,10 @@ export default {
         // await this.get_all();
         if ([200, 201].includes(response.status)) {
           $event.target.reset();
+
+          // Reset JSON data arrays
+          this.taking_action_data = [{ ...this.taking_action_data_object }];
+
           // Clear summernote editors for all textarea fields
           this.form_fields.forEach((field) => {
             if (field.type === "textarea" && $(`#${field.name}`).length) {

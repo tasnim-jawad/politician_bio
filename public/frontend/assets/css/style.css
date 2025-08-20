@@ -4263,6 +4263,14 @@ ul {
 .party-member-section-area.home-six .single-party-member-item .content .social-links ul li {
   border-radius: 0px;
 }
+.party-member-section-area .political-member .single-party-member-item .thumb {
+  height: 400px;
+}
+.party-member-section-area .political-member .single-party-member-item .thumb img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 
 .testimonial-carousel-eight .owl-item.center .single-party-member-item .content .author-meta {
   visibility: visible;

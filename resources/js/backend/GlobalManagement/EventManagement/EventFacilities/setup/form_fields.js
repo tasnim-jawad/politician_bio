@@ -5,12 +5,4 @@ export default [
 		type: "text",
 		value: "",
 	},
-
-	{
-		name: "facility",
-		label: "Enter your facility",
-		type: "textarea",
-		placeholder: "Enter JSON data",
-		value: "",
-	},
 ];

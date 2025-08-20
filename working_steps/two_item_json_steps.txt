@@ -57,3 +57,20 @@
         this.facts_figures_data.splice(index, 1);
       }
     },
+
+    ------------------------------------------------------------------------------
+---------------------------- reset_fields ----------------------------------------
+------------------------------------------------------------------------------
+
+// Reset JSON data arrays
+this.features_data = [{ ...this.features_data_object }];
+this.facts_figures_data = [{ ...this.facts_figures_data_object }];
+
+------------------------------------------------------------------------------
+---------------------------- submitHandler aftere submit success ----------------------------------------
+------------------------------------------------------------------------------
+
+// Reset JSON data arrays
+this.features_data = [{ ...this.features_data_object }];
+this.facts_figures_data = [{ ...this.facts_figures_data_object }];
+

@@ -103,3 +103,13 @@ php artisan make:module NewsManagement/NewsComment [news_id:bigint,name:string-5
 */
 php artisan make:module ContactUsManagement/ContactAddress [icon:string-30,name:string-100,address:string-200,phone_number:string-20,email:string-50,map_link:string-250] --vue
 php artisan make:module ContactUsManagement/ContactPeople [first_name:string-50,last_name:string-50,email:string-50,phone_number:string-20,subject:string-100,address:string-200] --vue
+
+
+/*
+|--------------------------------------------------------------------------
+| Poll
+|--------------------------------------------------------------------------
+*/
+php artisan make:module PollManagement/Poll [title:string-100,description:longtext,image:string-150,is_voting:enum-0.1] --vue
+php artisan make:module PollManagement/PollOption [poll_id:bigint,option_title:string-200] --vue
+php artisan make:module PollManagement/PollVote [poll_id:bigint,poll_option_id:bigint,session_id:bigint] --vue

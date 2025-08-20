@@ -20,12 +20,4 @@ export default [
 		multiple: "false",
 		value: "",
 	},
-
-	{
-		name: "social_link",
-		label: "Enter your social link",
-		type: "textarea",
-		placeholder: "Enter JSON data",
-		value: "",
-	},
 ];

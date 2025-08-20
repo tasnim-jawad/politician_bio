@@ -28,33 +28,10 @@ export default [
 	},
 
 	{
-		name: "help_types",
-		label: "Enter your help types",
-		type: "textarea",
-		placeholder: "Enter JSON data",
-		value: "",
-	},
-
-	{
-		name: "preferred_times",
-		label: "Enter your preferred times",
-		type: "textarea",
-		placeholder: "Enter JSON data",
-		value: "",
-	},
-
-	{
-		name: "preferred_days",
-		label: "Enter your preferred days",
-		type: "textarea",
-		placeholder: "Enter JSON data",
-		value: "",
-	},
-
-	{
 		name: "comments",
 		label: "Enter your comments",
 		type: "textarea",
 		value: "",
+		row_col_class: "col-md-12",
 	},
 ];

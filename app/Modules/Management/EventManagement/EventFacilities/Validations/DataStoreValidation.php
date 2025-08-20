@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
+use App\Modules\Management\EventManagement\EventFacilities\Models\Model as EventFacility;
 
 class DataStoreValidation extends FormRequest
 {
@@ -41,8 +42,26 @@ class DataStoreValidation extends FormRequest
      */
     public function rules(): array
     {
+        $slug = $this->route('slug');
+        $is_update = $slug !== null;
+
+        if ($is_update) {
+            // Find the record by slug to get its ID
+            $eventFacility = EventFacility::where('slug', $slug)->first();
+            $currentId = $eventFacility ? $eventFacility->id : null;
+
+            $event_id_rules = [
+                'required',
+                'sometimes',
+                'exists:events,id',
+                Rule::unique('event_facilities', 'event_id')->ignore($currentId), // ignore current record
+            ];
+        } else {
+            $event_id_rules = 'required|sometimes|exists:events,id|unique:event_facilities,event_id';
+        }
+
         return [
-            'event_id' => 'required | sometimes',
+            'event_id' => $event_id_rules,
             'video_url' => 'required | sometimes',
             'facility' => 'required | sometimes',
             'status' => ['sometimes', Rule::in(['active', 'inactive'])],

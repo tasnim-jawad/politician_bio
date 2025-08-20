@@ -1,5 +1,5 @@
 <template>
-  <div class="poll-wrapper">
+  <div :class="['poll-wrapper', { vote: isVoteActive }]">
     <header>
       <div class="thumb">
         <img src="frontend/assets/img/poll-img.png" alt="" />
@@ -8,7 +8,9 @@
         <h6 class="voter-name">Pier Goodman</h6>
         <span>PARTY SECRETERY</span>
       </div>
-      <button class="poll-btn close-btn"><i class="fas fa-times"></i></button>
+      <button class="poll-btn close-btn" @click="toggleVote">
+        <i class="fas fa-times"></i>
+      </button>
     </header>
     <div class="poll-area">
       <input type="checkbox" name="poll" id="opt-1" />
@@ -64,12 +66,50 @@
     </div>
   </div>
   <div class="btn-wrapper poll-btn">
-    <span class="boxed-btn btn-poll">
+    <span class="boxed-btn btn-poll" @click="toggleVote">
       Vote Now
       <i class="fas fa-vote-yea"></i>
     </span>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  name: "VotePooll",
+  data() {
+    return {
+      isVoteActive: false,
+    };
+  },
+  methods: {
+    toggleVote() {
+      this.isVoteActive = !this.isVoteActive;
+      console.log("Vote toggled:", this.isVoteActive);
+    },
+  },
+  // Vue lifecycle hooks for confirmation
+  beforeCreate() {
+    console.log("VotePooll lifecycle: beforeCreate");
+  },
+  created() {
+    console.log("VotePooll lifecycle: created");
+  },
+  beforeMount() {
+    console.log("VotePooll lifecycle: beforeMount");
+  },
+  mounted() {
+    console.log("VotePooll lifecycle: mounted");
+  },
+  beforeUpdate() {
+    console.log("VotePooll lifecycle: beforeUpdate");
+  },
+  updated() {
+    console.log("VotePooll lifecycle: updated");
+  },
+  beforeUnmount() {
+    console.log("VotePooll lifecycle: beforeUnmount");
+  },
+  unmounted() {
+    console.log("VotePooll lifecycle: unmounted");
+  },
+};
 </script>

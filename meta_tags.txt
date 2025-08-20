@@ -1,0 +1,52 @@
+<!-- Charset & Viewport -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Title & Description -->
+  <title>মাদরাসাতুন নূর আল আরাবিয়া বাংলাদেশ</title>
+  <meta name="description" content="শিক্ষা প্রতিষ্ঠান মেধা ও প্রতিভা বিকাশের অন্যতম স্থান">
+
+  <!-- SEO -->
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="মাদরাসাতুন নূর আল আরাবিয়া বাংলাদেশ">
+  <link rel="canonical" href="http://mnab.info">
+
+  <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+  <meta property="og:title" content="মাদরাসাতুন নূর আল আরাবিয়া বাংলাদেশ">
+  <meta property="og:description" content="শিক্ষা প্রতিষ্ঠান মেধা ও প্রতিভা বিকাশের অন্যতম স্থান">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://mnab.info">
+  <meta property="og:image" content="http://mnab.info/assets/images/og-image.jpg">
+  <meta property="og:site_name" content="মাদরাসাতুন নূর আল আরাবিয়া বাংলাদেশ">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="মাদরাসাতুন নূর আল আরাবিয়া বাংলাদেশ">
+  <meta name="twitter:description" content="শিক্ষা প্রতিষ্ঠান মেধা ও প্রতিভা বিকাশের অন্যতম স্থান">
+  <meta name="twitter:image" content="http://mnab.info/assets/images/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Optional: Schema.org for rich snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "মাদরাসাতুন নূর আল আরাবিয়া বাংলাদেশ",
+    "url": "http://mnab.info",
+    "logo": "http://mnab.info/assets/images/og-image.jpg",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+8801646376015",
+      "contactType": "customer service"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "বাড়ী ১, রোড ১, ব্লক এইচ, সেক্টর ২, আড্ডার মোড়, আফতাব নগর",
+      "addressLocality": "ঢাকা",
+      "postalCode": "1212",
+      "addressCountry": "BD"
+    }
+  }
+  </script>

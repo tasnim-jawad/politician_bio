@@ -317,6 +317,10 @@ export default {
       this.form_fields.forEach((item) => {
         item.value = "";
       });
+
+      // Reset JSON data arrays
+      this.features_data = [{ ...this.features_data_object }];
+      this.facts_figures_data = [{ ...this.facts_figures_data_object }];
     },
     set_fields: async function (id) {
       this.param_id = id;
@@ -371,6 +375,11 @@ export default {
         // await this.get_all();
         if ([200, 201].includes(response.status)) {
           $event.target.reset();
+
+          // Reset JSON data arrays
+          this.features_data = [{ ...this.features_data_object }];
+          this.facts_figures_data = [{ ...this.facts_figures_data_object }];
+          
           // Clear summernote editors for all textarea fields
           this.form_fields.forEach((field) => {
             if (field.type === "textarea" && $(`#${field.name}`).length) {
