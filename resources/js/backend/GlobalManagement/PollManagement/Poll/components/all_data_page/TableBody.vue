@@ -14,7 +14,20 @@
       <td v-if="row_item == 'id'">
         {{ (current_page - 1) * per_page + dataindex + 1 }}
       </td>
-      <td v-else-if="row_item === 'image' || isImageFile(item[row_item])" class="text-wrap max-w-120">
+      <td v-else-if="row_item == 'is_voting'">
+        <label class="switch">
+          <input
+            type="checkbox"
+            :checked="item.is_voting == 1"
+            @change="toggleIsVoting(item , $event)"
+          />
+          <span class="slider round"></span>
+        </label>
+      </td>
+      <td
+        v-else-if="row_item === 'image' || isImageFile(item[row_item])"
+        class="text-wrap max-w-120"
+      >
         <a
           :href="item[row_item] || '/avatar.png'"
           data-fancybox="gallery"
@@ -70,6 +83,9 @@ import SelectSingle from "./select_data/SelectSingle.vue";
 import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
+import { mapActions, mapWritableState } from "pinia";
+import { store } from "../../store";
+
 export default {
   props: ["data", "current_page", "per_page"],
   data: () => ({
@@ -95,13 +111,19 @@ export default {
   },
 
   methods: {
+    ...mapActions(store, {
+      get_all: "get_all",
+      set_item: "set_item",
+      update_is_voting: "update_is_voting",
+    }),
+
     handleImageError(event) {
       // When image fails to load, set src to avatar.png
-      event.target.src = '/avatar.png';
+      event.target.src = "/avatar.png";
       // Also update the parent link href to avatar.png
-      const parentLink = event.target.closest('a');
+      const parentLink = event.target.closest("a");
       if (parentLink) {
-        parentLink.href = '/avatar.png';
+        parentLink.href = "/avatar.png";
       }
     },
 
@@ -140,33 +162,45 @@ export default {
 
     isImageFile(content) {
       if (!content || typeof content !== "string") return false;
-      
-      const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
+
+      const imageExtensions = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "webp",
+        "svg",
+        "bmp",
+      ];
       const extension = this.getFileExtension(content);
       return imageExtensions.includes(extension.toLowerCase());
     },
 
     getFileExtension(filePath) {
       if (!filePath || typeof filePath !== "string") return "";
-      
-      const parts = filePath.split('.');
+
+      const parts = filePath.split(".");
       return parts.length > 1 ? parts[parts.length - 1] : "";
     },
 
     getFileName(filePath) {
       if (!filePath || typeof filePath !== "string") return "Download";
-      
+
       // Extract filename from path like "uploads/GalleryManagement\\GalleryCategory/2025-07-14-10352237554.pdf"
       const parts = filePath.split(/[\/\\]/);
       const fileName = parts[parts.length - 1];
-      
+
       // If filename is too long, truncate it
       if (fileName.length > 20) {
         const extension = this.getFileExtension(fileName);
-        const nameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
-        return nameWithoutExt.substring(0, 15) + '...' + (extension ? '.' + extension : '');
+        const nameWithoutExt = fileName.substring(0, fileName.lastIndexOf("."));
+        return (
+          nameWithoutExt.substring(0, 15) +
+          "..." +
+          (extension ? "." + extension : "")
+        );
       }
-      
+
       return fileName;
     },
 
@@ -197,6 +231,20 @@ export default {
 
       return content || "";
     },
+
+    async toggleIsVoting(item ,event) {
+      console.log("is voting toggled" , item);
+      const newValue = event.target.checked ? 1 : 0;
+
+      await this.set_item(item);
+      await this.update_is_voting({ is_voting: newValue, slug: item.slug });
+      await this.get_all();
+    },
+  },
+  computed: {
+    ...mapWritableState(store, {
+      item: "item",
+    }),
   },
 };
 </script>
@@ -206,9 +254,9 @@ export default {
   max-width: 120px;
 }
 .text-wrap {
-    text-overflow: ellipsis !important;
-    overflow: hidden !important;
-    white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
 }
 
 .file-download-link {
@@ -230,5 +278,66 @@ export default {
 
 .file-download-link i {
   font-size: 14px;
+}
+
+/* Switch styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 </style>

@@ -12,6 +12,7 @@ import restore from "./async_actions/restore";
 import destroy from "./async_actions/destroy";
 import bulk_action from "./async_actions/bulk_action";
 import import_data from "./async_actions/import_data";
+import update_is_voting from "./async_actions/update_is_voting";
 
 /** actions */
 import set_filter_criteria from "./actions/set_filter_criteria";
@@ -43,6 +44,7 @@ export const store = defineStore(setup.store_prefix, {
     destroy: destroy,
     bulk_action: bulk_action,
     import_data: import_data,
+    update_is_voting: update_is_voting,
 
     /* actions */
     set_page,

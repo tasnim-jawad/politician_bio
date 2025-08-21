@@ -11,11 +11,21 @@ class StoreData
         try {
             $requestData = $request->validated();
 
+
+            if (isset($requestData['is_voting'])) {
+                if ($requestData['is_voting']) {
+                    self::$model::query()->where('is_voting', '1')->update(['is_voting' => '0']);
+                    $requestData['is_voting'] = '1';
+                } else {
+                    $requestData['is_voting'] = '0';
+                }
+            }
+
             if ($data = self::$model::query()->create($requestData)) {
                 return messageResponse('Item added successfully', $data, 201);
             }
         } catch (\Exception $e) {
-            return messageResponse($e->getMessage(),[], 500, 'server_error');
+            return messageResponse($e->getMessage(), [], 500, 'server_error');
         }
     }
 }

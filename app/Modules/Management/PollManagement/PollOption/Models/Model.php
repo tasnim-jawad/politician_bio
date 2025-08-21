@@ -5,7 +5,7 @@ namespace App\Modules\Management\PollManagement\PollOption\Models;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use use App\Modules\Management\PollManagement\Poll\Models\Model as PollModel;
+use App\Modules\Management\PollManagement\Poll\Models\Model as PollModel;
 use App\Modules\Management\PollManagement\PollVote\Models\Model as PollVoteModel;
 class Model extends EloquentModel
 {
