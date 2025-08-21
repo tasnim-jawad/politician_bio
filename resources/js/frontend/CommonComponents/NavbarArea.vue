@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-  <nav class="navbar navbar-area navbar-expand-lg nav-style-03">
+  <nav class="navbar navbar-area navbar-expand-lg nav-style-03 ">
     <div class="container nav-container home-five">
       <div class="responsive-mobile-menu">
         <div class="logo-wrapper">
@@ -53,13 +53,6 @@ import { Link } from '@inertiajs/vue3';
           <li class="menu-item-has-children">
             <Link href="/events/event">Events</Link>
           </li>
-          <!-- <li class="menu-item-has-children">
-            <a href="#">Events</a>
-            <ul class="sub-menu ">
-              <li><Link href="/events/event">Events</Link></li>
-              <li><Link href="/events/event/details">Event Details</Link></li>
-            </ul>
-          </li> -->
           <li class="menu-item-has-children">
             <Link href="/news">News</Link>
           </li>

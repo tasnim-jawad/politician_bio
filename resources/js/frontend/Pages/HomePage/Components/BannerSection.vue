@@ -9,7 +9,7 @@
     <div class="container custom-container-02">
       <div class="home-five-banner">
         <div class="row align-items-center">
-          <div class="col-lg-6">
+          <div class="col-lg-6 order-lg-1 order-md-2 order-2">
             <div class="header-inner-02">
               <h4 class="subtitle">
                 {{ data?.slogan }}<i class="icon-star"></i
@@ -26,8 +26,8 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-5 offset-lg-1">
-            <div class="thumbnail">
+          <div class="col-lg-5 offset-lg-1 order-md-1">
+            <div class="thumbnail text-center mb-md-4">
                 <img
                 :src="data?.image || '/uploads/default.jpg'"
                 alt="mayor image"
@@ -37,7 +37,9 @@
         </div>
       </div>
       <!-- Navbar area Start -->
-      <NavbarArea />
+       <template class="d-lg-block">
+          <NavbarArea />
+       </template>
       <!-- navbar area end -->
     </div>
   </div>

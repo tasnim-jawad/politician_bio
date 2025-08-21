@@ -9680,7 +9680,8 @@ input[type=checkbox] {
   color: var(--main-color-one);
 }
 .navbar-area.nav-style-02 .nav-container .navbar-collapse .navbar-nav li:hover a {
-  color: var(--main-color-one);
+  /* color: var(--main-color-one); */
+  color: var(--heading-color);
 }
 .navbar-area.nav-style-02 .nav-container .navbar-collapse .navbar-nav li:hover .line {
   -webkit-transform: scaleX(1);
@@ -9935,10 +9936,10 @@ input[type=checkbox] {
     padding: 27px 0px;
   }
   .navbar-area.nav-style-02 .nav-container .navbar-toggler {
-    background-color: #000565;
+    background-color: var(--main-color-one);
   }
   .navbar-area.nav-style-02 .nav-container .navbar-collapse .navbar-nav {
-    background-color: #000565;
+    background-color: var(--main-color-one);
     padding: 0 20px;
   }
   .navbar-area.nav-style-02 .nav-container .navbar-collapse .navbar-nav li.menu-item-has-children .sub-menu li a {
@@ -10041,7 +10042,7 @@ input[type=checkbox] {
     text-align: left;
     line-height: 30px;
     padding: 10px 0;
-    border-bottom: 1px solid rgba(221, 19, 26, 0.5);
+    border-bottom: 1px solid rgb(255 255 255 / 50%);;
   }
   .navbar-area .nav-container .navbar-collapse .navbar-nav li:last-child {
     border-bottom: none;
