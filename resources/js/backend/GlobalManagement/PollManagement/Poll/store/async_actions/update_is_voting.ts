@@ -12,14 +12,7 @@ async function execute( params: any = {} ) {
     
     // Use the is_voting value from params if provided, otherwise toggle the current state
     const isVoting = params.hasOwnProperty('is_voting') ? params.is_voting : (state.item().is_voting === 1 ? 0 : 1);
-    
-    console.log("update_is_voting url", url);
-    console.log("update_is_voting params", {
-        data: state.item(),
-        is_voting: isVoting,
-        params: params,
-    });
-    
+
     try {
         let response = await axios.post(url, {
             is_voting: isVoting

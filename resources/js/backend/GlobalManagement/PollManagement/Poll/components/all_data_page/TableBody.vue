@@ -233,7 +233,6 @@ export default {
     },
 
     async toggleIsVoting(item ,event) {
-      console.log("is voting toggled" , item);
       const newValue = event.target.checked ? 1 : 0;
 
       await this.set_item(item);

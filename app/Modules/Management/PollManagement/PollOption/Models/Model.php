@@ -42,9 +42,9 @@ class Model extends EloquentModel
         return $q->onlyTrashed();
     }
 
-    public function poll()
+    public function poll_id()
     {
-        return $this->belongsTo(PollModel::class);
+        return $this->belongsTo(PollModel::class,'poll_id');
     }
     public function votes()
     {
