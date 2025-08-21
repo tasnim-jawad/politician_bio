@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      php artisan migrate --path='/app/Modules/Management/PollManagement/PollVote/Database/create_poll_votes_table.php'
      * Run the migrations.
@@ -16,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('poll_id')->nullable();
             $table->bigInteger('poll_option_id')->nullable();
-            $table->bigInteger('session_id')->nullable();
+            $table->string('session_id', 100)->nullable();
 
             $table->bigInteger('creator')->unsigned()->nullable();
             $table->string('slug', 50)->nullable();

@@ -44,11 +44,11 @@ class Model extends EloquentModel
 
     public function options()
     {
-        return $this->hasMany(PollOptionModel::class);
+        return $this->hasMany(PollOptionModel::class,'poll_id');
     }
     public function votes()
     {
-        return $this->hasMany(PollVoteModel::class);
+        return $this->hasMany(PollVoteModel::class,'poll_id');
     }
 }
 

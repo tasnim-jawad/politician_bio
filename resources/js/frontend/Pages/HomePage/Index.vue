@@ -1,5 +1,4 @@
 <template>
-  
   <Head :title="event.title">
     <meta
       head-key="description"
@@ -183,7 +182,7 @@
 
   <!-- Vote poll start here -->
   <!-- Vote poll start here -->
-  <VotePooll />
+  <VotePooll v-if="poll" :poll="poll" />
   <!-- Vote poll start here -->
   <!-- Vote poll start here -->
 </template>
@@ -364,6 +363,7 @@ export default {
       "mediaCoverages",
       "comments",
       "news",
+      "poll",
       "loading",
       "error",
     ]),

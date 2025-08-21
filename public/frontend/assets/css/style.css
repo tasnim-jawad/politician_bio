@@ -1151,7 +1151,7 @@ ul {
   position: fixed;
   top: 50%;
   right: -2.5%;
-  z-index: 2;
+  z-index: 9;
   -webkit-transform: rotate(270deg);
           transform: rotate(270deg);
 }
@@ -7799,9 +7799,17 @@ blockquote:not(.has-light-gray-color):not(.has-very-dark-gray-color):not(.is-sty
           align-items: center;
   margin-bottom: 30px;
 }
+.poll-wrapper header .thumb {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
 .poll-wrapper header .thumb img {
   border-radius: 6px;
-  margin-right: 20px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 .poll-wrapper header .content .voter-name {
   font-size: 24px;

@@ -18,7 +18,7 @@ class GetAllData
             $start_date = request()->input('start_date');
             $end_date = request()->input('end_date');
 
-            $with = [];
+            $with = ['options'];
 
             $condition = [];
 
@@ -48,6 +48,15 @@ class GetAllData
 
             if ($status == 'trased') {
                 $data = $data->trased();
+            }
+
+            if ( request()->has('poll_is_voting') && request()->input('poll_is_voting') ) {
+                $data = $data->active()->where('is_voting', '1')->with($with)->first();
+                if ($data) {
+                    return entityResponse($data);
+                } else {
+                    return messageResponse('No active poll found', [], 404, 'not_found');
+                }
             }
 
             if (request()->has('get_all') && (int) request()->input('get_all') === 1) {

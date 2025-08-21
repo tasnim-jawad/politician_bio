@@ -19,7 +19,8 @@ use App\Http\Controllers\Controller as ControllersController;
 class Controller extends ControllersController
 {
 
-    public function index( ){
+    public function index()
+    {
 
         $data = GetAllData::execute();
         return $data;
@@ -42,7 +43,7 @@ class Controller extends ControllersController
         $data = UpdateData::execute($request, $slug);
         return $data;
     }
-         public function updateStatus()
+    public function updateStatus()
     {
         $data = UpdateStatus::execute();
         return $data;
@@ -72,6 +73,53 @@ class Controller extends ControllersController
     {
         $data = BulkActions::execute($request);
         return $data;
+    }
+
+    public function checkVote($id)
+    {
+        $sessionId = request('session_id');
+        $hasVoted = \App\Modules\Management\PollManagement\PollVote\Models\Model::where('poll_id', $id)
+            ->where('session_id', $sessionId)
+            ->exists();
+
+        return response()->json(['has_voted' => $hasVoted]);
+    }
+
+    public function submitVote($id)
+    {
+        $request = request();
+        $sessionId = $request->input('session_id');
+        $pollOptionId = $request->input('poll_option_id');
+
+        // Check if already voted
+        $existingVote = \App\Modules\Management\PollManagement\PollVote\Models\Model::where('poll_id', $id)
+            ->where('session_id', $sessionId)
+            ->first();
+
+        if ($existingVote) {
+            return response()->json(['success' => false, 'message' => 'Already voted'], 400);
+        }
+
+        // Create new vote
+        $vote = \App\Modules\Management\PollManagement\PollVote\Models\Model::create([
+            'poll_id'        => $id,
+            'poll_option_id' => $pollOptionId,
+            'session_id'     => $sessionId,
+            'status'         => 'active'
+        ]);
+
+        return response()->json(['success' => true, 'vote' => $vote]);
+    }
+
+    public function getPollResults($id)
+    {
+        $results = \App\Modules\Management\PollManagement\PollVote\Models\Model::where('poll_id', $id)
+            ->selectRaw('poll_option_id, COUNT(*) as votes')
+            ->groupBy('poll_option_id')
+            ->pluck('votes', 'poll_option_id')
+            ->toArray();
+
+        return response()->json(['results' => $results]);
     }
 
 }

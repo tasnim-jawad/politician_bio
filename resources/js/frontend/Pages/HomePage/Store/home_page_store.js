@@ -11,6 +11,7 @@ export const store = defineStore("home_page", {
     mediaCoverages: [],
     comments: [],
     news: [],
+    poll: null,
     loading: false,
     error: null,
   }),
@@ -151,6 +152,24 @@ export const store = defineStore("home_page", {
         this.error = e;
       }
     },
+    async fetch_poll() {
+      if (await this._isCacheValid("poll")) {
+        this.poll = this._cache["poll"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("/polls", {
+          params: {
+            poll_is_voting: 1,
+          },
+        });
+        // The API returns the poll data directly, not wrapped in a data property
+        this.poll = res.data.data ? res.data : { data: res.data };
+        await this._setCache("poll", this.poll);
+      } catch (e) {
+        this.error = e;
+      }
+    },
     async fetchAllHomePageData() {
       this.loading = true;
       this.error = null;
@@ -164,6 +183,7 @@ export const store = defineStore("home_page", {
           this.fetch_media_coverages(),
           this.fetch_comments(),
           this.fetch_news(),
+          this.fetch_poll(),
         ]);
       } catch (e) {
         this.error = e;
