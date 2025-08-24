@@ -9,6 +9,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F70C2BSCS2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-F70C2BSCS2');
+    </script>
+
+
     <!-- <title>Senatory Political HTML-5 Template</title> -->
     <!-- favicon -->
     <link rel="icon" href="{{ asset('frontend') }}/assets/img/favicon.png" sizes="20x20" type="image/png" />
@@ -32,7 +44,7 @@
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/style.css" />
     <!-- responsive Stylesheet -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/responsive.css" />
-    
+
     @inertiaHead
 </head>
 
