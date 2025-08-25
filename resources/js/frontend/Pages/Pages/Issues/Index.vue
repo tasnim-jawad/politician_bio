@@ -1,7 +1,11 @@
 <template>
   <NavbarArea />
-  <!-- banner section start here -->
+
+  <!-- Banner Section with Skeleton -->
+  <BannerSkeleton v-if="shouldShowBannerSkeleton" />
   <common-banner
+    v-else
+    ref="bannerSection"
     :background-image="'/frontend/assets/img/about-bg.png'"
     :heading="'Issues'"
     :breadcrumbs="[
@@ -10,14 +14,20 @@
     ]"
     key="issues"
   />
-  <!-- banner section End here -->
 
-  <!-- Issuesd Around Us Section Start Here -->
+  <!-- Issues Around Us Section Start Here -->
   <div class="issues-around-us-section margin-top-120">
     <div class="container">
-      <div class="row justify-content-center">
+      <!-- Section Title with Skeleton -->
+      <div class="row justify-content-center" ref="titleSection">
         <div class="col-lg-6">
-          <div class="section-title">
+          <GenericSectionSkeleton
+            v-if="shouldShowTitleSkeleton"
+            layout="default"
+            :height="120"
+            class="title-skeleton"
+          />
+          <div v-else class="section-title">
             <h4 class="title wow animate__animated animate__fadeInUp">
               <a href="#">Issues Around Us</a>
             </h4>
@@ -28,16 +38,37 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6" v-for="(item, idx) in issues?.data?.data" :key="idx">
-          <IssueItem
-            :item="item"
-          />
+
+      <!-- Issues Grid with Skeleton -->
+      <div class="row" ref="issuesSection">
+        <GenericSectionSkeleton
+          v-if="shouldShowIssuesSkeleton"
+          layout="cards"
+          :gridCols="2"
+          :cardCount="6"
+          class="issues-skeleton"
+        />
+        <div
+          v-else
+          class="col-md-6"
+          v-for="(item, idx) in issues?.data?.data"
+          :key="idx"
+        >
+          <IssueItem :item="item" />
         </div>
       </div>
-      <div class="row justify-content-center">
+
+      <!-- Pagination with Skeleton -->
+      <div class="row justify-content-center" ref="paginationSection">
         <div class="col-lg-8 col-md-10 col-12">
-          <Pagination 
+          <GenericSectionSkeleton
+            v-if="shouldShowPaginationSkeleton"
+            layout="default"
+            :height="60"
+            class="pagination-skeleton"
+          />
+          <Pagination
+            v-else
             :currentPage="issues?.data?.current_page || 1"
             :totalPages="issues?.data?.last_page || 1"
             @prev="goToPage(issues?.data?.current_page - 1)"
@@ -48,13 +79,21 @@
       </div>
     </div>
   </div>
-  <!-- Issuesd Around Us Section Start Here -->
+  <!-- Issues Around Us Section End Here -->
 </template>
 
 <script>
 import { Head } from "@inertiajs/vue3";
+import { usePageSkeleton } from "../../../composables/usePageSkeleton.js";
+import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
+
+// Skeleton Components
+import BannerSkeleton from "../../../CommonComponents/Skeletons/BannerSkeleton.vue";
+import GenericSectionSkeleton from "../../../CommonComponents/Skeletons/GenericSectionSkeleton.vue";
+
 import Pagination from "../../../CommonComponents/Pagination.vue";
 import IssueItem from "./IssueItem.vue";
 
@@ -65,62 +104,99 @@ export default {
   components: {
     NavbarArea,
     CommonBanner,
+    BannerSkeleton,
+    GenericSectionSkeleton,
     Pagination,
     IssueItem,
+  },
+  setup() {
+    const {
+      loading,
+      sectionLoadingStates,
+      initializeSectionStates,
+      setupIntersectionObserver,
+      observeElements,
+      enableScrollPersistence,
+      cleanup,
+      shouldShowSkeleton,
+    } = usePageSkeleton();
+
+    // Section visibility states
+    const isBannerVisible = ref(false);
+    const isTitleVisible = ref(false);
+    const isIssuesVisible = ref(false);
+    const isPaginationVisible = ref(false);
+
+    // Section refs
+    const bannerSection = ref(null);
+    const titleSection = ref(null);
+    const issuesSection = ref(null);
+    const paginationSection = ref(null);
+
+    // Initialize section states
+    const sections = ["banner", "title", "issues", "pagination"];
+    initializeSectionStates(sections);
+
+    let scrollCleanup = null;
+
+    onMounted(async () => {
+      // Setup intersection observer
+      const sectionVisibility = {
+        banner: isBannerVisible,
+        title: isTitleVisible,
+        issues: isIssuesVisible,
+        pagination: isPaginationVisible,
+      };
+
+      setupIntersectionObserver(null, sectionVisibility);
+
+      await nextTick();
+
+      // Observe elements
+      const elements = [
+        bannerSection.value,
+        titleSection.value,
+        issuesSection.value,
+        paginationSection.value,
+      ];
+      observeElements(elements);
+
+      // Enable scroll persistence
+      scrollCleanup = enableScrollPersistence("issues");
+
+      // Additional restore attempt after everything is mounted
+      setTimeout(() => {
+        if (scrollCleanup) {
+          scrollCleanup();
+          scrollCleanup = enableScrollPersistence("issues");
+        }
+      }, 300);
+    });
+
+    onUnmounted(() => {
+      cleanup();
+      if (scrollCleanup) {
+        scrollCleanup();
+      }
+    });
+
+    return {
+      loading,
+      sectionLoadingStates,
+      isBannerVisible,
+      isTitleVisible,
+      isIssuesVisible,
+      isPaginationVisible,
+      bannerSection,
+      titleSection,
+      issuesSection,
+      paginationSection,
+      shouldShowSkeleton,
+    };
   },
   data() {
     return {
       current: 1,
-      // issues: [
-      //   {
-      //     img: "/frontend/assets/img/modern-building.png",
-      //     title: "Jobs and Economy",
-      //     url: "/pages/issues/details",
-      //     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-      //   },
-      //   {
-      //     img: "/frontend/assets/img/doctors-check.png",
-      //     title: "Medcare and Social Security",
-      //     url: "/pages/issues/details",
-      //     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-      //   },
-      //   {
-      //     img: "/frontend/assets/img/community-services.png",
-      //     title: "Environment",
-      //     url: "/pages/issues/details",
-      //     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-      //   },
-      //   {
-      //     img: "/frontend/assets/img/balancing-budget.png",
-      //     title: "Balancing the Budget",
-      //     url: "/pages/issues/details",
-      //     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-      //   },
-      //   {
-      //     img: "/frontend/assets/img/criminal-judges.png",
-      //     title: "Criminal Justice",
-      //     url: "/pages/issues/details",
-      //     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-      //   },
-      //   {
-      //     img: "/frontend/assets/img/vaterans.png",
-      //     title: "Veterans",
-      //     url: "/pages/issues/details",
-      //     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-      //   },
-      //   {
-      //     img: "/frontend/assets/img/educaition.png",
-      //     title: "Education",
-      //     url: "/pages/issues/details",
-      //     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-      //   },
-      //   {
-      //     img: "/frontend/assets/img/feminist-02.png",
-      //     title: "Women's Equality",
-      //     url: "/pages/issues/details",
-      //     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-      //   },
-      // ],
     };
   },
   watched: {
@@ -142,11 +218,37 @@ export default {
       this.fetchAllIssuesPageData({ page });
     },
   },
-  created: async function () {
-    await this.fetchAllIssuesPageData();
-  },
   computed: {
     ...mapState(issues_store, ["issues"]),
+    shouldShowBannerSkeleton() {
+      return this.loading;
+    },
+    shouldShowTitleSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isTitleVisible,
+        computed(() => true), // Title is always available
+        "title"
+      ).value;
+    },
+    shouldShowIssuesSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isIssuesVisible,
+        computed(() => this.issues?.data?.data),
+        "issues"
+      ).value;
+    },
+    shouldShowPaginationSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isPaginationVisible,
+        computed(() => this.issues?.data?.last_page),
+        "pagination"
+      ).value;
+    },
+  },
+  async created() {
+    this.loading = true;
+    await this.fetchAllIssuesPageData();
+    this.loading = false;
   },
 };
 </script>

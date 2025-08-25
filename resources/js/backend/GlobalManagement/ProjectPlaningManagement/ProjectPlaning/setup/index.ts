@@ -48,7 +48,7 @@ const setup: setup_type = {
         "id",
         "image",
         "planning_steps",
-            "statistics",
+        "statistics",
         "status",
         "created_at",
     ],

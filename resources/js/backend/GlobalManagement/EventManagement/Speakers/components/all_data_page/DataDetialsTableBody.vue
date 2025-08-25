@@ -20,6 +20,24 @@
             />
           </a>
         </template>
+        <template v-else-if="isArrayField(item[row_item])">
+          <div v-if="row_item === 'social_link'">
+            <div v-for="(data, index) in item[row_item]" :key="index">
+              <div class="content mb-2 border rounded p-2">
+                <div class="">
+                  *
+                  <i v-if="data.icon" :class="data.icon"></i>
+                </div>
+                <div class="">* {{ data.link }}</div>
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            <pre class="array-preview">{{
+              JSON.stringify(item[row_item], null, 2)
+            }}</pre>
+          </div>
+        </template>
         <template v-else>
           {{ trim_content(item[row_item], row_item) }}
         </template>
@@ -134,6 +152,9 @@ export default {
       }
 
       return content || "";
+    },
+    isArrayField(content) {
+      return Array.isArray(content) && content.length > 0;
     },
   },
 };

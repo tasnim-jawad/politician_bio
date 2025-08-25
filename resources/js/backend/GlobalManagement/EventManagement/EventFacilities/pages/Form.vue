@@ -35,6 +35,7 @@
               :name="'event_id'"
               :multiple="false"
               :value="item.event_id"
+              @change="handleEventChange"
             />
             <template
               v-for="(form_field, index) in form_fields"
@@ -187,6 +188,7 @@ export default {
     param_id: null,
     errors: {},
     icons: iconList,
+    isLoadingEventData: false, // Flag to prevent duplicate API calls
 
     //----------- for facility list input ----------
 
@@ -216,8 +218,107 @@ export default {
       update: "update",
       details: "details",
       get_all: "get_all",
+      get_by_event_id: "get_by_event_id",
       set_only_latest_data: "set_only_latest_data",
     }),
+    loadEventData: async function (eventId) {
+      // Prevent duplicate API calls
+      if (this.isLoadingEventData) {
+        return null;
+      }
+
+      this.isLoadingEventData = true;
+
+      try {
+        const eventData = await this.get_by_event_id(eventId);
+
+        if (eventData && eventData.facility) {
+          // Load existing facility data for this event
+          this.facility_data = eventData.facility.map((facility) => ({
+            icon: facility.icon || "",
+            title: facility.title || "",
+          }));
+
+          // Also load other form fields if they exist in the response
+          this.form_fields.forEach((field, index) => {
+            if (eventData[field.name] !== undefined) {
+              this.form_fields[index].value = eventData[field.name];
+            }
+            // If the field is a textarea, set its summernote content dynamically
+            if (field.type === "textarea" && eventData[field.name]) {
+              $(`#${field.name}`).summernote("code", eventData[field.name]);
+            }
+          });
+
+          window.s_alert("Loaded existing data for this event", "info");
+        } else {
+          // No existing data for this event, reset to default
+          this.facility_data = [{ ...this.facility_data_object }];
+
+          // Reset all form fields when no existing data is found
+          this.form_fields.forEach((field, index) => {
+            this.form_fields[index].value = "";
+            // Clear summernote editors for textarea fields
+            if (field.type === "textarea" && $(`#${field.name}`).length) {
+              $(`#${field.name}`).summernote("code", "");
+            }
+          });
+        }
+
+        // Return the event data so caller can check if it exists
+        return eventData;
+      } catch (error) {
+        console.error("Error loading event data:", error);
+        // Reset to default if there's an error
+        this.facility_data = [{ ...this.facility_data_object }];
+        return null;
+      } finally {
+        this.isLoadingEventData = false;
+      }
+    },
+    handleEventChange: async function (eventId) {
+      // Prevent duplicate calls by clearing any existing timeout
+      if (this.eventChangeTimeout) {
+        clearTimeout(this.eventChangeTimeout);
+      }
+
+      // Debounce the event change to prevent multiple rapid calls
+      this.eventChangeTimeout = setTimeout(async () => {
+        // If eventId is an Event object, extract the ID from the target
+        this.param_id = null; // Reset param_id when event changes
+        let actualEventId = eventId;
+        if (eventId && typeof eventId === "object" && eventId.target) {
+          // For checkbox inputs, extract the ID from the element's id attribute
+          if (eventId.target.type === "checkbox" && eventId.target.id) {
+            // Extract number from ID like "drop_item_98" -> "98"
+            const match = eventId.target.id.match(/drop_item_(\d+)/);
+            if (match) {
+              actualEventId = match[1];
+            }
+          } else {
+            // For other input types, use the value
+            actualEventId = eventId.target.value;
+          }
+        }
+        if (!this.param_id && actualEventId) {
+          // Only load data when creating new record (not editing)
+          const eventData = await this.loadEventData(actualEventId);
+
+          // If data exists for this event, update param_id to switch to update mode
+          if (eventData && eventData.slug) {
+            this.param_id = eventData.slug;
+          }
+
+          // Update the event_id field value
+          const eventField = this.form_fields.find(
+            (field) => field.name === "event_id"
+          );
+          if (eventField) {
+            eventField.value = actualEventId;
+          }
+        }
+      }, 300); // 300ms debounce delay
+    },
     reset_fields: function () {
       this.form_fields.forEach((item) => {
         item.value = "";
@@ -245,7 +346,7 @@ export default {
         if (this.item.facility) {
           this.facility_data = this.item.facility.map((facility) => ({
             icon: facility.icon,
-            link: facility.link,
+            title: facility.title,
           }));
         }
       }
@@ -263,7 +364,10 @@ export default {
         // await this.get_all();
         if ([200, 201].includes(response.status)) {
           window.s_alert("Data successfully updated");
-          this.$router.push({ name: `Details${this.setup.route_prefix}` });
+          this.$router.push({
+            name: `Details${this.setup.route_prefix}`,
+            params: { id: this.param_id },
+          });
         }
       } else {
         this.setSummerEditor();
@@ -272,9 +376,14 @@ export default {
         if ([200, 201].includes(response.status)) {
           $event.target.reset();
 
+          // Reset form fields
+          this.form_fields.forEach((item) => {
+            item.value = "";
+          });
+
           // Reset JSON data arrays
-            this.facility_data = [{ ...this.facility_data_object }];
-          
+          this.facility_data = [{ ...this.facility_data_object }];
+
           // Clear summernote editors for all textarea fields
           this.form_fields.forEach((field) => {
             if (field.type === "textarea" && $(`#${field.name}`).length) {
@@ -304,9 +413,9 @@ export default {
           $input.val(markupStr);
         }
       });
-      },
+    },
 
-        //add row for json data
+    //add row for json data
     add_row: function (field_name) {
       if (field_name === "facility") {
         this.facility_data.push({
@@ -323,9 +432,9 @@ export default {
         }
         this.facility_data.splice(index, 1);
       }
-      },
+    },
 
-      //validation for social link empty data
+    //validation for social link empty data
     validate_data: function () {
       this.errors = [];
       let valid = true;

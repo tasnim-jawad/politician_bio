@@ -1,8 +1,12 @@
 <template>
   <Head :title="event.title" />
   <NavbarArea />
-  <!-- banner section start here -->
+
+  <!-- Banner Section with Skeleton -->
+  <BannerSkeleton v-if="shouldShowBannerSkeleton" />
   <common-banner
+    v-else
+    ref="bannerSection"
     :background-image="'/frontend/assets/img/about-bg.png'"
     :heading="'Donations'"
     :breadcrumbs="[
@@ -11,14 +15,20 @@
     ]"
     key="donation"
   />
-  <!-- banner section End here -->
 
-  <!-- Dontaion items Section Start Here -->
+  <!-- Donation items Section Start Here -->
   <div class="issues-around-us-section">
     <div class="container">
-      <div class="row justify-content-center">
+      <!-- Section Title with Skeleton -->
+      <div class="row justify-content-center" ref="titleSection">
         <div class="col-lg-6">
-          <div class="section-title">
+          <GenericSectionSkeleton
+            v-if="shouldShowTitleSkeleton"
+            layout="default"
+            :height="120"
+            class="title-skeleton"
+          />
+          <div v-else class="section-title">
             <h4 class="title wow animate__animated animate__fadeInUp">
               Donation Programs
             </h4>
@@ -29,11 +39,20 @@
           </div>
         </div>
       </div>
-      <!-- <p>{{ donations.data.last_page }}</p> -->
-      <div class="row">
+
+      <!-- Donation Cards with Skeleton -->
+      <div class="row" ref="donationsSection">
+        <GenericSectionSkeleton
+          v-if="shouldShowDonationsSkeleton"
+          layout="cards"
+          :gridCols="2"
+          :cardCount="4"
+          class="donations-skeleton"
+        />
         <div
+          v-else
           class="col-lg-6"
-          v-for="(donation,index) in donations.data.data"
+          v-for="(donation, index) in donations.data.data"
           :key="index"
         >
           <donation-single-item
@@ -46,9 +65,18 @@
           />
         </div>
       </div>
-      <div class="row justify-content-center">
+
+      <!-- Pagination with Skeleton -->
+      <div class="row justify-content-center" ref="paginationSection">
         <div class="col-lg-8 col-md-10 col-12">
-          <Pagination 
+          <GenericSectionSkeleton
+            v-if="shouldShowPaginationSkeleton"
+            layout="default"
+            :height="60"
+            class="pagination-skeleton"
+          />
+          <Pagination
+            v-else
             :currentPage="donations.data.current_page || 1"
             :totalPages="donations.data.last_page || 1"
             @prev="goToPage(donations.data.current_page - 1)"
@@ -59,15 +87,24 @@
       </div>
     </div>
   </div>
-  <!-- Donation Items Section Start Here -->
+  <!-- Donation Items Section End Here -->
 </template>
 <script>
 import { Head } from "@inertiajs/vue3";
+import { usePageSkeleton } from "../../composables/usePageSkeleton.js";
+import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+
 import NavbarArea from "../../CommonComponents/NavbarArea.vue";
+import CommonBanner from "../../CommonComponents/CommonBanner.vue";
+
+// Skeleton Components
+import BannerSkeleton from "../../CommonComponents/Skeletons/BannerSkeleton.vue";
+import GenericSectionSkeleton from "../../CommonComponents/Skeletons/GenericSectionSkeleton.vue";
+
 import Pagination from "../../CommonComponents/Pagination.vue";
 import Donation from "../../GlobalComponent/Donation.vue";
 import DonationSingleItem from "./components/DonationSingleItem.vue";
-import CommonBanner from "../../CommonComponents/CommonBanner.vue";
+
 import { mapActions, mapState } from "pinia";
 import { store as donation_store } from "./Store/donation_store.js";
 
@@ -81,6 +118,93 @@ export default {
     DonationSingleItem,
     Donation,
     CommonBanner,
+    BannerSkeleton,
+    GenericSectionSkeleton,
+  },
+  setup() {
+    const {
+      loading,
+      sectionLoadingStates,
+      initializeSectionStates,
+      setupIntersectionObserver,
+      observeElements,
+      enableScrollPersistence,
+      cleanup,
+      shouldShowSkeleton,
+    } = usePageSkeleton();
+
+    // Section visibility states
+    const isBannerVisible = ref(false);
+    const isTitleVisible = ref(false);
+    const isDonationsVisible = ref(false);
+    const isPaginationVisible = ref(false);
+
+    // Section refs
+    const bannerSection = ref(null);
+    const titleSection = ref(null);
+    const donationsSection = ref(null);
+    const paginationSection = ref(null);
+
+    // Initialize section states
+    const sections = ["banner", "title", "donations", "pagination"];
+    initializeSectionStates(sections);
+
+    let scrollCleanup = null;
+
+    onMounted(async () => {
+      // Setup intersection observer
+      const sectionVisibility = {
+        banner: isBannerVisible,
+        title: isTitleVisible,
+        donations: isDonationsVisible,
+        pagination: isPaginationVisible,
+      };
+
+      setupIntersectionObserver(null, sectionVisibility);
+
+      await nextTick();
+
+      // Observe elements
+      const elements = [
+        bannerSection.value,
+        titleSection.value,
+        donationsSection.value,
+        paginationSection.value,
+      ];
+      observeElements(elements);
+
+      // Enable scroll persistence
+      scrollCleanup = enableScrollPersistence("donations");
+
+      // Additional restore attempt after everything is mounted
+      setTimeout(() => {
+        if (scrollCleanup) {
+          scrollCleanup();
+          scrollCleanup = enableScrollPersistence("donations");
+        }
+      }, 300);
+    });
+
+    onUnmounted(() => {
+      cleanup();
+      if (scrollCleanup) {
+        scrollCleanup();
+      }
+    });
+
+    return {
+      loading,
+      sectionLoadingStates,
+      isBannerVisible,
+      isTitleVisible,
+      isDonationsVisible,
+      isPaginationVisible,
+      bannerSection,
+      titleSection,
+      donationsSection,
+      paginationSection,
+      shouldShowSkeleton,
+    };
   },
   data() {
     return {
@@ -93,7 +217,6 @@ export default {
         console.log("newVal page updated to:", this.donations);
         if (newVal && newVal.data && newVal.data.length > 0) {
           this.current = newVal.current_page || 1;
-          
         }
       },
       immediate: true,
@@ -107,15 +230,37 @@ export default {
       this.fetchAllDonationPageData({ page });
     },
   },
-  created:async function () {
-    await this.fetchAllDonationPageData();
-  },
   computed: {
-    ...mapState(donation_store, [
-      "donations",
-      "loading", 
-      "error"
-    ]),
+    ...mapState(donation_store, ["donations", "loading", "error"]),
+    shouldShowBannerSkeleton() {
+      return this.loading;
+    },
+    shouldShowTitleSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isTitleVisible,
+        computed(() => true), // Title is always available
+        "title"
+      ).value;
+    },
+    shouldShowDonationsSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isDonationsVisible,
+        computed(() => this.donations?.data?.data),
+        "donations"
+      ).value;
+    },
+    shouldShowPaginationSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isPaginationVisible,
+        computed(() => this.donations?.data?.last_page),
+        "pagination"
+      ).value;
+    },
+  },
+  async created() {
+    this.loading = true;
+    await this.fetchAllDonationPageData();
+    this.loading = false;
   },
 };
 </script>

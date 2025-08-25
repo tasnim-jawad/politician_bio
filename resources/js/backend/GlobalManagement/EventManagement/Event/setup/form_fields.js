@@ -42,7 +42,7 @@ export default [
 	},
 
 	{
-		name: "location_link (Embed URL or Iframe HTML Code)",
+		name: "location_link",
 		label: "Enter your location link (Embed URL or Iframe HTML Code)",
 		type: "text",
 		value: "",

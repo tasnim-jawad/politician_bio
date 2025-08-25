@@ -79,7 +79,7 @@ export const useNewsletterStore = defineStore("newsletter", {
         });
         
         if (response.data.status === "success") {
-          this.successMessage = "Thank you for subscribing to our newsletter!";
+          this.successMessage = "Thank you for subscribing to our newsletter. We’re delighted to keep you updated with our latest news and insights.";
           this.email = ""; // Clear the form
           
           // Auto-hide success message after 3 seconds

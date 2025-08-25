@@ -1,7 +1,5 @@
 <template>
-  <Head :title="event.title">
-    
-  </Head>
+  <Head :title="event.title"> </Head>
   <!-- Header Single Section Start here -->
   <!-- Header Single Section Start here -->
   <div class="header-style-05">
@@ -10,14 +8,7 @@
     <!-- Mobile Supported Navbar End -->
     <!-- Banner Section Area Start Here -->
     <!-- Banner Section Area Start Here -->
-    <Suspense>
-      <template #default>
-        <BannerSection v-if="banner" :data="banner" />
-      </template>
-      <template #fallback>
-        <div class="banner-skeleton">Loading banner...</div>
-      </template>
-    </Suspense>
+    <BannerSection :data="banner" :isLoading="bannerLoading" />
     <!-- Banner Section Area End Here -->
     <!-- Banner Section Area End Here -->
   </div>
@@ -27,18 +18,12 @@
   <!-- Services Single Section Start here -->
   <!-- Services Single Section Start here -->
   <div ref="servicesSection">
-    <Suspense>
-      <template #default>
-        <ServiceSection
-          v-if="isServicesVisible && services.length > 0"
-          :serviceMarginTop="'100px'"
-          :serviceItems="services"
-        />
-      </template>
-      <template #fallback>
-        <div class="section-skeleton">Loading services...</div>
-      </template>
-    </Suspense>
+    <ServiceSectionSkeleton v-if="shouldShowServicesSkeleton" />
+    <ServiceSection
+      v-else-if="isServicesVisible && services && services.length > 0"
+      :serviceMarginTop="'100px'"
+      :serviceItems="services"
+    />
   </div>
   <!-- Services Single Section Start here -->
   <!-- Services Single Section Start here -->
@@ -46,20 +31,14 @@
   <!-- Why Choose us secion Start here -->
   <!-- Why Choose us secion Start here -->
   <div ref="whyChooseSection">
-    <Suspense>
-      <template #default>
-        <WhyChoseUs
-          v-if="isWhyChooseVisible"
-          :position="'right'"
-          :main-bg="'/frontend/assets/img/group-activity-02.png'"
-          :side-bg="'/frontend/assets/img/ceo.png'"
-          :whyChooseItems="whyChoseUs"
-        />
-      </template>
-      <template #fallback>
-        <div class="section-skeleton">Loading why choose us...</div>
-      </template>
-    </Suspense>
+    <WhyChoseUsSkeleton v-if="shouldShowWhyChooseSkeleton" />
+    <WhyChoseUs
+      v-else-if="isWhyChooseVisible && whyChoseUs && whyChoseUs.length > 0"
+      :position="'right'"
+      :main-bg="'/frontend/assets/img/group-activity-02.png'"
+      :side-bg="'/frontend/assets/img/ceo.png'"
+      :whyChooseItems="whyChoseUs"
+    />
   </div>
   <!-- Why Choose us secion End here -->
   <!-- Why Choose us secion End here -->
@@ -67,17 +46,11 @@
   <!-- Our Principle Section Start here -->
   <!-- Our Principle Section Start here -->
   <div ref="principlesSection">
-    <Suspense>
-      <template #default>
-        <OurPrinciple
-          v-if="isPrinciplesVisible && principles.length > 0"
-          :principleItems="principles"
-        />
-      </template>
-      <template #fallback>
-        <div class="section-skeleton">Loading principles...</div>
-      </template>
-    </Suspense>
+    <OurPrincipleSkeleton v-if="shouldShowPrinciplesSkeleton" />
+    <OurPrinciple
+      v-else-if="isPrinciplesVisible && principles && principles.length > 0"
+      :principleItems="principles"
+    />
   </div>
   <!-- Our Principle Section End here -->
   <!-- Our Principle Section End here -->
@@ -85,17 +58,11 @@
   <!-- Our Journey Section Start Here -->
   <!-- Our Journey Section Start Here -->
   <div ref="journeySection">
-    <Suspense>
-      <template #default>
-        <OurJourney
-          v-if="isJourneyVisible && ourJourney.length > 0"
-          :journeyItems="ourJourney"
-        />
-      </template>
-      <template #fallback>
-        <div class="section-skeleton">Loading journey...</div>
-      </template>
-    </Suspense>
+    <OurJourneySkeleton v-if="shouldShowJourneySkeleton" />
+    <OurJourney
+      v-else-if="isJourneyVisible && ourJourney && ourJourney.length > 0"
+      :journeyItems="ourJourney"
+    />
   </div>
   <!-- Our Journey Section End Here -->
   <!-- Our Journey Section End Here -->
@@ -103,17 +70,11 @@
   <!-- Media section Start here -->
   <!-- Media section Start here -->
   <div ref="mediaSection">
-    <Suspense>
-      <template #default>
-        <MediaCoverage
-          v-if="isMediaVisible && mediaCoverages"
-          :mediaItems="mediaCoverages"
-        />
-      </template>
-      <template #fallback>
-        <div class="section-skeleton">Loading media coverage...</div>
-      </template>
-    </Suspense>
+    <MediaCoverageSkeleton v-if="shouldShowMediaSkeleton" />
+    <MediaCoverage
+      v-else-if="isMediaVisible && mediaCoverages"
+      :mediaItems="mediaCoverages"
+    />
   </div>
   <!-- Media section end here -->
   <!-- Media section end here -->
@@ -121,14 +82,8 @@
   <!-- Donation Section Start -->
   <!-- Donation Section Start -->
   <div ref="donationSection">
-    <Suspense>
-      <template #default>
-        <Donation v-if="isDonationVisible" />
-      </template>
-      <template #fallback>
-        <div class="section-skeleton">Loading donation...</div>
-      </template>
-    </Suspense>
+    <DonationSkeleton v-if="shouldShowDonationSkeleton" />
+    <Donation v-else-if="isDonationVisible" />
   </div>
   <!-- Donation Section End -->
   <!-- Donation Section End -->
@@ -136,17 +91,11 @@
   <!-- Testimonial Section-02 Start -->
   <!-- Testimonial Section-02 Start -->
   <div ref="testimonialSection">
-    <Suspense>
-      <template #default>
-        <Testimonial
-          v-if="isTestimonialVisible && comments"
-          :comments="comments"
-        />
-      </template>
-      <template #fallback>
-        <div class="section-skeleton">Loading testimonials...</div>
-      </template>
-    </Suspense>
+    <TestimonialSkeleton v-if="shouldShowTestimonialSkeleton" />
+    <Testimonial
+      v-else-if="isTestimonialVisible && comments"
+      :comments="comments"
+    />
   </div>
   <!-- Testimonial Secition-02 End -->
   <!-- Testimonial Secition-02 End -->
@@ -154,18 +103,12 @@
   <!-- News Section Start -->
   <!-- News Section Start -->
   <div ref="newsSection">
-    <Suspense>
-      <template #default>
-        <News
-          v-if="isNewsVisible && news"
-          :lead_news="news.lead_news"
-          :side_news="news.side_news"
-        />
-      </template>
-      <template #fallback>
-        <div class="section-skeleton">Loading news...</div>
-      </template>
-    </Suspense>
+    <NewsSkeleton v-if="shouldShowNewsSkeleton" />
+    <News
+      v-else-if="isNewsVisible && news"
+      :lead_news="news.lead_news"
+      :side_news="news.side_news"
+    />
   </div>
   <!-- News Section End  -->
   <!-- News Section End  -->
@@ -192,11 +135,19 @@ import { defineAsyncComponent } from "vue";
 import Header from "../../Shared/Header.vue";
 import BackToTop from "../../CommonComponents/BackToTop.vue";
 import VotePooll from "../../CommonComponents/VotePooll.vue";
+import BannerSection from "./Components/BannerSection.vue";
+
+// Skeleton components
+import ServiceSectionSkeleton from "./Components/Skeletons/ServiceSectionSkeleton.vue";
+import WhyChoseUsSkeleton from "./Components/Skeletons/WhyChoseUsSkeleton.vue";
+import OurPrincipleSkeleton from "./Components/Skeletons/OurPrincipleSkeleton.vue";
+import OurJourneySkeleton from "./Components/Skeletons/OurJourneySkeleton.vue";
+import MediaCoverageSkeleton from "./Components/Skeletons/MediaCoverageSkeleton.vue";
+import DonationSkeleton from "./Components/Skeletons/DonationSkeleton.vue";
+import TestimonialSkeleton from "./Components/Skeletons/TestimonialSkeleton.vue";
+import NewsSkeleton from "./Components/Skeletons/NewsSkeleton.vue";
 
 // Lazy loaded components
-const BannerSection = defineAsyncComponent(() =>
-  import("./Components/BannerSection.vue")
-);
 const ServiceSection = defineAsyncComponent(() =>
   import("../../GlobalComponent/ServiceSection.vue")
 );
@@ -244,6 +195,15 @@ export default {
     News,
     VotePooll,
     BackToTop,
+    // Skeleton components
+    ServiceSectionSkeleton,
+    WhyChoseUsSkeleton,
+    OurPrincipleSkeleton,
+    OurJourneySkeleton,
+    MediaCoverageSkeleton,
+    DonationSkeleton,
+    TestimonialSkeleton,
+    NewsSkeleton,
   },
   data() {
     return {
@@ -256,6 +216,21 @@ export default {
       isTestimonialVisible: false,
       isNewsVisible: false,
       observer: null,
+      // Skeleton timing control
+      sectionLoadingStates: {
+        services: true,
+        whyChoose: true,
+        principles: true,
+        journey: true,
+        media: true,
+        donation: true,
+        testimonial: true,
+        news: true,
+      },
+      skeletonMinTime: 2000, // 2 seconds
+      // Scroll persistence helpers
+      scrollSaveThrottle: 50, // reduced to save more frequently
+      lastScrollSave: 0,
     };
   },
   methods: {
@@ -276,27 +251,35 @@ export default {
             switch (target) {
               case this.$refs.servicesSection:
                 this.isServicesVisible = true;
+                this.startSectionTimer("services");
                 break;
               case this.$refs.whyChooseSection:
                 this.isWhyChooseVisible = true;
+                this.startSectionTimer("whyChoose");
                 break;
               case this.$refs.principlesSection:
                 this.isPrinciplesVisible = true;
+                this.startSectionTimer("principles");
                 break;
               case this.$refs.journeySection:
                 this.isJourneyVisible = true;
+                this.startSectionTimer("journey");
                 break;
               case this.$refs.mediaSection:
                 this.isMediaVisible = true;
+                this.startSectionTimer("media");
                 break;
               case this.$refs.donationSection:
                 this.isDonationVisible = true;
+                this.startSectionTimer("donation");
                 break;
               case this.$refs.testimonialSection:
                 this.isTestimonialVisible = true;
+                this.startSectionTimer("testimonial");
                 break;
               case this.$refs.newsSection:
                 this.isNewsVisible = true;
+                this.startSectionTimer("news");
                 break;
             }
 
@@ -307,6 +290,16 @@ export default {
       };
 
       this.observer = new IntersectionObserver(observerCallback, options);
+    },
+
+    startSectionTimer(sectionName) {
+      console.log(
+        `Starting ${sectionName} skeleton timer for ${this.skeletonMinTime}ms`
+      );
+      setTimeout(() => {
+        console.log(`${sectionName} skeleton timer completed`);
+        this.sectionLoadingStates[sectionName] = false;
+      }, this.skeletonMinTime);
     },
 
     observeElements() {
@@ -327,6 +320,143 @@ export default {
         }
       });
     },
+
+    // Persist scroll position across page reloads for this page
+    saveScrollPosition() {
+      try {
+        sessionStorage.setItem(
+          "home_scroll_pos",
+          String(window.scrollY || window.pageYOffset || 0)
+        );
+      } catch (e) {
+        // ignore storage errors
+      }
+    },
+
+    // Simple restore (kept for backwards compatibility)
+    restoreScrollPosition() {
+      try {
+        const pos = sessionStorage.getItem("home_scroll_pos");
+        if (pos !== null) {
+          let y = parseInt(pos, 10);
+          if (!Number.isNaN(y)) {
+            const maxScroll = Math.max(
+              0,
+              document.documentElement.scrollHeight - window.innerHeight
+            );
+            if (y > maxScroll) y = maxScroll;
+            window.scrollTo({ top: y, behavior: "auto" });
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
+    },
+
+    // Robust restore that retries until layout stabilizes or max attempts reached
+    restoreScrollPositionWithRetries() {
+      try {
+        const pos = sessionStorage.getItem("home_scroll_pos");
+        if (pos === null) return;
+        const yDesired = parseInt(pos, 10);
+        if (Number.isNaN(yDesired)) return; // Allow 0 position
+
+        console.log(`Attempting to restore scroll position to: ${yDesired}px`);
+
+        const maxAttempts = 15; // reduced attempts to avoid conflicts
+        const intervalMs = 150; // increased interval
+        let attempts = 0;
+        let timer;
+
+        const attempt = () => {
+          attempts++;
+
+          const maxScroll = Math.max(
+            0,
+            document.documentElement.scrollHeight - window.innerHeight
+          );
+          const target = Math.min(Math.max(0, yDesired), maxScroll);
+          const currentScroll = window.scrollY || window.pageYOffset || 0;
+
+          // Only scroll if we're not already at the target
+          if (Math.abs(currentScroll - target) > 5) {
+            console.log(
+              `Attempt ${attempts}: scrolling to ${target}px (current: ${currentScroll}px, max: ${maxScroll}px)`
+            );
+            window.scrollTo({ top: target, behavior: "auto" });
+          }
+
+          // Check if we're close enough or reached max attempts
+          const newScroll = window.scrollY || window.pageYOffset || 0;
+          if (Math.abs(newScroll - target) <= 5 || attempts >= maxAttempts) {
+            console.log(
+              `Scroll restore complete. Final position: ${newScroll}px`
+            );
+            if (timer) clearInterval(timer);
+            return;
+          }
+        };
+
+        // Single immediate attempt
+        attempt();
+
+        // Continue with interval only if needed
+        if (attempts < maxAttempts) {
+          timer = setInterval(attempt, intervalMs);
+
+          // Ensure cleanup after max time
+          setTimeout(() => {
+            if (timer) clearInterval(timer);
+          }, maxAttempts * intervalMs + 100);
+        }
+      } catch (e) {
+        console.error("Error restoring scroll position:", e);
+      }
+    },
+
+    visibilityChangeHandler() {
+      if (document.visibilityState === "hidden") {
+        this.saveScrollPosition();
+      }
+    },
+
+    onScrollSave() {
+      // Throttled save while user scrolls
+      try {
+        const now = Date.now();
+        if (now - this.lastScrollSave > this.scrollSaveThrottle) {
+          this.lastScrollSave = now;
+          this.saveScrollPosition();
+        }
+      } catch (e) {
+        // ignore
+      }
+    },
+
+    enableScrollPersistence() {
+      // Prevent browser automatic scroll restoration so we control it
+      if ("scrollRestoration" in history) {
+        try {
+          history.scrollRestoration = "manual";
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      window.addEventListener("beforeunload", this.saveScrollPosition);
+      window.addEventListener("unload", this.saveScrollPosition);
+      document.addEventListener(
+        "visibilitychange",
+        this.visibilityChangeHandler
+      );
+      // Save during scroll (throttled) to keep position up-to-date
+      window.addEventListener("scroll", this.onScrollSave, { passive: true });
+      // Also restore after all resources load using the robust retrier
+      window.addEventListener("load", this.restoreScrollPositionWithRetries);
+
+      // Single immediate restore attempt
+      this.restoreScrollPositionWithRetries();
+    },
   },
 
   async created() {
@@ -340,12 +470,37 @@ export default {
     this.$nextTick(() => {
       this.observeElements();
     });
+
+    // Enable scroll persistence so reload keeps the same scroll position
+    this.enableScrollPersistence();
+
+    // Additional restore attempt after everything is mounted
+    setTimeout(() => this.restoreScrollPositionWithRetries(), 300);
   },
 
   beforeUnmount() {
     // Cleanup observers
     if (this.observer) {
       this.observer.disconnect();
+    }
+
+    // Remove scroll persistence listeners
+    window.removeEventListener("beforeunload", this.saveScrollPosition);
+    window.removeEventListener("unload", this.saveScrollPosition);
+    document.removeEventListener(
+      "visibilitychange",
+      this.visibilityChangeHandler
+    );
+    window.removeEventListener("scroll", this.onScrollSave);
+    window.removeEventListener("load", this.restoreScrollPositionWithRetries);
+
+    // Restore default browser behavior
+    if ("scrollRestoration" in history) {
+      try {
+        history.scrollRestoration = "auto";
+      } catch (e) {
+        // ignore
+      }
     }
   },
 
@@ -363,6 +518,79 @@ export default {
       "loading",
       "error",
     ]),
+    bannerLoading() {
+      const isLoading = this.loading || !this.banner;
+      console.log("Index banner loading state:", {
+        storeLoading: this.loading,
+        hasBanner: !!this.banner,
+        finalLoading: isLoading,
+      });
+      return isLoading;
+    },
+    shouldShowServicesSkeleton() {
+      return (
+        this.isServicesVisible &&
+        (this.loading ||
+          !this.services ||
+          this.services.length === 0 ||
+          this.sectionLoadingStates.services)
+      );
+    },
+    shouldShowWhyChooseSkeleton() {
+      return (
+        this.isWhyChooseVisible &&
+        (this.loading ||
+          !this.whyChoseUs ||
+          this.whyChoseUs.length === 0 ||
+          this.sectionLoadingStates.whyChoose)
+      );
+    },
+    shouldShowPrinciplesSkeleton() {
+      return (
+        this.isPrinciplesVisible &&
+        (this.loading ||
+          !this.principles ||
+          this.principles.length === 0 ||
+          this.sectionLoadingStates.principles)
+      );
+    },
+    shouldShowJourneySkeleton() {
+      return (
+        this.isJourneyVisible &&
+        (this.loading ||
+          !this.ourJourney ||
+          this.ourJourney.length === 0 ||
+          this.sectionLoadingStates.journey)
+      );
+    },
+    shouldShowMediaSkeleton() {
+      return (
+        this.isMediaVisible &&
+        (this.loading ||
+          !this.mediaCoverages ||
+          this.sectionLoadingStates.media)
+      );
+    },
+    shouldShowDonationSkeleton() {
+      return (
+        this.isDonationVisible &&
+        (this.loading || this.sectionLoadingStates.donation)
+      );
+    },
+    shouldShowTestimonialSkeleton() {
+      return (
+        this.isTestimonialVisible &&
+        (this.loading ||
+          !this.comments ||
+          this.sectionLoadingStates.testimonial)
+      );
+    },
+    shouldShowNewsSkeleton() {
+      return (
+        this.isNewsVisible &&
+        (this.loading || !this.news || this.sectionLoadingStates.news)
+      );
+    },
   },
 };
 </script>

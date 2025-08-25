@@ -7,9 +7,9 @@
       <th class="text-center">:</th>
       <th class="text-trim">
         <template v-if="row_item === 'image'">
-          <a 
-            :href="item[row_item] || '/avatar.png'" 
-            data-fancybox="detail-gallery" 
+          <a
+            :href="item[row_item] || '/avatar.png'"
+            data-fancybox="detail-gallery"
             :data-caption="`${row_item} - Detail View`"
           >
             <img
@@ -20,6 +20,39 @@
             />
           </a>
         </template>
+        <template v-else-if="isArrayField(item[row_item])">
+          <div v-if="row_item === 'planning_steps'">
+            <div v-for="(data, index) in item[row_item]" :key="index">
+              <div class="content mb-2 border rounded p-2">
+                <div class="">
+                  *
+                  <i v-if="data.icon" :class="data.icon"></i>
+                </div>
+                <div class="">* {{ data.title }}</div>
+                <div class="">* {{ data.description }}</div>
+              </div>
+            </div>
+          </div>
+          <div v-else-if="row_item === 'statistics'">
+            <div v-for="(data, index) in item[row_item]" :key="index">
+              <div class="content mb-2 border rounded p-2">
+                <div class="">
+                  *
+                  <i v-if="data.icon" :class="data.icon"></i>
+                </div>
+                <div class="">* {{ data.number }}</div>
+                <div class="">* {{ data.title }}</div>
+                <div class="">* {{ data.unit }}</div>
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            <pre class="array-preview">{{
+              JSON.stringify(item[row_item], null, 2)
+            }}</pre>
+          </div>
+        </template>
+
         <template v-else>
           {{ trim_content(item[row_item], row_item) }}
         </template>
@@ -62,18 +95,18 @@ export default {
 
   computed: {
     filteredFields() {
-      return setup.select_fields.filter(field => field !== 'deleted_at');
-    }
+      return setup.select_fields.filter((field) => field !== "deleted_at");
+    },
   },
 
   methods: {
     handleImageError(event) {
       // When image fails to load, set src to avatar.png
-      event.target.src = '/avatar.png';
+      event.target.src = "/avatar.png";
       // Also update the parent link href to avatar.png
-      const parentLink = event.target.closest('a');
+      const parentLink = event.target.closest("a");
       if (parentLink) {
-        parentLink.href = '/avatar.png';
+        parentLink.href = "/avatar.png";
       }
     },
 
@@ -134,6 +167,9 @@ export default {
       }
 
       return content || "";
+    },
+    isArrayField(content) {
+      return Array.isArray(content) && content.length > 0;
     },
   },
 };

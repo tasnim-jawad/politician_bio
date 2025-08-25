@@ -1,7 +1,11 @@
 <template>
   <NavbarArea />
-  <!-- banner section start here -->
+
+  <!-- Banner Section with Skeleton -->
+  <BannerSkeleton v-if="shouldShowBannerSkeleton" />
   <common-banner
+    v-else
+    ref="bannerSection"
     :background-image="'/frontend/assets/img/about-bg.png'"
     :heading="'Event details'"
     :breadcrumbs="[
@@ -11,30 +15,78 @@
     ]"
     key="event_details"
   />
-  <!-- banner section End here -->
 
   <!-- Event Content Section Start here -->
-  <event-banner-section v-if="event_details" :event="event_details?.data" />
-  <!-- Event Content Section Start here -->
+  <div ref="eventBannerSection">
+    <GenericSectionSkeleton
+      v-if="shouldShowEventBannerSkeleton"
+      layout="default"
+      :height="400"
+      class="event-banner-skeleton"
+    />
+    <event-banner-section
+      v-else-if="event_details"
+      :event="event_details?.data"
+    />
+  </div>
+  <!-- Event Content Section End here -->
 
-  <!-- speaker Section Start Here -->
-  <speaker-slider v-if="event_details" :speakers="event_details?.data?.event_speakers" />
-  <!-- speaker Section End Here -->
+  <!-- Speaker Section Start Here -->
+  <div ref="speakerSection">
+    <GenericSectionSkeleton
+      v-if="shouldShowSpeakerSkeleton"
+      layout="cards"
+      :gridCols="4"
+      :cardCount="4"
+      class="speaker-skeleton"
+    />
+    <speaker-slider
+      v-else-if="event_details"
+      :speakers="event_details?.data?.event_speakers"
+    />
+  </div>
+  <!-- Speaker Section End Here -->
 
-  <!-- Event Facilities Section Star Here -->
-  <event-facilities-section
-    v-if="event_details"
-    :facilities="event_details?.data?.event_facilities"
-  />
-  <!-- Event Event Section End Here -->
-  <!-- More Issue Section Start Here -->
-  <event-slider v-if="latest_events" :events="latest_events?.data" />
+  <!-- Event Facilities Section Start Here -->
+  <div ref="facilitiesSection">
+    <GenericSectionSkeleton
+      v-if="shouldShowFacilitiesSkeleton"
+      layout="list"
+      :itemCount="6"
+      class="facilities-skeleton"
+    />
+    <event-facilities-section
+      v-else-if="event_details"
+      :facilities="event_details?.data?.event_facilities"
+    />
+  </div>
+  <!-- Event Facilities Section End Here -->
+
   <!-- More Event Section Start Here -->
+  <div ref="moreEventsSection">
+    <GenericSectionSkeleton
+      v-if="shouldShowMoreEventsSkeleton"
+      layout="cards"
+      :gridCols="3"
+      :cardCount="3"
+      class="more-events-skeleton"
+    />
+    <event-slider v-else-if="latest_events" :events="latest_events?.data" />
+  </div>
+  <!-- More Event Section End Here -->
 </template>
 <script>
+import { usePageSkeleton } from "../../../composables/usePageSkeleton.js";
+import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import MyCountdown from "./components/MyCountdown.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
+
+// Skeleton Components
+import BannerSkeleton from "../../../CommonComponents/Skeletons/BannerSkeleton.vue";
+import GenericSectionSkeleton from "../../../CommonComponents/Skeletons/GenericSectionSkeleton.vue";
+
 import EventBannerSection from "./components/EventBannerSection.vue";
 import SpeakerSlider from "../../../GlobalComponent/SpeakerSlider.vue";
 import EventFacilitiesSection from "./components/EventFacilitiesSection.vue";
@@ -48,10 +100,109 @@ export default {
     NavbarArea,
     MyCountdown,
     CommonBanner,
+    BannerSkeleton,
+    GenericSectionSkeleton,
     EventBannerSection,
     SpeakerSlider,
     EventFacilitiesSection,
     EventSlider,
+  },
+  setup() {
+    const {
+      loading,
+      sectionLoadingStates,
+      initializeSectionStates,
+      setupIntersectionObserver,
+      observeElements,
+      enableScrollPersistence,
+      cleanup,
+      shouldShowSkeleton,
+    } = usePageSkeleton();
+
+    // Section visibility states
+    const isBannerVisible = ref(false);
+    const isEventBannerVisible = ref(false);
+    const isSpeakerVisible = ref(false);
+    const isFacilitiesVisible = ref(false);
+    const isMoreEventsVisible = ref(false);
+
+    // Section refs
+    const bannerSection = ref(null);
+    const eventBannerSection = ref(null);
+    const speakerSection = ref(null);
+    const facilitiesSection = ref(null);
+    const moreEventsSection = ref(null);
+
+    // Initialize section states
+    const sections = [
+      "banner",
+      "eventBanner",
+      "speaker",
+      "facilities",
+      "moreEvents",
+    ];
+    initializeSectionStates(sections);
+
+    let scrollCleanup = null;
+
+    onMounted(async () => {
+      // Setup intersection observer
+      const sectionVisibility = {
+        banner: isBannerVisible,
+        eventBanner: isEventBannerVisible,
+        speaker: isSpeakerVisible,
+        facilities: isFacilitiesVisible,
+        moreEvents: isMoreEventsVisible,
+      };
+
+      setupIntersectionObserver(null, sectionVisibility);
+
+      await nextTick();
+
+      // Observe elements
+      const elements = [
+        bannerSection.value,
+        eventBannerSection.value,
+        speakerSection.value,
+        facilitiesSection.value,
+        moreEventsSection.value,
+      ];
+      observeElements(elements);
+
+      // Enable scroll persistence
+      scrollCleanup = enableScrollPersistence("event-details");
+
+      // Additional restore attempt after everything is mounted
+      setTimeout(() => {
+        if (scrollCleanup) {
+          scrollCleanup();
+          scrollCleanup = enableScrollPersistence("event-details");
+        }
+      }, 300);
+    });
+
+    onUnmounted(() => {
+      cleanup();
+      if (scrollCleanup) {
+        scrollCleanup();
+      }
+    });
+
+    return {
+      loading,
+      sectionLoadingStates,
+      isBannerVisible,
+      isEventBannerVisible,
+      isSpeakerVisible,
+      isFacilitiesVisible,
+      isMoreEventsVisible,
+      bannerSection,
+      eventBannerSection,
+      speakerSection,
+      facilitiesSection,
+      moreEventsSection,
+      shouldShowSkeleton,
+    };
   },
   data() {
     return {
@@ -93,7 +244,45 @@ export default {
       ],
     };
   },
-  created: async function () {
+  computed: {
+    ...mapWritableState(event_details_store, [
+      "event_details",
+      "latest_events",
+    ]),
+    shouldShowBannerSkeleton() {
+      return this.loading;
+    },
+    shouldShowEventBannerSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isEventBannerVisible,
+        computed(() => this.event_details?.data),
+        "eventBanner"
+      ).value;
+    },
+    shouldShowSpeakerSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isSpeakerVisible,
+        computed(() => this.event_details?.data?.event_speakers),
+        "speaker"
+      ).value;
+    },
+    shouldShowFacilitiesSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isFacilitiesVisible,
+        computed(() => this.event_details?.data?.event_facilities),
+        "facilities"
+      ).value;
+    },
+    shouldShowMoreEventsSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isMoreEventsVisible,
+        computed(() => this.latest_events?.data),
+        "moreEvents"
+      ).value;
+    },
+  },
+  async created() {
+    this.loading = true;
     const params = new URLSearchParams(window.location.search);
     this.slug = params.get("slug") || "";
     if (this.slug) {
@@ -102,17 +291,12 @@ export default {
     }
     await this.fetchAllEventDetailsPageData();
     console.log("latest_events after fetch:", this.latest_events);
+    this.loading = false;
   },
   methods: {
     ...mapActions(event_details_store, [
       "fetch_event_details",
       "fetchAllEventDetailsPageData",
-    ]),
-  },
-  computed: {
-    ...mapWritableState(event_details_store, [
-      "event_details",
-      "latest_events",
     ]),
   },
 };

@@ -14,7 +14,10 @@
       <td v-if="row_item == 'id'">
         {{ (current_page - 1) * per_page + dataindex + 1 }}
       </td>
-      <td v-else-if="row_item === 'image' || isImageFile(item[row_item])" class="text-wrap max-w-120">
+      <td
+        v-else-if="row_item === 'image' || isImageFile(item[row_item])"
+        class="text-wrap max-w-120"
+      >
         <a
           :href="item[row_item] || '/avatar.png'"
           data-fancybox="gallery"
@@ -54,6 +57,60 @@
             {{ getFileName(item[row_item]) }}
           </a>
         </template>
+      </td>
+      <!-- Render array fields as readable blocks -->
+      <td v-else-if="isArrayField(item[row_item])" class="text-wrap max-w-240">
+        <div v-if="row_item === 'planning_steps'">
+          <div class="content">
+            <div v-if="item[row_item] && item[row_item].length > 0">
+              <i
+                v-if="item[row_item][0].icon"
+                :class="item[row_item][0].icon"
+              ></i>
+              {{ item[row_item][0].title }} -
+              {{ item[row_item][0].description }}
+            </div>
+          </div>
+          <!-- <div
+            v-for="(data, index) in item[row_item]" :key="index"
+          >
+            <div class="content mb-2 border rounded p-2">
+              <div class="">* 
+                <i v-if="data.icon" :class="data.icon"></i>
+              </div>
+              <div class="">* {{ data.title }}</div>
+              <div class="">* {{ data.description }}</div>
+            </div>
+          </div> -->
+        </div>
+        <div v-else-if="row_item === 'statistics'">
+          <div class="content">
+            <div v-if="item[row_item] && item[row_item].length > 0">
+              <i
+                v-if="item[row_item][0].icon"
+                :class="item[row_item][0].icon"
+              ></i>
+              {{ item[row_item][0].number }} -
+              {{ item[row_item][0].title }} -
+              {{ item[row_item][0].unit }}
+            </div>
+          </div>
+          <!-- <div v-for="(data, index) in item[row_item]" :key="index" >
+            <div class="content mb-2 border rounded p-2">
+              <div class="">* 
+                <i v-if="data.icon" :class="data.icon"></i>
+              </div>
+              <div class="">* {{ data.number }}</div>
+              <div class="">* {{ data.title }}</div>
+              <div class="">* {{ data.unit }}</div>
+            </div>
+          </div> -->
+        </div>
+        <div v-else>
+          <pre class="array-preview">{{
+            JSON.stringify(item[row_item], null, 2)
+          }}</pre>
+        </div>
       </td>
       <td v-else class="text-wrap max-w-120">
         {{ trim_content(item[row_item], row_item) }}
@@ -97,11 +154,11 @@ export default {
   methods: {
     handleImageError(event) {
       // When image fails to load, set src to avatar.png
-      event.target.src = '/avatar.png';
+      event.target.src = "/avatar.png";
       // Also update the parent link href to avatar.png
-      const parentLink = event.target.closest('a');
+      const parentLink = event.target.closest("a");
       if (parentLink) {
-        parentLink.href = '/avatar.png';
+        parentLink.href = "/avatar.png";
       }
     },
 
@@ -140,33 +197,45 @@ export default {
 
     isImageFile(content) {
       if (!content || typeof content !== "string") return false;
-      
-      const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
+
+      const imageExtensions = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "webp",
+        "svg",
+        "bmp",
+      ];
       const extension = this.getFileExtension(content);
       return imageExtensions.includes(extension.toLowerCase());
     },
 
     getFileExtension(filePath) {
       if (!filePath || typeof filePath !== "string") return "";
-      
-      const parts = filePath.split('.');
+
+      const parts = filePath.split(".");
       return parts.length > 1 ? parts[parts.length - 1] : "";
     },
 
     getFileName(filePath) {
       if (!filePath || typeof filePath !== "string") return "Download";
-      
+
       // Extract filename from path like "uploads/GalleryManagement\\GalleryCategory/2025-07-14-10352237554.pdf"
       const parts = filePath.split(/[\/\\]/);
       const fileName = parts[parts.length - 1];
-      
+
       // If filename is too long, truncate it
       if (fileName.length > 20) {
         const extension = this.getFileExtension(fileName);
-        const nameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
-        return nameWithoutExt.substring(0, 15) + '...' + (extension ? '.' + extension : '');
+        const nameWithoutExt = fileName.substring(0, fileName.lastIndexOf("."));
+        return (
+          nameWithoutExt.substring(0, 15) +
+          "..." +
+          (extension ? "." + extension : "")
+        );
       }
-      
+
       return fileName;
     },
 
@@ -197,6 +266,11 @@ export default {
 
       return content || "";
     },
+
+    // New helper to detect array fields
+    isArrayField(content) {
+      return Array.isArray(content) && content.length > 0;
+    },
   },
 };
 </script>
@@ -205,10 +279,13 @@ export default {
 .max-w-120 {
   max-width: 120px;
 }
+.max-w-240 {
+  max-width: 240px;
+}
 .text-wrap {
-    text-overflow: ellipsis !important;
-    overflow: hidden !important;
-    white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
 }
 
 .file-download-link {
@@ -230,5 +307,73 @@ export default {
 
 .file-download-link i {
   font-size: 14px;
+}
+
+/* Styles for planning_steps and statistics rendering */
+.planning-step-item,
+.stat-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.planning-step-item:last-child,
+.stat-item:last-child {
+  border-bottom: none;
+}
+.step-icon,
+.stat-icon {
+  font-size: 18px;
+  width: 28px;
+  text-align: center;
+  color: #5a6b7a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-slot {
+  width: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #5a6b7a;
+  font-size: 18px;
+}
+.icon-slot.empty::before {
+  content: "\00a0";
+  display: block;
+  width: 100%;
+}
+
+/* Reserve space when there is no icon class */
+.no-icon::before {
+  content: "\00a0";
+  display: inline-block;
+  width: 100%;
+}
+
+.step-content .step-title,
+.stat-content .stat-title {
+  font-weight: 600;
+  font-size: 13px;
+}
+.step-content .step-desc {
+  font-size: 12px;
+  color: #fff;
+}
+.stat-content .stat-number {
+  font-weight: 700;
+  font-size: 16px;
+}
+.stat-content .stat-unit {
+  font-size: 12px;
+  color: #6c757d;
+}
+.array-preview {
+  white-space: pre-wrap;
+  font-size: 12px;
+  color: #333;
+  margin: 0;
 }
 </style>

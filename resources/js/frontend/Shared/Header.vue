@@ -1,5 +1,4 @@
 <template>
-  
   <nav
     class="navbar navbar-area style-01 d-lg-none d-md-block navbar-expand-lg nav-style-02"
   >
@@ -116,11 +115,11 @@
             <Link href="/about-us">About Us</Link>
           </li>
           <li class="menu-item-has-children">
-           <Link href="/donation">Donation</Link>
+            <Link href="/donation">Donation</Link>
           </li>
           <li class="menu-item-has-children">
             <a href="#">Pages</a>
-            <ul class="sub-menu ">
+            <ul class="sub-menu">
               <li><Link href="/pages/history">History</Link></li>
               <li><Link href="/pages/principles">Principles</Link></li>
               <li><Link href="/pages/team">Team</Link></li>

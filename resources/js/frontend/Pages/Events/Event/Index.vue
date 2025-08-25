@@ -1,8 +1,12 @@
 <template>
-<Head :title="event.title" />
+  <Head :title="event.title" />
   <NavbarArea />
-  <!-- banner section start here -->
+
+  <!-- Banner Section with Skeleton -->
+  <BannerSkeleton v-if="shouldShowBannerSkeleton" />
   <common-banner
+    v-else
+    ref="bannerSection"
     :background-image="'/frontend/assets/img/about-bg.png'"
     :heading="'Events'"
     :breadcrumbs="[
@@ -11,21 +15,38 @@
     ]"
     key="events"
   />
-  <!-- banner section End here -->
 
   <!-- Event items Section Start Here -->
   <div class="issues-around-us-section">
     <div class="container">
-      <div class="row">
+      <!-- Events Grid with Skeleton -->
+      <div class="row" ref="eventsSection">
+        <GenericSectionSkeleton
+          v-if="shouldShowEventsSkeleton"
+          layout="cards"
+          :gridCols="3"
+          :cardCount="6"
+          class="events-skeleton"
+        />
         <EventSingleItem
+          v-else
           v-for="(event, idx) in events?.data?.data"
           :key="idx"
           :event="event"
         />
       </div>
-      <div class="row justify-content-center">
+
+      <!-- Pagination Section with Skeleton -->
+      <div class="row justify-content-center" ref="paginationSection">
         <div class="col-lg-8 col-md-10 col-12">
-          <Pagination 
+          <GenericSectionSkeleton
+            v-if="shouldShowPaginationSkeleton"
+            layout="default"
+            :height="60"
+            class="pagination-skeleton"
+          />
+          <Pagination
+            v-else
             :currentPage="events?.data?.current_page || 1"
             :totalPages="events?.data?.last_page || 1"
             @prev="goToPage(events?.data?.current_page - 1)"
@@ -37,12 +58,20 @@
       </div>
     </div>
   </div>
-  <!-- Event Items Section Start Here -->
+  <!-- Event Items Section End Here -->
 </template>
 <script>
 import { Head } from "@inertiajs/vue3";
+import { usePageSkeleton } from "../../../composables/usePageSkeleton.js";
+import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
+
+// Skeleton Components
+import BannerSkeleton from "../../../CommonComponents/Skeletons/BannerSkeleton.vue";
+import GenericSectionSkeleton from "../../../CommonComponents/Skeletons/GenericSectionSkeleton.vue";
+
 import Pagination from "../../../CommonComponents/Pagination.vue";
 import EventSingleItem from "./components/EventSingleItem.vue";
 
@@ -57,57 +86,92 @@ export default {
     NavbarArea,
     EventSingleItem,
     Pagination,
-    CommonBanner
+    CommonBanner,
+    BannerSkeleton,
+    GenericSectionSkeleton,
+  },
+  setup() {
+    const {
+      loading,
+      sectionLoadingStates,
+      initializeSectionStates,
+      setupIntersectionObserver,
+      observeElements,
+      enableScrollPersistence,
+      cleanup,
+      shouldShowSkeleton,
+    } = usePageSkeleton();
+
+    // Section visibility states
+    const isBannerVisible = ref(false);
+    const isEventsVisible = ref(false);
+    const isPaginationVisible = ref(false);
+
+    // Section refs
+    const bannerSection = ref(null);
+    const eventsSection = ref(null);
+    const paginationSection = ref(null);
+
+    // Initialize section states
+    const sections = ["banner", "events", "pagination"];
+    initializeSectionStates(sections);
+
+    let scrollCleanup = null;
+
+    onMounted(async () => {
+      // Setup intersection observer
+      const sectionVisibility = {
+        banner: isBannerVisible,
+        events: isEventsVisible,
+        pagination: isPaginationVisible,
+      };
+
+      setupIntersectionObserver(null, sectionVisibility);
+
+      await nextTick();
+
+      // Observe elements
+      const elements = [
+        bannerSection.value,
+        eventsSection.value,
+        paginationSection.value,
+      ];
+      observeElements(elements);
+
+      // Enable scroll persistence
+      scrollCleanup = enableScrollPersistence("events");
+
+      // Additional restore attempt after everything is mounted
+      setTimeout(() => {
+        if (scrollCleanup) {
+          scrollCleanup();
+          scrollCleanup = enableScrollPersistence("events");
+        }
+      }, 300);
+    });
+
+    onUnmounted(() => {
+      cleanup();
+      if (scrollCleanup) {
+        scrollCleanup();
+      }
+    });
+
+    return {
+      loading,
+      sectionLoadingStates,
+      isBannerVisible,
+      isEventsVisible,
+      isPaginationVisible,
+      bannerSection,
+      eventsSection,
+      paginationSection,
+      shouldShowSkeleton,
+    };
   },
   data() {
     return {
       current: 1,
-      // events: [
-      //   {
-      //     img: "/frontend/assets/img/event-01.png",
-      //     date: "21",
-      //     month: "jan",
-      //     location: "684 Ann St.  FL 34608",
-      //     time: "12:00 am",
-      //     title: "The Economy of the US: What are the Weakest Spots?",
-      //     url: "/events/event/details",
-      //     description:
-      //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
-      //   },
-      //   {
-      //     img: "/frontend/assets/img/event-02.png",
-      //     date: "04",
-      //     month: "feb",
-      //     location: "684 Ann St.  FL 34608",
-      //     time: "12:00 am",
-      //     title: "The Economy of the US: What are the Weakest Spots?",
-      //     url: "/events/event/details",
-      //     description:
-      //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
-      //   },
-      //   {
-      //     img: "/frontend/assets/img/event-03.png",
-      //     date: "17",
-      //     month: "feb",
-      //     location: "684 Ann St.  FL 34608",
-      //     time: "12:00 am",
-      //     title: "The Economy of the US: What are the Weakest Spots?",
-      //     url: "/events/event/details",
-      //     description:
-      //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
-      //   },
-      //   {
-      //     img: "/frontend/assets/img/evnt-04.png",
-      //     date: "23",
-      //     month: "feb",
-      //     location: "684 Ann St.  FL 34608",
-      //     time: "12:00 am",
-      //     title: "The Economy of the US: What are the Weakest Spots?",
-      //     url: "/events/event/details",
-      //     description:
-      //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
-      //   },
-      // ],
     };
   },
   watched: {
@@ -129,11 +193,30 @@ export default {
       this.fetchAllEventsPageData({ page });
     },
   },
-  created: async function () {
-    await this.fetchAllEventsPageData();
-  },
   computed: {
     ...mapState(events_store, ["events"]),
+    shouldShowBannerSkeleton() {
+      return this.loading;
+    },
+    shouldShowEventsSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isEventsVisible,
+        computed(() => this.events?.data?.data),
+        "events"
+      ).value;
+    },
+    shouldShowPaginationSkeleton() {
+      return this.shouldShowSkeleton(
+        this.isPaginationVisible,
+        computed(() => this.events?.data?.last_page),
+        "pagination"
+      ).value;
+    },
+  },
+  async created() {
+    this.loading = true;
+    await this.fetchAllEventsPageData();
+    this.loading = false;
   },
 };
 </script>
