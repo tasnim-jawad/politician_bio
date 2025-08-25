@@ -11,6 +11,12 @@ class StoreData
         try {
             $requestData = $request->validated();
 
+            // Process file uploads for specific fields
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $requestData['image'] = uploader($file, 'uploads/PollManagement/Poll');
+            }
+
 
             if (isset($requestData['is_voting'])) {
                 if ($requestData['is_voting']) {

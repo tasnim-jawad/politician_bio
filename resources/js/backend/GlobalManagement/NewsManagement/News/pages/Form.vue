@@ -51,6 +51,7 @@
                 :row_col_class="form_field.row_col_class"
               />
             </template>
+            <multi-chip :name="`tags`" />
           </div>
         </div>
         <div class="card-footer">
@@ -69,10 +70,10 @@ import { mapActions, mapState } from "pinia";
 import { store } from "../store";
 import setup from "../setup";
 import form_fields from "../setup/form_fields";
-
+import MultiChip from "../components/meta_component/MultiChip.vue";
 import NewsCategoryDropDownEl from "../../NewsCategory/components/dropdown/DropDownEl.vue";
 export default {
-  components: { NewsCategoryDropDownEl },
+  components: { NewsCategoryDropDownEl, MultiChip },
 
   data: () => ({
     setup,
@@ -82,6 +83,10 @@ export default {
   created: async function () {
     let id = (this.param_id = this.$route.params.id);
     this.reset_fields();
+    // Clear the store item state when creating new
+    if (!id) {
+      this.set_item({});
+    }
     if (id) {
       this.set_fields(id);
     }
@@ -93,11 +98,20 @@ export default {
       details: "details",
       get_all: "get_all",
       set_only_latest_data: "set_only_latest_data",
+      set_item: "set_item",
     }),
     reset_fields: function () {
       this.form_fields.forEach((item) => {
         item.value = "";
       });
+      // Also clear summernote editors
+      this.form_fields.forEach((field) => {
+        if (field.type === "textarea" && $(`#${field.name}`).length) {
+          $(`#${field.name}`).summernote("code", "");
+        }
+      });
+      // Clear the store item to ensure MultiChip component resets
+      this.set_item({});
     },
     set_fields: async function (id) {
       this.param_id = id;

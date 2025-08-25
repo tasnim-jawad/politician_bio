@@ -24,53 +24,78 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-4 col-md-6" v-for="(lead_news, index) in lead_news" :key="index">
-          <div
-            class="news-single-items wow animate__animated animate__fadeInUp"
-          >
+        <div class="col-lg-8">
+          <div class="row">
             <div
-              class="news-bg"
-              :style="'background-image: url(/' + lead_news.banner_image + ');'"
+              class="col-md-6"
+              v-for="(lead_news, index) in lead_news"
+              :key="index"
             >
-              <span class="even">Event</span>
-              <div class="content">
-                <h4 class="title">
-                  <a :href="`/news/details?slug=${lead_news.slug}`"> {{ lead_news.title }}</a>
-                </h4>
-                <div class="author-meta">
-                  <p class="author-name">By: {{ lead_news.author }}</p>
-                  <p>{{ lead_news.date }}</p>
+              <div
+                class="news-single-items wow animate__animated animate__fadeInUp"
+              >
+                <div
+                  class="news-bg"
+                  :style="
+                    'background-image: url(/' + lead_news?.banner_image + ');'
+                  "
+                >
+                  <!-- loop tags (supports comma-separated string or array) -->
+                  <div class="tag-list" v-if="lead_news?.tags">
+                    <span
+                      v-for="(tag, tIndex) in formatTags(lead_news?.tags)"
+                      :key="tIndex"
+                      class="tag-badge"
+                    >
+                      {{ tag }}
+                    </span>
+                  </div>
+                  <div class="content">
+                    <h4 class="title">
+                      <a :href="`/news/details?slug=${lead_news?.slug}`">
+                        {{ lead_news?.title }}</a
+                      >
+                    </h4>
+                    <div class="author-meta">
+                      <p class="author-name">By: {{ lead_news?.author ?? 'admin'}}</p>
+                      <p>{{ lead_news?.date }}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-12">
-          <ul
-            class="news-single-list wow animate__animated animate__fadeInRight animate__delay-2s"
-          >
-            <li
-              class="news-single-list-items"
-              v-for="(news, index) in side_news"
-              :key="index"
-            >
-              <div class="thumb">
-                <img :src="'/' + news.banner_image" alt="" />
-              </div>
-              <div class="content">
-                <span class="date">{{ formatDate(news.date) }}</span>
-                <h4 class="title">
-                  <a :href="`/news/details?slug=${news.slug}`">
-                    {{
-                      news.title.length > 36
-                        ? news.title.slice(0, 36) + "..."
-                        : news.title
-                    }}
-                  </a>
-                </h4>
-              </div>
-            </li>
-          </ul>
+        <div class="col-lg-4">
+          <div class="row">
+            <div class="col-md-12">
+              <ul
+                class="news-single-list wow animate__animated animate__fadeInRight animate__delay-2s"
+              >
+                <li
+                  class="news-single-list-items"
+                  v-for="(news, index) in side_news"
+                  :key="index"
+                >
+                  <div class="thumb">
+                    <img :src="'/' + news.banner_image" alt="" />
+                  </div>
+                  <div class="content">
+                    <span class="date">{{ formatDate(news.date) }}</span>
+                    <h4 class="title">
+                      <a :href="`/news/details?slug=${news.slug}`">
+                        {{
+                          news.title.length > 36
+                            ? news.title.slice(0, 36) + "..."
+                            : news.title
+                        }}
+                      </a>
+                    </h4>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -120,6 +145,19 @@ export default {
     },
   },
   methods: {
+    // convert tags into an array (supports "a,b,c" string or array)
+    formatTags(tags) {
+      if (!tags) return [];
+      if (Array.isArray(tags))
+        return tags.map((t) => String(t).trim()).filter(Boolean);
+      if (typeof tags === "string") {
+        return tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean);
+      }
+      return [];
+    },
     formatDate(dateStr) {
       if (!dateStr) return "";
       const date = new Date(dateStr);
@@ -191,14 +229,23 @@ export default {
   color: #fff;
 }
 
-.even {
+/* Tag list container in top-left of the news-bg */
+.tag-list {
   position: absolute;
   top: 20px;
   left: 20px;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 5px 10px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tag-badge {
+  background-color: rgb(255, 0, 0);
+  padding: 10px 10px;
   border-radius: 3px;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #fff;
+  white-space: nowrap;
 }
 
 .author-meta {

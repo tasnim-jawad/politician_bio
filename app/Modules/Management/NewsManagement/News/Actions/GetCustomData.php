@@ -9,8 +9,8 @@ class GetCustomData
     public static function execute()
     {
         try {
-            $lead_news = self::$model::query()->with('news_category_id')->active()->latest()->take(2)->orderBy('id','desc')->get();
-            $side_news = self::$model::query()->with('news_category_id')->active()->latest()->take(3)->orderBy('id','desc')->get();
+            $lead_news = self::$model::query()->with('news_category_id')->active()->latest()->take(8)->orderBy('id','desc')->get();
+            $side_news = self::$model::query()->with('news_category_id')->active()->latest()->take(10)->orderBy('id','desc')->get();
             $data = [
                 'lead_news' => $lead_news,
                 'side_news' => $side_news,

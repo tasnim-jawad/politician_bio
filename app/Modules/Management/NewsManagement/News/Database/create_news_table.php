@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('news_category_id', 100)->nullable();
             $table->string('title', 100)->nullable();
             $table->longtext('content')->nullable();
-            $table->string('tags', 20)->nullable();
+            $table->string('tags', 100)->nullable();
             $table->date('date')->nullable();
             $table->string('author',80)->nullable();
 

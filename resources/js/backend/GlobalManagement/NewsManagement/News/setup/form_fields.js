@@ -13,20 +13,7 @@ export default [
 		type: "text",
 		value: "",
 	},
-
-	{
-		name: "content",
-		label: "Enter your content",
-		type: "textarea",
-		value: "",
-	},
-
-	{
-		name: "tags",
-		label: "Enter your tags",
-		type: "text",
-		value: "",
-	},
+	
 	{
 		name: "date",
 		label: "Enter your date",
@@ -39,4 +26,21 @@ export default [
 		type: "text",
 		value: "",
 	},
+
+	{
+		name: "content",
+		label: "Enter your content",
+		type: "textarea",
+		value: "",
+		row_col_class: "col-md-12",
+	},
+
+	// {
+	// 	name: "tags",
+	// 	label: "Enter your tags",
+	// 	type: "text",
+	// 	value: "",
+	// },
+
+	
 ];

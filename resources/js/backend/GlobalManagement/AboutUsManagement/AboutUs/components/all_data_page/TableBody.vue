@@ -55,6 +55,7 @@
           </a>
         </template>
       </td>
+      
       <td v-else class="text-wrap max-w-120">
         {{ trim_content(item[row_item], row_item) }}
       </td>

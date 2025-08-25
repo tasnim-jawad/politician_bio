@@ -17,6 +17,12 @@ class UpdateData
 
             $requestData = $request->validated();
 
+            // Process file uploads for specific fields
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $requestData['image'] = uploader($file, 'uploads/PollManagement/Poll');
+            }
+
             if (isset($requestData['is_voting'])) {
                 if ($requestData['is_voting']) {
                     self::$model::query()->where('is_voting', '1')->update(['is_voting' => '0']);
