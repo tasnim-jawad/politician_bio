@@ -97,6 +97,13 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-12">
+          <div class="text-center mt-4">
+            <Link href="/news" class="btn btn-danger btn-square px-5">
+              View All News
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   </div>
