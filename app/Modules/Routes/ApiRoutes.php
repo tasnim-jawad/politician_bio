@@ -68,3 +68,4 @@ include_once base_path("app/Modules/Management/VolunteerManagement/VolunteerAppl
 include_once base_path("app/Modules/Management/PollManagement/Poll/Routes/Route.php");
 include_once base_path("app/Modules/Management/PollManagement/PollOption/Routes/Route.php");
 include_once base_path("app/Modules/Management/PollManagement/PollVote/Routes/Route.php");
+include_once base_path("app/Modules/Management/SectionHeadingManagement/SectionHeading/Routes/Route.php");

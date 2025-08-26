@@ -352,6 +352,17 @@
           },
         ]"
 />
+<side-bar-drop-down-menus
+        :icon="`fa fa-plus`"
+        :menu_title="`SectionHeadingManagement`"
+        :menus="[
+          {
+            route_name: `HomePageSectionHeading`,
+            title: `HomePage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+        ]"
+/>
 <!-- Management end -->
     </ul>
   </div>

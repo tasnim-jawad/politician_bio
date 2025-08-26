@@ -20,6 +20,20 @@
             />
           </a>
         </template>
+        <template v-if="row_item === 'background_image'">
+          <a 
+            :href="item[row_item] || '/avatar.png'" 
+            data-fancybox="detail-gallery" 
+            :data-caption="`${row_item} - Detail View`"
+          >
+            <img
+              :src="item[row_item] || '/avatar.png'"
+              @error="handleImageError($event)"
+              style="width: 120px; height: 120px; object-fit: cover"
+              alt="image"
+            />
+          </a>
+        </template>
         <template v-else>
           {{ trim_content(item[row_item], row_item) }}
         </template>

@@ -10,7 +10,6 @@ class StoreData
     {
         try {
             $requestData = $request->validated();
-
             // Process file uploads for specific fields
             if ($request->hasFile('image')) {
                 $file = $request->file('image');

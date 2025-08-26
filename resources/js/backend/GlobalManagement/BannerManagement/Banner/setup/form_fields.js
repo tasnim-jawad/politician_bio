@@ -38,6 +38,13 @@ export default [
 	},
 
 	{
+		name: "perma_link",
+		label: "Enter your permanent link",
+		type: "text",
+		value: "",
+	},
+	
+	{
 		name: "short_title",
 		label: "Enter your short title",
 		type: "text",

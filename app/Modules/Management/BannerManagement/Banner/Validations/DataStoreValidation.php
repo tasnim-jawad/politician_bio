@@ -21,7 +21,7 @@ class DataStoreValidation extends FormRequest
      */
     public function validateError($data)
     {
-        $errorPayload =  $data->getMessages();
+        $errorPayload = $data->getMessages();
         return response(['status' => 'validation_error', 'errors' => $errorPayload], 422);
     }
 
@@ -41,16 +41,19 @@ class DataStoreValidation extends FormRequest
      */
     public function rules(): array
     {
+        $is_update = $this->route('slug') !== null;
+        // Image should be required on create, optional on update
+        $imageRule = $is_update ? 'sometimes|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120' : 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120';
         return [
-            'slogan' => 'required | sometimes',
-            'election_type' => 'required | sometimes',
-            'main_title' => 'required | sometimes',
-            'short_title' => 'required | sometimes',
-            'description' => 'required | sometimes',
-            'perma_link' => 'required | sometimes',
-            'image' => 'required | sometimes',
-            'background_image' => 'required | sometimes',
-            'status' => ['sometimes', Rule::in(['active', 'inactive'])],
+            'slogan'           => 'required | sometimes',
+            'election_type'    => 'required | sometimes',
+            'main_title'       => 'required | sometimes',
+            'short_title'      => 'required | sometimes',
+            'description'      => 'required | sometimes',
+            'perma_link'       => 'required | sometimes',
+            'image'            => $imageRule,
+            'background_image' => $imageRule,
+            'status'           => ['sometimes', Rule::in(['active', 'inactive'])],
         ];
     }
 }
