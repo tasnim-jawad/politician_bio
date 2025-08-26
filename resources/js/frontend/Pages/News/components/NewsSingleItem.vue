@@ -4,14 +4,21 @@
       class="news-bg"
       :style="{ backgroundImage: `url(/${item?.banner_image})` }"
     >
-      <span class="even">{{ item?.tags }}</span>
+      <!-- show tags as comma-separated list (supports "a,b,c" or array) -->
+      <div v-if="tagsArray.length" class="tag-list">
+        <span class="tag-item" v-for="(tag, tIndex) in tagsArray" :key="tIndex">
+          {{ tag }}
+        </span>
+      </div>
       <div class="content">
         <h4 class="title">
-          <Link :href="`/news/details?slug=${item.slug}`">{{ item?.title }}</Link>
+          <Link :href="`/news/details?slug=${item.slug}`">{{
+            item?.title
+          }}</Link>
         </h4>
         <div class="author-meta">
           <p class="author-name">
-            By:{{ item?.author ? item?.author : "Admin" }}
+            By: {{ item?.author ? item?.author : "Admin" }}
           </p>
           <p>{{ formatDate(item?.date) }}</p>
         </div>
@@ -25,7 +32,25 @@ export default {
   props: {
     item: Object,
   },
+  computed: {
+    // normalized tags array for template
+    tagsArray() {
+      return this.formatTags(this.item?.tags);
+    },
+  },
   methods: {
+    // support both comma-separated string and array
+    formatTags(tags) {
+      if (!tags) return [];
+      if (Array.isArray(tags))
+        return tags.map((t) => String(t).trim()).filter(Boolean);
+      if (typeof tags === "string")
+        return tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean);
+      return [];
+    },
     formatDate(date) {
       if (!date) return "";
 
@@ -81,3 +106,22 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.tag-list {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tag-item {
+  background: var(--main-color-one);
+  color: #fff;
+  padding: 8px 8px;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 16px;
+}
+</style>

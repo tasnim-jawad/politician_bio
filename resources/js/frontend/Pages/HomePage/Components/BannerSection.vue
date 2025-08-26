@@ -49,7 +49,7 @@
 
         <!-- Actual Content -->
         <div v-else class="row align-items-center">
-          <div class="col-lg-6 order-lg-1 order-md-2 order-2">
+          <div class="col-lg-6 order-lg-1 order-md-2 order-2 pb-md-4">
             <div class="header-inner-02">
               <h4 class="subtitle">
                 {{ data?.slogan }}<i class="icon-star"></i

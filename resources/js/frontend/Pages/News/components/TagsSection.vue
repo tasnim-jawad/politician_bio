@@ -58,12 +58,39 @@ export default {
 </script>
 
 <style scoped>
+/* Show up to ~10 tags vertically, then allow scrolling */
+.tagcloud {
+  max-height: calc(10 * 36px); /* ~20 tags at 36px each */
+  overflow-y: auto;
+  padding: 8px;
+  display: block;
+}
+
+/* Stack tags vertically so the max-height corresponds to number of tags shown */
+.tagcloud a {
+  display: inline-block;
+  padding: 6px 10px;
+  margin: 4px 4px 4px 0px;
+  border-radius: 4px;
+  color: inherit;
+  text-decoration: none;
+}
+
 .tagcloud a.active {
-  background-color: #007bff;
+  background-color: var(--main-color-one);
   color: white;
 }
 .tagcloud a:hover {
-  background-color: #0056b3;
+  background-color: var(--main-color-one);
   color: white;
+}
+
+/* Optional: thin scrollbar */
+.tagcloud::-webkit-scrollbar {
+  width: 8px;
+}
+.tagcloud::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
 }
 </style>

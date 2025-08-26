@@ -21,7 +21,7 @@
       <div class="row justify-content-center">
         <div class="col-lg-6">
           <div class="section-title">
-            <h4 class="title">Read Our Daily blog</h4>
+            <h4 class="title">Read Our Daily News</h4>
             <p class="description wow animate__ animate__fadeInUp animated">
               Every pleasures is to welcomed pain avoided owing to the duty the
               obligations of business it will frequently.
@@ -57,9 +57,9 @@
               v-if="currentFilter.type === 'tag'"
               class="current-filter mb-3"
             >
-              <span class="w-100 text-start">
+              <span class="w-100 text-start current_filter_item">
                 Filtered by tag:
-                <span class="badge badge-primary text-white">{{
+                <span class="badge badge-danger text-white">{{
                   currentFilter.tag_name
                 }}</span>
                 <button
@@ -277,5 +277,11 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 3px;
+}
+.current_filter_item {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 6px;
 }
 </style>
