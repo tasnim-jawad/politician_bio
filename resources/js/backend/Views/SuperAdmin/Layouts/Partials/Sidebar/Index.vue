@@ -174,7 +174,8 @@
             route_name: `AllVolunteer`,
             title: `Volunteer`,
             icon: `zmdi zmdi-dot-circle-alt`,
-          },          {
+          },
+          {
             route_name: `AllVolunteerApplication`,
             title: `VolunteerApplication`,
             icon: `zmdi zmdi-dot-circle-alt`,
@@ -336,8 +337,8 @@
             icon: `zmdi zmdi-dot-circle-alt`,
           },
         ]"
-/>
-<side-bar-drop-down-menus
+      />
+      <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
         :menu_title="`PollManagement`"
         :menus="[
@@ -345,14 +346,15 @@
             route_name: `AllPoll`,
             title: `Poll`,
             icon: `zmdi zmdi-dot-circle-alt`,
-          },          {
+          },
+          {
             route_name: `AllPollOption`,
             title: `PollOption`,
             icon: `zmdi zmdi-dot-circle-alt`,
           },
         ]"
-/>
-<side-bar-drop-down-menus
+      />
+      <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
         :menu_title="`SectionHeadingManagement`"
         :menus="[
@@ -361,9 +363,89 @@
             title: `HomePage`,
             icon: `zmdi zmdi-dot-circle-alt`,
           },
+          {
+            route_name: `AboutUsPageSectionHeading`,
+            title: `AboutUsPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `DonationPageSectionHeading`,
+            title: `DonationPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `HistoryPageSectionHeading`,
+            title: `HistoryPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `PrinciplesPageSectionHeading`,
+            title: `PrinciplesPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `TeamPageSectionHeading`,
+            title: `TeamPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `MediaPageSectionHeading`,
+            title: `MediaPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `IssuesPageSectionHeading`,
+            title: `IssuesPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `VolunteerPageSectionHeading`,
+            title: `VolunteerPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `ServicesPageSectionHeading`,
+            title: `ServicesPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `ServicesDetailsPageSectionHeading`,
+            title: `ServicesDetailsPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `FaqPageSectionHeading`,
+            title: `FaqPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `EventPageSectionHeading`,
+            title: `EventPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `EventDetailsPageSectionHeading`,
+            title: `EventDetailsPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `NewsPageSectionHeading`,
+            title: `NewsPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `NewsDetailsPageSectionHeading`,
+            title: `NewsDetailsPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `ContactUsPageSectionHeading`,
+            title: `ContactUsPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
         ]"
-/>
-<!-- Management end -->
+      />
+      <!-- Management end -->
     </ul>
   </div>
 </template>
