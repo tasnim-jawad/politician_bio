@@ -23,6 +23,8 @@
       v-else-if="isServicesVisible && services && services.length > 0"
       :serviceMarginTop="'100px'"
       :serviceItems="services"
+      :sectionTitle="serviceSection?.short_title"
+      :sectionDescription="serviceSection?.long_title"
     />
   </div>
   <!-- Services Single Section Start here -->
@@ -38,6 +40,8 @@
       :main-bg="'/frontend/assets/img/group-activity-02.png'"
       :side-bg="'/frontend/assets/img/ceo.png'"
       :whyChooseItems="whyChoseUs"
+      :sectionTitle="whyChooseSection?.short_title"
+      :sectionDescription="whyChooseSection?.long_title"
     />
   </div>
   <!-- Why Choose us secion End here -->
@@ -50,6 +54,8 @@
     <OurPrinciple
       v-else-if="isPrinciplesVisible && principles && principles.length > 0"
       :principleItems="principles"
+      :sectionTitle="principleSection?.short_title"
+      :sectionDescription="principleSection?.long_title"
     />
   </div>
   <!-- Our Principle Section End here -->
@@ -62,6 +68,8 @@
     <OurJourney
       v-else-if="isJourneyVisible && ourJourney && ourJourney.length > 0"
       :journeyItems="ourJourney"
+      :sectionTitle="journeySection?.short_title"
+      :sectionDescription="journeySection?.long_title"
     />
   </div>
   <!-- Our Journey Section End Here -->
@@ -74,6 +82,8 @@
     <MediaCoverage
       v-else-if="isMediaVisible && mediaCoverages"
       :mediaItems="mediaCoverages"
+      :sectionTitle="mediaSection?.short_title"
+      :sectionDescription="mediaSection?.long_title"
     />
   </div>
   <!-- Media section end here -->
@@ -235,6 +245,15 @@ export default {
   },
   methods: {
     ...mapActions(home_page_store, ["fetchAllHomePageData"]),
+
+    // Get section data by section_type
+    get_section_headings_data(sectionType) {
+      return (
+        this.section_headings?.find(
+          (item) => item.section_type === sectionType
+        ) || null
+      );
+    },
 
     setupIntersectionObserver() {
       const options = {
@@ -506,6 +525,7 @@ export default {
 
   computed: {
     ...mapState(home_page_store, [
+      "section_headings",
       "banner",
       "services",
       "whyChoseUs",
@@ -518,6 +538,32 @@ export default {
       "loading",
       "error",
     ]),
+
+    // Section heading data computed properties
+    serviceSection() {
+      return this.get_section_headings_data("home_service");
+    },
+    whyChooseSection() {
+      return this.get_section_headings_data("home_why_choose");
+    },
+    principleSection() {
+      return this.get_section_headings_data("home_principle");
+    },
+    journeySection() {
+      return this.get_section_headings_data("home_journey");
+    },
+    mediaSection() {
+      return this.get_section_headings_data("home_media");
+    },
+    donationSection() {
+      return this.get_section_headings_data("home_donation");
+    },
+    testimonialSection() {
+      return this.get_section_headings_data("home_testimonial");
+    },
+    newsSection() {
+      return this.get_section_headings_data("home_news");
+    },
     bannerLoading() {
       const isLoading = this.loading || !this.banner;
       console.log("Index banner loading state:", {

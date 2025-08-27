@@ -45,6 +45,15 @@
 <script>
 export default {
   props: {
+    short_title: {
+      type: String,
+      default: "Why chose us",
+    },
+    long_title: {
+      type: String,
+      default:
+        "A choice that makes the difference from others.",
+    },
     position: {
       type: String,
       default: "right",

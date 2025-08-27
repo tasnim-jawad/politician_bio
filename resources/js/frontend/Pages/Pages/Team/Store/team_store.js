@@ -53,14 +53,14 @@ export const store = defineStore("team_page", {
         return;
       }
       try {
-        const res = await axios.get("section_headings",{
+        const res = await axios.get("section-headings",{
           params: {
             get_all: 1,
             limit: 1000,
           },
         });
-        this.section_headings = res.data;
-        await this._setCache("section_headings", res.data);
+        this.section_headings = res.data.data;
+        await this._setCache("section_headings", res.data.data);
       } catch (e) {
         this.error = e;
       }
