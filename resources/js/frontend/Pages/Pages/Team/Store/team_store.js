@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const store = defineStore("team_page", {
   state: () => ({
+    section_headings: [],
     volunteers: {
       data: [],
       current_page: 1,
@@ -44,6 +45,24 @@ export const store = defineStore("team_page", {
           });
           await cache.put(key, response);
         } catch (e) {}
+      }
+    },
+    async fetch_section_headings() {
+      if (await this._isCacheValid("section_headings")) {
+        this.section_headings = this._cache["section_headings"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("section_headings",{
+          params: {
+            get_all: 1,
+            limit: 1000,
+          },
+        });
+        this.section_headings = res.data;
+        await this._setCache("section_headings", res.data);
+      } catch (e) {
+        this.error = e;
       }
     },
     async fetch_volunteers({ page = 1 } = {}) {
@@ -96,6 +115,7 @@ export const store = defineStore("team_page", {
       try {
         await this.fetch_volunteers({ page });
         await this.fetch_counters();
+        await this.fetch_section_headings();
       } catch (e) {
         this.error = e;
       } finally {

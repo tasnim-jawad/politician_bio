@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const store = defineStore("news_details_page", {
   state: () => ({
+    section_headings: [],
     news_details: null,
     recent_news: [],
     latest_news: [],
@@ -40,6 +41,24 @@ export const store = defineStore("news_details_page", {
           });
           await cache.put(key, response);
         } catch (e) {}
+      }
+    },
+    async fetch_section_headings() {
+      if (await this._isCacheValid("section_headings")) {
+        this.section_headings = this._cache["section_headings"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("section_headings",{
+          params: {
+            get_all: 1,
+            limit: 1000,
+          },
+        });
+        this.section_headings = res.data;
+        await this._setCache("section_headings", res.data);
+      } catch (e) {
+        this.error = e;
       }
     },
     async fetch_news_details(slug) {
@@ -195,7 +214,8 @@ export const store = defineStore("news_details_page", {
       try {
         await this.fetch_recent_news();
         await this.fetch_latest_news();
-        
+        await this.fetch_section_headings();
+
       } catch (e) {
         this.error = e;
       } finally {

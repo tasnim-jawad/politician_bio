@@ -1,17 +1,15 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-export const store = defineStore("events_page", {
+export const store = defineStore("home_page", {
   state: () => ({
     section_headings: [],
-    events: [],
-
     loading: false,
     error: null,
   }),
   actions: {
     _cache: {},
-    _cacheKeyPrefix: "events_page_cache_",
+    _cacheKeyPrefix: "for_all_page_cache_",
     async _isCacheValid(key) {
       // Try memory first, then Cache Storage
       let entry = this._cache[key];
@@ -60,43 +58,14 @@ export const store = defineStore("events_page", {
         this.error = e;
       }
     },
-    async fetch_events({ page = 1 } = {}) {
-      const cacheKey = `events_page_${page}`;
-      if (await this._isCacheValid(cacheKey)) {
-        this.events = this._cache[cacheKey].data;
-        return;
-      }
-      try {
-        const res = await axios.get("events", {
-          params: {
-            page,
-            limit: 8,
-          },
-        });
-        // Normalize response for both paginated and non-paginated
-        let result = res.data;
-        if (!result.data) {
-          // If data is not present, fallback to array
-          result = {
-            data: Array.isArray(res.data) ? res.data : [],
-            current_page: 1,
-            last_page: 1,
-            total: Array.isArray(res.data) ? res.data.length : 0,
-            per_page: 8,
-          };
-        }
-        this.events = result;
-        await this._setCache(cacheKey, this.events);
-      } catch (e) {
-        this.error = e;
-      }
-    },
-    async fetchAllEventsPageData({ page = 1 } = {}) {
+    
+    async fetchForAllPageData() {
       this.loading = true;
       this.error = null;
       try {
-        await this.fetch_events({ page });
-        await this.fetch_section_headings();
+        await Promise.all([
+          this.fetch_section_headings(),
+        ]);
       } catch (e) {
         this.error = e;
       } finally {

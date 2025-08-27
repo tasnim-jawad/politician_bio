@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const store = defineStore("home_page", {
   state: () => ({
+    section_headings: [],
     banner: null,
     services: [],
     whyChoseUs: [],
@@ -46,6 +47,24 @@ export const store = defineStore("home_page", {
           });
           await cache.put(key, response);
         } catch (e) {}
+      }
+    },
+    async fetch_section_headings() {
+      if (await this._isCacheValid("section_headings")) {
+        this.section_headings = this._cache["section_headings"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("section_headings",{
+          params: {
+            get_all: 1,
+            limit: 1000,
+          },
+        });
+        this.section_headings = res.data;
+        await this._setCache("section_headings", res.data);
+      } catch (e) {
+        this.error = e;
       }
     },
     async fetch_banner() {
@@ -175,6 +194,7 @@ export const store = defineStore("home_page", {
       this.error = null;
       try {
         await Promise.all([
+          this.fetch_section_headings(),
           this.fetch_banner(),
           this.fetch_services(),
           this.fetch_why_chose_us(),

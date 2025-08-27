@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const store = defineStore("history_page", {
   state: () => ({
+    section_headings: [],
     ourJourney: [],
     history_timelines: [],
     counters: [],
@@ -41,6 +42,24 @@ export const store = defineStore("history_page", {
           });
           await cache.put(key, response);
         } catch (e) {}
+      }
+    },
+    async fetch_section_headings() {
+      if (await this._isCacheValid("section_headings")) {
+        this.section_headings = this._cache["section_headings"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("section_headings",{
+          params: {
+            get_all: 1,
+            limit: 1000,
+          },
+        });
+        this.section_headings = res.data;
+        await this._setCache("section_headings", res.data);
+      } catch (e) {
+        this.error = e;
       }
     },
     async fetch_our_journey() {
@@ -110,6 +129,7 @@ export const store = defineStore("history_page", {
           this.fetch_our_journey(),
           this.fetch_history_timelines(),
           this.fetch_counters(),
+          this.fetch_section_headings(),
         ]);
       } catch (e) {
         this.error = e;

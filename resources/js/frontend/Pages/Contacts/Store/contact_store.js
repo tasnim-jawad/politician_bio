@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const store = defineStore("contact_page", {
   state: () => ({
+    section_headings: [],
     addresses: [],
     loading: false,
     error: null,
@@ -40,6 +41,24 @@ export const store = defineStore("contact_page", {
         } catch (e) {}
       }
     },
+    async fetch_section_headings() {
+      if (await this._isCacheValid("section_headings")) {
+        this.section_headings = this._cache["section_headings"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("section_headings",{
+          params: {
+            get_all: 1,
+            limit: 1000,
+          },
+        });
+        this.section_headings = res.data;
+        await this._setCache("section_headings", res.data);
+      } catch (e) {
+        this.error = e;
+      }
+    },
     async fetch_addresses() {
       if (await this._isCacheValid("addresses")) {
         this.addresses = this._cache["addresses"].data;
@@ -64,6 +83,7 @@ export const store = defineStore("contact_page", {
       try {
         await Promise.all([
           this.fetch_addresses(),
+          this.fetch_section_headings(),
         ]);
       } catch (e) {
         this.error = e;
