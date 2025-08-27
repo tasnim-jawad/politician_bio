@@ -13,35 +13,11 @@
               <ul
                 class="flex-column nav nav-tabs nav-tabs-primary top-icon nav-justified card"
               >
-                <li class="nav-item" @click="tab = 'home_service'">
+                <li class="nav-item" @click="tab = 'principles_principles'">
                   <a
-                    :class="tab == 'home_service' ? ' active' : ''"
+                    :class="tab == 'principles_principles' ? ' active' : ''"
                     href="javascript:void();"
-                    data-target="#home_service"
-                    data-toggle="pill"
-                    class="nav-link"
-                    ><i class="icon-note"></i>
-                    <span class="hidden-xs">Service</span></a
-                  >
-                  <hr />
-                </li>
-                <li class="nav-item" @click="tab = 'home_why_chose_us'">
-                  <a
-                    :class="tab == 'home_why_chose_us' ? ' active' : ''"
-                    href="javascript:void();"
-                    data-target="#home_why_chose_us"
-                    data-toggle="pill"
-                    class="nav-link"
-                    ><i class="icon-note"></i>
-                    <span class="hidden-xs">Why Choose Us</span></a
-                  >
-                  <hr />
-                </li>
-                <li class="nav-item" @click="tab = 'home_principles'">
-                  <a
-                    :class="tab == 'home_principles' ? ' active' : ''"
-                    href="javascript:void();"
-                    data-target="#home_principles"
+                    data-target="#principles_principles"
                     data-toggle="pill"
                     class="nav-link"
                     ><i class="icon-note"></i>
@@ -49,23 +25,11 @@
                   >
                   <hr />
                 </li>
-                <li class="nav-item" @click="tab = 'home_media_coverage'">
+                <li class="nav-item" @click="tab = 'principles_public_comments'">
                   <a
-                    :class="tab == 'home_media_coverage' ? ' active' : ''"
+                    :class="tab == 'principles_public_comments' ? ' active' : ''"
                     href="javascript:void();"
-                    data-target="#home_media_coverage"
-                    data-toggle="pill"
-                    class="nav-link"
-                    ><i class="icon-note"></i>
-                    <span class="hidden-xs">Media Coverage</span></a
-                  >
-                  <hr />
-                </li>
-                <li class="nav-item" @click="tab = 'home_public_comments'">
-                  <a
-                    :class="tab == 'home_public_comments' ? ' active' : ''"
-                    href="javascript:void();"
-                    data-target="#home_public_comments"
+                    data-target="#principles_public_comments"
                     data-toggle="pill"
                     class="nav-link"
                     ><i class="icon-note"></i>
@@ -73,28 +37,28 @@
                   >
                   <hr />
                 </li>
-                <li class="nav-item" @click="tab = 'home_news'">
+                <li class="nav-item" @click="tab = 'principles_our_speeches'">
                   <a
-                    :class="tab == 'home_news' ? ' active' : ''"
+                    :class="tab == 'principles_our_speeches' ? ' active' : ''"
                     href="javascript:void();"
-                    data-target="#home_news"
+                    data-target="#principles_our_speeches"
                     data-toggle="pill"
                     class="nav-link"
                     ><i class="icon-note"></i>
-                    <span class="hidden-xs">News</span></a
+                    <span class="hidden-xs">Our Speeches</span></a
                   >
                   <hr />
                 </li>
               </ul>
               <div class="ml-2 flex-grow-1 tab-content p-3 card">
                 <!-- -------------------------------------------------------- -->
-                <!-- --------------------------home_service ----------------- -->
+                <!-- --------------------------principles_principles ----------------- -->
                 <!-- --------------------------------------------------------- -->
                 <div
-                  v-if="tab == 'home_service'"
-                  :class="tab == 'home_service' ? ' active' : ''"
+                  v-if="tab == 'principles_principles'"
+                  :class="tab == 'principles_principles' ? ' active' : ''"
                   class="tab-pane active"
-                  id="home_service"
+                  id="principles_principles"
                 >
                   <form
                     @submit.prevent="SectionHeadingHandler"
@@ -110,7 +74,7 @@
                           class="form-control"
                           type="text"
                           :value="`${get_heading_value(
-                            'home_service',
+                            'principles_principles',
                             'short_title'
                           )}`"
                           placeholder="Enter short title"
@@ -127,7 +91,7 @@
                           class="form-control"
                           type="text"
                           :value="`${get_heading_value(
-                            'home_service',
+                            'principles_principles',
                             'long_title'
                           )}`"
                           placeholder="Enter long title"
@@ -151,13 +115,13 @@
                 </div>
 
                 <!-- -------------------------------------------------------- -->
-                <!-- --------------------------home_why_chose_us ----------------- -->
+                <!-- --------------------------principles_public_comments ----------------- -->
                 <!-- --------------------------------------------------------- -->
                 <div
-                  v-if="tab == 'home_why_chose_us'"
-                  :class="tab == 'home_why_chose_us' ? ' active' : ''"
+                  v-if="tab == 'principles_public_comments'"
+                  :class="tab == 'principles_public_comments' ? ' active' : ''"
                   class="tab-pane active"
-                  id="home_why_chose_us"
+                  id="principles_public_comments"
                 >
                   <form
                     @submit.prevent="SectionHeadingHandler"
@@ -173,7 +137,7 @@
                           class="form-control"
                           type="text"
                           :value="`${get_heading_value(
-                            'home_why_chose_us',
+                            'principles_public_comments',
                             'short_title'
                           )}`"
                           placeholder="Enter short title"
@@ -190,7 +154,7 @@
                           class="form-control"
                           type="text"
                           :value="`${get_heading_value(
-                            'home_why_chose_us',
+                            'principles_public_comments',
                             'long_title'
                           )}`"
                           placeholder="Enter long title"
@@ -210,13 +174,13 @@
                         <img
                           v-if="
                             get_heading_value(
-                              'home_why_chose_us',
+                              'principles_public_comments',
                               'primary_image'
                             )
                           "
                           class="mt-2"
                           :src="`${get_heading_value(
-                            'home_why_chose_us',
+                            'principles_public_comments',
                             'primary_image'
                           )}`"
                           height="100"
@@ -238,13 +202,13 @@
                         <img
                           v-if="
                             get_heading_value(
-                              'home_why_chose_us',
+                              'principles_public_comments',
                               'background_image'
                             )
                           "
                           class="mt-2"
                           :src="`${get_heading_value(
-                            'home_why_chose_us',
+                            'principles_public_comments',
                             'background_image'
                           )}`"
                           height="100"
@@ -270,13 +234,13 @@
                 </div>
 
                 <!-- -------------------------------------------------------- -->
-                <!-- --------------------------home_principles ----------------- -->
+                <!-- --------------------------principles_our_speeches ----------------- -->
                 <!-- --------------------------------------------------------- -->
                 <div
-                  v-if="tab == 'home_principles'"
-                  :class="tab == 'home_principles' ? ' active' : ''"
+                  v-if="tab == 'principles_our_speeches'"
+                  :class="tab == 'principles_our_speeches' ? ' active' : ''"
                   class="tab-pane active"
-                  id="home_principles"
+                  id="principles_our_speeches"
                 >
                   <form
                     @submit.prevent="SectionHeadingHandler"
@@ -292,7 +256,7 @@
                           class="form-control"
                           type="text"
                           :value="`${get_heading_value(
-                            'home_principles',
+                            'principles_our_speeches',
                             'short_title'
                           )}`"
                           placeholder="Enter short title"
@@ -309,7 +273,7 @@
                           class="form-control"
                           type="text"
                           :value="`${get_heading_value(
-                            'home_principles',
+                            'principles_our_speeches',
                             'long_title'
                           )}`"
                           placeholder="Enter long title"
@@ -332,269 +296,6 @@
                   </form>
                 </div>
 
-                <!-- -------------------------------------------------------- -->
-                <!-- --------------------------home_media_coverage ----------------- -->
-                <!-- --------------------------------------------------------- -->
-                <div
-                  v-if="tab == 'home_media_coverage'"
-                  :class="tab == 'home_media_coverage' ? ' active' : ''"
-                  class="tab-pane active"
-                  id="home_media_coverage"
-                >
-                  <form
-                    @submit.prevent="SectionHeadingHandler"
-                    enctype="multipart/form-data"
-                  >
-                    <div class="form-group row">
-                      <label class="col-lg-3 col-form-label form-control-label"
-                        >Short Title</label
-                      >
-                      <div class="col-lg-9">
-                        <input
-                          name="short_title"
-                          class="form-control"
-                          type="text"
-                          :value="`${get_heading_value(
-                            'home_media_coverage',
-                            'short_title'
-                          )}`"
-                          placeholder="Enter short title"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-lg-3 col-form-label form-control-label"
-                        >Title</label
-                      >
-                      <div class="col-lg-9">
-                        <input
-                          name="title"
-                          class="form-control"
-                          type="text"
-                          :value="`${get_heading_value(
-                            'home_media_coverage',
-                            'title'
-                          )}`"
-                          placeholder="Enter title"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-lg-3 col-form-label form-control-label"
-                        >Video URL (youtube link)</label
-                      >
-                      <div class="col-lg-9">
-                        <input
-                          name="video_url"
-                          class="form-control"
-                          type="text"
-                          :value="`${get_heading_value(
-                            'home_media_coverage',
-                            'video_url'
-                          )}`"
-                          placeholder="Enter video URL"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-lg-3 col-form-label form-control-label"
-                        >Background Image</label
-                      >
-                      <div class="col-lg-9">
-                        <input
-                          class="form-control"
-                          name="background_image"
-                          type="file"
-                        />
-                        <img
-                          v-if="
-                            get_heading_value(
-                              'home_media_coverage',
-                              'background_image'
-                            )
-                          "
-                          class="mt-2"
-                          :src="`${get_heading_value(
-                            'home_media_coverage',
-                            'background_image'
-                          )}`"
-                          height="100"
-                          width="100"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <!-- Submit Button -->
-                    <div class="form-group row">
-                      <label
-                        class="col-lg-3 col-form-label form-control-label"
-                      ></label>
-                      <div class="col-lg-9">
-                        <input
-                          type="submit"
-                          class="btn btn-primary"
-                          value="Save Changes"
-                        />
-                      </div>
-                    </div>
-                  </form>
-                </div>
-
-                <!-- -------------------------------------------------------- -->
-                <!-- --------------------------home_public_comments ----------------- -->
-                <!-- --------------------------------------------------------- -->
-                <div
-                  v-if="tab == 'home_public_comments'"
-                  :class="tab == 'home_public_comments' ? ' active' : ''"
-                  class="tab-pane active"
-                  id="home_public_comments"
-                >
-                  <form
-                    @submit.prevent="SectionHeadingHandler"
-                    enctype="multipart/form-data"
-                  >
-                    <div class="form-group row">
-                      <label class="col-lg-3 col-form-label form-control-label"
-                        >Short Title</label
-                      >
-                      <div class="col-lg-9">
-                        <input
-                          name="short_title"
-                          class="form-control"
-                          type="text"
-                          :value="`${get_heading_value(
-                            'home_public_comments',
-                            'short_title'
-                          )}`"
-                          placeholder="Enter short title"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-lg-3 col-form-label form-control-label"
-                        >Title</label
-                      >
-                      <div class="col-lg-9">
-                        <input
-                          name="title"
-                          class="form-control"
-                          type="text"
-                          :value="`${get_heading_value(
-                            'home_public_comments',
-                            'title'
-                          )}`"
-                          placeholder="Enter title"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-lg-3 col-form-label form-control-label"
-                        >Background Image</label
-                      >
-                      <div class="col-lg-9">
-                        <input
-                          class="form-control"
-                          name="background_image"
-                          type="file"
-                        />
-                        <img
-                          v-if="
-                            get_heading_value(
-                              'home_public_comments',
-                              'background_image'
-                            )
-                          "
-                          class="mt-2"
-                          :src="`${get_heading_value(
-                            'home_public_comments',
-                            'background_image'
-                          )}`"
-                          height="100"
-                          width="100"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <!-- Submit Button -->
-                    <div class="form-group row">
-                      <label
-                        class="col-lg-3 col-form-label form-control-label"
-                      ></label>
-                      <div class="col-lg-9">
-                        <input
-                          type="submit"
-                          class="btn btn-primary"
-                          value="Save Changes"
-                        />
-                      </div>
-                    </div>
-                  </form>
-                </div>
-
-                <!-- -------------------------------------------------------- -->
-                <!-- --------------------------home_news ----------------- -->
-                <!-- --------------------------------------------------------- -->
-                <div
-                  v-if="tab == 'home_news'"
-                  :class="tab == 'home_news' ? ' active' : ''"
-                  class="tab-pane active"
-                  id="home_news"
-                >
-                  <form
-                    @submit.prevent="SectionHeadingHandler"
-                    enctype="multipart/form-data"
-                  >
-                    <div class="form-group row">
-                      <label class="col-lg-3 col-form-label form-control-label"
-                        >Short Title</label
-                      >
-                      <div class="col-lg-9">
-                        <input
-                          name="short_title"
-                          class="form-control"
-                          type="text"
-                          :value="`${get_heading_value(
-                            'home_news',
-                            'short_title'
-                          )}`"
-                          placeholder="Enter short title"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-lg-3 col-form-label form-control-label"
-                        >Title</label
-                      >
-                      <div class="col-lg-9">
-                        <input
-                          name="title"
-                          class="form-control"
-                          type="text"
-                          :value="`${get_heading_value(
-                            'home_news',
-                            'title'
-                          )}`"
-                          placeholder="Enter title"
-                        />
-                      </div>
-                    </div>
-                    <!-- Submit Button -->
-                    <div class="form-group row">
-                      <label
-                        class="col-lg-3 col-form-label form-control-label"
-                      ></label>
-                      <div class="col-lg-9">
-                        <input
-                          type="submit"
-                          class="btn btn-primary"
-                          value="Save Changes"
-                        />
-                      </div>
-                    </div>
-                  </form>
-                </div>
-
-                
               </div>
             </div>
           </div>
@@ -610,7 +311,7 @@ import { section_heading_store } from "../store/section_heading_store";
 import { mapState, mapActions } from "pinia";
 export default {
   data: () => ({
-    tab: "home_service",
+    tab: "principles_principles",
   }),
   created() {
     this.get_all_section_headings();
