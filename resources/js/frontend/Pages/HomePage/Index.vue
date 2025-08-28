@@ -37,11 +37,16 @@
     <WhyChoseUs
       v-else-if="isWhyChooseVisible && whyChoseUs && whyChoseUs.length > 0"
       :position="'right'"
-      :main-bg="'/frontend/assets/img/group-activity-02.png'"
-      :side-bg="'/frontend/assets/img/ceo.png'"
+      :main-bg="
+        whyChooseSection?.background_image ||
+        '/frontend/assets/img/group-activity-02.png'
+      "
+      :side-bg="
+        whyChooseSection?.primary_image || '/frontend/assets/img/ceo.png'
+      "
       :whyChooseItems="whyChoseUs"
-      :sectionTitle="whyChooseSection?.short_title"
-      :sectionDescription="whyChooseSection?.long_title"
+      :short_title="whyChooseSection?.short_title"
+      :long_title="whyChooseSection?.long_title"
     />
   </div>
   <!-- Why Choose us secion End here -->
@@ -54,8 +59,8 @@
     <OurPrinciple
       v-else-if="isPrinciplesVisible && principles && principles.length > 0"
       :principleItems="principles"
-      :sectionTitle="principleSection?.short_title"
-      :sectionDescription="principleSection?.long_title"
+      :short_title="principleSection?.short_title"
+      :long_title="principleSection?.long_title"
     />
   </div>
   <!-- Our Principle Section End here -->
@@ -68,8 +73,8 @@
     <OurJourney
       v-else-if="isJourneyVisible && ourJourney && ourJourney.length > 0"
       :journeyItems="ourJourney"
-      :sectionTitle="journeySection?.short_title"
-      :sectionDescription="journeySection?.long_title"
+      :short_title="journeySection?.short_title"
+      :long_title="journeySection?.long_title"
     />
   </div>
   <!-- Our Journey Section End Here -->
@@ -82,8 +87,11 @@
     <MediaCoverage
       v-else-if="isMediaVisible && mediaCoverages"
       :mediaItems="mediaCoverages"
-      :sectionTitle="mediaSection?.short_title"
-      :sectionDescription="mediaSection?.long_title"
+      :short_title="mediaSection?.short_title"
+      :title="mediaSection?.title"
+      :long_title="mediaSection?.long_title"
+      :video_url="mediaSection?.video_url"
+      :background_image="mediaSection?.background_image"
     />
   </div>
   <!-- Media section end here -->
@@ -93,7 +101,12 @@
   <!-- Donation Section Start -->
   <div ref="donationSection">
     <DonationSkeleton v-if="shouldShowDonationSkeleton" />
-    <Donation v-else-if="isDonationVisible" />
+    <Donation v-else-if="isDonationVisible" 
+    :short_title="donationSection?.short_title"
+    :title="donationSection?.title"
+    :short_description="donationSection?.short_description"
+    :side_image="donationSection?.side_image"
+    />
   </div>
   <!-- Donation Section End -->
   <!-- Donation Section End -->
@@ -105,6 +118,9 @@
     <Testimonial
       v-else-if="isTestimonialVisible && comments"
       :comments="comments"
+      :short_title="testimonialSection?.short_title"
+      :title="testimonialSection?.title"
+      :background_image="testimonialSection?.background_image"
     />
   </div>
   <!-- Testimonial Secition-02 End -->
@@ -118,6 +134,8 @@
       v-else-if="isNewsVisible && news"
       :lead_news="news.lead_news"
       :side_news="news.side_news"
+      :short_title="newsSection?.short_title"
+      :title="newsSection?.title"
     />
   </div>
   <!-- News Section End  -->
@@ -544,22 +562,22 @@ export default {
       return this.get_section_headings_data("home_service");
     },
     whyChooseSection() {
-      return this.get_section_headings_data("home_why_choose");
+      return this.get_section_headings_data("home_why_chose_us");
     },
     principleSection() {
-      return this.get_section_headings_data("home_principle");
+      return this.get_section_headings_data("home_principles");
     },
     journeySection() {
       return this.get_section_headings_data("home_journey");
     },
     mediaSection() {
-      return this.get_section_headings_data("home_media");
+      return this.get_section_headings_data("home_media_coverage");
     },
     donationSection() {
       return this.get_section_headings_data("home_donation");
     },
     testimonialSection() {
-      return this.get_section_headings_data("home_testimonial");
+      return this.get_section_headings_data("home_public_comments");
     },
     newsSection() {
       return this.get_section_headings_data("home_news");

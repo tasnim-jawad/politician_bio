@@ -52,6 +52,15 @@
 <script>
 export default {
   props: {
+    short_title: {
+      type: String,
+      default: "Our Journey",
+    },
+    long_title: {
+      type: String,
+      default:
+        "From database A choice that makes the difference from others.",
+    },
     contentPosition: {
       type: String,
       default: "middle",

@@ -1,7 +1,7 @@
 <template>
   <div
     class="testimonial-section-area people-say testimonial-bg-02 home-five"
-    style="background-image: url(frontend/assets/img/team-02.png)"
+    :style="{ backgroundImage: `url(${background_image})` }"
   >
     <div class="shapes political-shape">
       <img src="frontend/assets/img/shape-04.png" class="shape-01" alt="" />
@@ -26,7 +26,7 @@
                 />
                 <div class="content">
                   <div class="subtitle wow animate__animated animate__fadeInUp">
-                    <p>Public Comments</p>
+                    <p>{{ short_title }}</p>
                     <div class="icon">
                       <i class="icon-star"></i>
                       <i class="icon-star"></i>
@@ -34,7 +34,7 @@
                     </div>
                   </div>
                   <h4 class="title wow animate__animated animate__fadeInUp">
-                    People's Say About us
+                    {{ title }}
                   </h4>
                   <p
                     class="description wow animate__animated animate__fadeInUp"
@@ -59,6 +59,18 @@
 <script>
 export default {
   props: {
+    short_title: {
+      type: String,
+      default: "Public Comments",
+    },
+    title: {
+      type: String,
+      default: "People's Say About us",
+    },
+    background_image: {
+      type: String,
+      default: "uploads/default.jpg",
+    },
     comments: {
       type: Array,
       default: () => [

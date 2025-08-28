@@ -6,7 +6,7 @@
           <div class="party-single-item margin-bottom-50">
             <div class="content">
               <div class="subtitle wow animate__animated animate__fadeInUp">
-                <p>Contribute For Us</p>
+                <p>{{ short_title }}</p>
                 <div class="icon">
                   <i class="icon-star"></i>
                   <i class="icon-star"></i>
@@ -16,14 +16,12 @@
               <h4
                 class="title style-01 wow animate__animated animate__fadeInUp"
               >
-                Make A Donation For Your Country
+                {{ title }}
               </h4>
               <p
                 class="description style-01 wow animate__animated animate__fadeInUp"
               >
-                Every pleasures is to welcomed pain avoided owing to the duty
-                the obligations of business it will frequently occur that
-                pleasures have to be repudiated.
+                {{ short_description }}
               </p>
             </div>
             <div
@@ -40,7 +38,10 @@
         </div>
         <div class="col-lg-6">
           <div class="thumbnail">
-            <img src="frontend/assets/img/Home-five/donation-five.png" alt="" />
+            <img
+              :src="side_image ? '/' + side_image : '/frontend/assets/img/Home-five/donation-five.png'"
+              alt=""
+            />
           </div>
         </div>
       </div>
@@ -48,5 +49,26 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: {
+    short_title: {
+      type: String,
+      default: "Contribute For Us",
+    },
+    title: {
+      type: String,
+      default: "Make A Donation For Your Country",
+    },
+    short_description: {
+      type: String,
+      default: `Every pleasures is to welcomed pain avoided owing to the duty
+                the obligations of business it will frequently occur that
+                pleasures have to be repudiated.`
+    },
+    side_image: {
+      type: String,
+      default: "frontend/assets/img/Home-five/donation-five.png",
+    },
+  }
+};
 </script>

@@ -5,11 +5,10 @@
         <div class="col-lg-6">
           <div class="section-title">
             <h4 class="title wow animate__animated animate__fadeInUp">
-              Our Campaign Principles
+              {{ short_title }}
             </h4>
             <p class="description wow animate__animated animate__fadeInUp">
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{ long_title }}
             </p>
           </div>
         </div>
@@ -46,6 +45,15 @@
 export default {
   name: "OurPrinciple",
   props: {
+    short_title: {
+      type: String,
+      default: "Our Campaign Principles",
+    },
+    long_title: {
+      type: String,
+      default:
+        "A choice that makes the difference from others.",
+    },
     principleItems: {
       type: Array,
       default: () => [

@@ -10,7 +10,7 @@
                 <span class="icon-star"></span>
                 <span class="icon-star"></span>
               </div>
-              <p>Our News</p>
+              <p>{{ short_title }}</p>
               <div class="icon">
                 <span class="icon-star"></span>
                 <span class="icon-star"></span>
@@ -18,7 +18,7 @@
               </div>
             </div>
             <h4 class="title wow animate__animated animate__fadeInUp">
-              Latest News & Articles
+              {{ title }}
             </h4>
           </div>
         </div>
@@ -112,6 +112,14 @@
 <script>
 export default {
   props: {
+    short_title: {
+      type: String,
+      default: "Our News",
+    },
+    title: {
+      type: String,
+      default: "Latest News & Articles",
+    },
     lead_news: {
       type: Array,
       default: () => [

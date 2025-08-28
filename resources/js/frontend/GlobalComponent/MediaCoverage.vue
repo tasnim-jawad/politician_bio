@@ -1,16 +1,13 @@
 <template>
-  <div
-    class="media-section style-01"
-    style="background-image: url(/frontend/assets/img/media.png)"
-  >
+  <div class="media-section style-01">
+    <div class="bg_image">
+      <img :src="`/${background_image}`" alt="background image" />
+    </div>
     <div class="container">
       <div
         class="video-section style-02 text-center wow animate__animated animate__fadeInUp"
       >
-        <a
-          class="video-play style-01 style-05 mfp-iframe"
-          href="https://www.youtube.com/watch?v=-ZwQtICNbRc"
-        >
+        <a class="video-play style-01 style-05 mfp-iframe" :href="video_url">
           <i class="fas fa-play"></i>
         </a>
       </div>
@@ -24,7 +21,7 @@
                   <span class="icon-star"></span>
                   <span class="icon-star"></span>
                 </div>
-                <p>Political Campaign</p>
+                <p>{{ short_title }}</p>
                 <div class="icon">
                   <span class="icon-star"></span>
                   <span class="icon-star"></span>
@@ -32,7 +29,7 @@
                 </div>
               </div>
               <h2 class="title wow animate__animated animate__fadeInUp">
-                Media Coverage
+                {{ title }}
               </h2>
             </div>
           </div>
@@ -45,7 +42,10 @@
           >
             <div class="media-item wow animate__animated animate__fadeInUp">
               <div class="media-thumb">
-                <img :src="( '/' + item?.thumbnail_image || '/uploads/default.jpg') " :alt="item?.alt || 'media'" />
+                <img
+                  :src="'/' + item?.thumbnail_image || '/uploads/default.jpg'"
+                  :alt="item?.alt || 'media'"
+                />
                 <div class="media-thumb-video">
                   <a
                     class="video-play style-01 style-05 mfp-iframe"
@@ -72,6 +72,23 @@
 <script>
 export default {
   props: {
+    short_title: {
+      type: String,
+      default: "Media Coverage",
+    },
+    title: {
+      type: String,
+      default: "Stay updated with our latest media coverage.",
+    },
+    video_url: {
+      type: String,
+      default: "https://www.youtube.com/watch?v=-ZwQtICNbRc",
+    },
+    background_image: {
+      type: String,
+      default: "uploads/default.jpg",
+    },
+
     mediaItems: {
       type: Array,
       default: () => [
@@ -149,3 +166,18 @@ export default {
   },
 };
 </script>
+<style>
+.bg_image {
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  height: calc(100% - 158px);
+  top: 0;
+}
+.bg_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+}
+</style>

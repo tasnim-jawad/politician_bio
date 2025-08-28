@@ -61,6 +61,18 @@
                   >
                   <hr />
                 </li>
+                <li class="nav-item" @click="tab = 'home_donation'">
+                  <a
+                    :class="tab == 'home_donation' ? ' active' : ''"
+                    href="javascript:void();"
+                    data-target="#home_donation"
+                    data-toggle="pill"
+                    class="nav-link"
+                    ><i class="icon-note"></i>
+                    <span class="hidden-xs">Donation</span></a
+                  >
+                  <hr />
+                </li>
                 <li class="nav-item" @click="tab = 'home_public_comments'">
                   <a
                     :class="tab == 'home_public_comments' ? ' active' : ''"
@@ -417,6 +429,113 @@
                           :src="`${get_heading_value(
                             'home_media_coverage',
                             'background_image'
+                          )}`"
+                          height="100"
+                          width="100"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="form-group row">
+                      <label
+                        class="col-lg-3 col-form-label form-control-label"
+                      ></label>
+                      <div class="col-lg-9">
+                        <input
+                          type="submit"
+                          class="btn btn-primary"
+                          value="Save Changes"
+                        />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- -------------------------------------------------------- -->
+                <!-- --------------------------home_donation ----------------- -->
+                <!-- --------------------------------------------------------- -->
+                <div
+                  v-if="tab == 'home_donation'"
+                  :class="tab == 'home_donation' ? ' active' : ''"
+                  class="tab-pane active"
+                  id="home_donation"
+                >
+                  <form
+                    @submit.prevent="SectionHeadingHandler"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label"
+                        >Short Title</label
+                      >
+                      <div class="col-lg-9">
+                        <input
+                          name="short_title"
+                          class="form-control"
+                          type="text"
+                          :value="`${get_heading_value(
+                            'home_donation',
+                            'short_title'
+                          )}`"
+                          placeholder="Enter short title"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label"
+                        >Title</label
+                      >
+                      <div class="col-lg-9">
+                        <input
+                          name="title"
+                          class="form-control"
+                          type="text"
+                          :value="`${get_heading_value(
+                            'home_donation',
+                            'title'
+                          )}`"
+                          placeholder="Enter title"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label"
+                        >Short description</label
+                      >
+                      <div class="col-lg-9">
+                        <input
+                          name="short_description"
+                          class="form-control"
+                          type="text"
+                          :value="`${get_heading_value(
+                            'home_donation',
+                            'short_description'
+                          )}`"
+                          placeholder="Enter short description"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label"
+                        >Side Image</label
+                      >
+                      <div class="col-lg-9">
+                        <input
+                          class="form-control"
+                          name="side_image"
+                          type="file"
+                        />
+                        <img
+                          v-if="
+                            get_heading_value(
+                              'home_donation',
+                              'side_image'
+                            )
+                          "
+                          class="mt-2"
+                          :src="`${get_heading_value(
+                            'home_donation',
+                            'side_image'
                           )}`"
                           height="100"
                           width="100"

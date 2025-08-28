@@ -5,9 +5,9 @@
       <div :class="rowClass">
         <div class="col-lg-5">
           <div class="section-title">
-            <h4 class="title style-01">Why chose us</h4>
+            <h4 class="title style-01">{{ short_title }}</h4>
             <p class="description style-01">
-              A choice that makes the difference from others.
+              {{ long_title }}
             </p>
           </div>
           <div class="single-items-wrapper">
