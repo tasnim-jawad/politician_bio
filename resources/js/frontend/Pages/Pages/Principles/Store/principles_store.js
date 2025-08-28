@@ -108,12 +108,10 @@ export const store = defineStore("principles_page", {
       this.loading = true;
       this.error = null;
       try {
-        await Promise.all([
-          this.fetch_principles(),
-          this.fetch_comments(),
-          this.fetch_speeches(),
-          this.fetch_section_headings(),
-        ]);
+        this.fetch_principles()
+        this.fetch_comments()
+        this.fetch_speeches()
+        this.fetch_section_headings()
       } catch (e) {
         this.error = e;
       } finally {

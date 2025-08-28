@@ -13,7 +13,7 @@
                 <span class="icon-star"></span>
                 <span class="icon-star"></span>
               </div>
-              <p>Join Campaigns</p>
+              <p>{{ short_title }}</p>
               <div class="icon">
                 <span class="icon-star"></span>
                 <span class="icon-star"></span>
@@ -21,11 +21,10 @@
               </div>
             </div>
             <h4 class="title wow animate__animated animate__fadeInUp">
-              Meet Our Party Volunteer
+              {{ title }}
             </h4>
             <p class="description wow animate__animated animate__fadeInUp">
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{ long_title }}
             </p>
           </div>
         </div>
@@ -128,6 +127,19 @@
 export default {
   name: "VolunteerSection",
   props: {
+    short_title: {
+      type: String,
+      default: "Join Campaigns",
+    },
+    title: {
+      type: String,
+      default: "Meet Our Party Volunteer",
+    },
+    long_title: {
+      type: String,
+      default:
+        "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
+    },
     volunteers: {
       type: Array,
       default: () => 

@@ -2792,9 +2792,15 @@ ul {
   -webkit-transform: translateY(0px);
           transform: translateY(0px);
 }
+.volunteer-single-items .thum {
+  aspect-ratio: 16 / 12;
+}
 .volunteer-single-items .thum img {
   border-radius: 10px;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 .volunteer-single-items .content {
   text-align: center;

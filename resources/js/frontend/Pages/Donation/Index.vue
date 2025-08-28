@@ -30,11 +30,13 @@
           />
           <div v-else class="section-title">
             <h4 class="title wow animate__animated animate__fadeInUp">
-              Donation Programs
+              {{ donationSection?.short_title || "Donation Programs" }}
             </h4>
             <p class="description wow animate__animated animate__fadeInUp">
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{
+                donationSection?.long_title ||
+                "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently."
+              }}
             </p>
           </div>
         </div>
@@ -224,6 +226,16 @@ export default {
   },
   methods: {
     ...mapActions(donation_store, ["fetchAllDonationPageData"]),
+
+    // Get section data by section_type
+    get_section_headings_data(sectionType) {
+      return (
+        this.section_headings?.find(
+          (item) => item.section_type === sectionType
+        ) || null
+      );
+    },
+
     goToPage(page) {
       console.log("Going to page:", page);
       if (page < 1 || page > (this.donations.data.last_page || 1)) return;
@@ -231,7 +243,17 @@ export default {
     },
   },
   computed: {
-    ...mapState(donation_store, ["donations", "loading", "error"]),
+    ...mapState(donation_store, [
+      "section_headings",
+      "donations",
+      "loading",
+      "error",
+    ]),
+
+    // Section heading data computed properties
+    donationSection() {
+      return this.get_section_headings_data("donation_donation_all");
+    },
     shouldShowBannerSkeleton() {
       return this.loading;
     },

@@ -35,9 +35,16 @@
     <why-choose-us
       v-else-if="isWhyChooseVisible && whyChoseUs && whyChoseUs.length > 0"
       :position="'right'"
-      :main-bg="'/frontend/assets/img/group-activity-02.png'"
-      :side-bg="'/frontend/assets/img/ceo.png'"
+      :main-bg="
+        whyChooseSection?.background_image ||
+        '/frontend/assets/img/group-activity-02.png'
+      "
+      :side-bg="
+        whyChooseSection?.primary_image || '/frontend/assets/img/ceo.png'
+      "
       :whyChooseItems="whyChoseUs"
+      :sectionTitle="whyChooseSection?.short_title"
+      :sectionDescription="whyChooseSection?.long_title"
     />
   </div>
   <!-- Why Choose us secion End here -->
@@ -53,6 +60,9 @@
     <volunteer-section
       v-else-if="isVolunteerVisible && volunteers.length"
       :volunteers="volunteers"
+      :short_title="volunteerSection?.short_title"
+      :title="volunteerSection?.title"
+      :long_title="volunteerSection?.long_title"
     />
   </div>
   <!-- Volunteer Section End -->
@@ -66,6 +76,8 @@
     <mission-vision
       v-else-if="isMissionVisionVisible && mission_vision"
       :mission_vision="mission_vision"
+      :short_title="missionVisionSection?.short_title"
+      :long_title="missionVisionSection?.long_title"
     />
   </div>
   <!-- MissionVision section end here -->
@@ -222,6 +234,15 @@ export default {
   },
   methods: {
     ...mapActions(about_us_store, ["fetchAllAboutUsPageData"]),
+
+    // Get section data by section_type
+    get_section_headings_data(sectionType) {
+      return (
+        this.section_headings?.find(
+          (item) => item.section_type === sectionType
+        ) || null
+      );
+    },
   },
   async created() {
     this.loading = true;
@@ -230,6 +251,7 @@ export default {
   },
   computed: {
     ...mapState(about_us_store, [
+      "section_headings",
       "about_us",
       "whyChoseUs",
       "volunteers",
@@ -237,6 +259,17 @@ export default {
       "counters",
       "error",
     ]),
+
+    // Section heading data computed properties
+    volunteerSection() {
+      return this.get_section_headings_data("about_us_volunteer");
+    },
+    missionVisionSection() {
+      return this.get_section_headings_data("about_us_mission_vision");
+    },
+    whyChooseSection() {
+      return this.get_section_headings_data("about_us_why_chose_us");
+    },
     shouldShowBannerSkeleton() {
       return this.loading;
     },

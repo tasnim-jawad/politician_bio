@@ -8,11 +8,10 @@
         <div class="col-lg-6 col-md-10">
           <div class="section-title">
             <h2 class="title wow animate__animated animate__fadeInUp">
-              Inspiration, innovation and countless opportunities
+              {{ short_title }}
             </h2>
             <p class="description wow animate__animated animate__fadeInUp">
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{ long_title }}
             </p>
           </div>
         </div>
@@ -103,6 +102,15 @@
 export default {
   name: "MissionVision",
   props: {
+    short_title: {
+      type: String,
+      default: "Our Mission & Vision",
+    },
+    long_title: {
+      type: String,
+      default:
+        "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
+    },
     mission_vision: {
       type: Array,
       required: true,

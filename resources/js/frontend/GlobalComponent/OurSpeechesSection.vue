@@ -5,11 +5,10 @@
         <div class="col-lg-6">
           <div class="section-title">
             <h4 class="title wow animate__animated animate__fadeInUp">
-              Our Speeches
+              {{ short_title }}
             </h4>
             <p class="description wow animate__animated animate__fadeInUp">
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{ long_title }}
             </p>
           </div>
         </div>
@@ -85,6 +84,15 @@
 export default {
   name: "OurSpeechesSection",
   props: {
+    short_title: {
+      type: String,
+      default: "Our Speeches",
+    },
+    long_title: {
+      type: String,
+      default:
+        "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
+    },
     speeches: {
       type: Array,
       required: true,

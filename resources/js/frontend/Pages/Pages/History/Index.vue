@@ -15,15 +15,24 @@
 
   <!-- Jour Journey Section Start Her -->
   <!-- <our-journey :journeyItems="journeyItems" :contentPosition="'top_left'" /> -->
-  <OurJourney v-if="ourJourney.length > 0" :journeyItems="ourJourney" :contentPosition="'top_left'"/>
+  <OurJourney
+    v-if="ourJourney.length > 0"
+    :journeyItems="ourJourney"
+    :contentPosition="'top_left'"
+  />
   <!-- Jour Journey Section End Her -->
 
   <!-- Our History Timeline Section Start Here -->
-  <history-timeline v-if="history_timelines" :timelineItems="history_timelines" />
+  <history-timeline
+    v-if="history_timelines"
+    :timelineItems="history_timelines"
+    :short_title="historyTimelineSection?.short_title"
+    :long_title="historyTimelineSection?.long_title"
+  />
   <!-- Our History Timeline Section End Here -->
 
   <!-- Counter Section Start -->
-  <at-a-glance v-if="counters" :counters="counters"/>
+  <at-a-glance v-if="counters" :counters="counters" />
   <!-- Counter Section End -->
 </template>
 <script>
@@ -31,10 +40,10 @@
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import OurJourney from "../../../GlobalComponent/OurJourney.vue";
 import HistoryTimeline from "../../../GlobalComponent/HistoryTimeline.vue";
-import AtAGlance from '../../../GlobalComponent/AtAGlance.vue'
-import CommonBanner from '../../../CommonComponents/CommonBanner.vue';
-import {store as history_page_store} from "./Store/history_store.js";
-import { mapActions , mapWritableState } from "pinia";
+import AtAGlance from "../../../GlobalComponent/AtAGlance.vue";
+import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
+import { store as history_page_store } from "./Store/history_store.js";
+import { mapActions, mapWritableState } from "pinia";
 
 export default {
   components: {
@@ -146,13 +155,28 @@ export default {
   },
   methods: {
     ...mapActions(history_page_store, ["fetchAllHistoryPageData"]),
+
+    // Get section data by section_type
+    get_section_headings_data(sectionType) {
+      return (
+        this.section_headings?.find(
+          (item) => item.section_type === sectionType
+        ) || null
+      );
+    },
   },
   computed: {
     ...mapWritableState(history_page_store, [
+      "section_headings",
       "ourJourney",
       "history_timelines",
       "counters",
     ]),
+
+    // Section heading data computed properties
+    historyTimelineSection() {
+      return this.get_section_headings_data("history_timeline");
+    },
   },
 
   // mounted() {

@@ -25,11 +25,10 @@
         <div class="col-lg-6">
           <div class="section-title">
             <h4 class="title wow animate__animated animate__fadeInUp">
-              See History Timeline
+              {{ short_title }}
             </h4>
             <p class="description wow animate__animated animate__fadeInUp">
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{ long_title }}
             </p>
           </div>
         </div>
@@ -62,6 +61,15 @@ export default {
   name: "HistoryTimeline",
   components: { HistorySingleItem },
   props: {
+    short_title: {
+      type: String,
+      default: "See History Timeline",
+    },
+    long_title: {
+      type: String,
+      default:
+        "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
+    },
     timelineItems: {
       type: Array,
       required: true,
