@@ -21,7 +21,7 @@
                     data-toggle="pill"
                     class="nav-link"
                     ><i class="icon-note"></i>
-                    <span class="hidden-xs">Service</span></a
+                    <span class="hidden-xs">Volunteer Involved</span></a
                   >
                   <hr />
                 </li>
