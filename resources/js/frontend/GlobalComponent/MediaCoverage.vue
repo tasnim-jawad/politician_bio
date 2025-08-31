@@ -65,6 +65,13 @@
             </div>
           </div>
         </div>
+        <div class="row justify-content-center mt-4">
+          <div class="col-auto">
+            <Link class="link_button" href="/pages/media">
+              See More
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -179,5 +186,19 @@ export default {
     height: 100%;
     object-fit: cover;
     object-position: top center;
+}
+.link_button {
+  background-color: var(--main-color-one);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-align: center;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+.link_button:hover {
+  background-color: #c82333;
+  color: #fff;
 }
 </style>

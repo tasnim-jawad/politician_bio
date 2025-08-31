@@ -19,6 +19,7 @@ Route::get('/pages/history/details', [FrontendController::class, 'HistoryDetails
 Route::get('/pages/principles', [FrontendController::class, 'PrinciplesPage'])->name('pages.principles');
 Route::get('/pages/team', [FrontendController::class, 'TeamPage'])->name('pages.team');
 Route::get('/pages/media', [FrontendController::class, 'MediaPage'])->name('pages.media');
+Route::get('/pages/gallery', [FrontendController::class, 'GalleryPage'])->name('pages.gallery');
 Route::get('/pages/issues', [FrontendController::class, 'IssuesPage'])->name('pages.issues');
 Route::get('/pages/issues/details', [FrontendController::class, 'IssuesDetailsPage'])->name('pages.issues.details');
 Route::get('/pages/volunteer', [FrontendController::class, 'VolunteerPage'])->name('pages.volunteer');

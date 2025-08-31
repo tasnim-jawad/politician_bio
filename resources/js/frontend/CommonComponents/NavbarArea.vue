@@ -40,6 +40,7 @@ import { Link } from '@inertiajs/vue3';
               <li><Link href="/pages/history">History</Link></li>
               <li><Link href="/pages/principles">Principles</Link></li>
               <li><Link href="/pages/team">Team</Link></li>
+              <li><Link href="/pages/gallery">Gallery</Link></li>
               <li><Link href="/pages/media">Media</Link></li>
               <li><Link href="/pages/issues">Issues</Link></li>
               <!-- <li><Link href="/pages/issues/details">Issues details</Link></li> -->

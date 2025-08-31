@@ -20,12 +20,7 @@ export default [
 		value: "",
 	},
 
-	{
-		name: "content",
-		label: "Enter your content",
-		type: "textarea",
-		value: "",
-	},
+	
 
 	{
 		name: "target",
@@ -47,5 +42,12 @@ export default [
 		type: "file",
 		multiple: "false",
 		value: "",
+	},
+	{
+		name: "content",
+		label: "Enter your content",
+		type: "textarea",
+		value: "",
+		row_col_class: "col-md-12",
 	},
 ];

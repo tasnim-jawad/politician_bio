@@ -10,6 +10,7 @@ import DonationPage from "../pages/DonationPage.vue";
 import HistoryPage from "../pages/HistoryPage.vue";
 import PrinciplesPage from "../pages/PrinciplesPage.vue";
 import TeamPage from "../pages/TeamPage.vue";
+import GalleryPage from "../pages/GalleryPage.vue";
 import MediaPage from "../pages/MediaPage.vue";
 import IssuesPage from "../pages/IssuesPage.vue";
 import VolunteerPage from "../pages/VolunteerPage.vue";
@@ -86,6 +87,11 @@ const routes = {
             path: "media",
             name: "MediaPage" + route_prefix,
             component: MediaPage,
+        },
+        {
+            path: "gallery",
+            name: "GalleryPage" + route_prefix,
+            component: GalleryPage,
         },
         {
             path: "issues",

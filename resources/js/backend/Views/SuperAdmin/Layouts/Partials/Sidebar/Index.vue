@@ -389,6 +389,11 @@
             icon: `zmdi zmdi-dot-circle-alt`,
           },
           {
+            route_name: `GalleryPageSectionHeading`,
+            title: `GalleryPage`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
             route_name: `MediaPageSectionHeading`,
             title: `MediaPage`,
             icon: `zmdi zmdi-dot-circle-alt`,

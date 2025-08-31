@@ -1,23 +1,21 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-export const store = defineStore("media_page", {
+export const store = defineStore("gallery_page", {
   state: () => ({
     section_headings: [],
-    media: {
-      data: [],
-      current_page: 1,
-      last_page: 1,
-      total: 0,
-      per_page: 6,
-    },
+    photo_gallery: [],
+    video_gallery: [],
+    news: [],
+
     loading: false,
     error: null,
   }),
   actions: {
     _cache: {},
-    _cacheKeyPrefix: "media_page_cache_",
+    _cacheKeyPrefix: "gallery_page_cache_",
     async _isCacheValid(key) {
+      // Try memory first, then Cache Storage
       let entry = this._cache[key];
       if (!entry && "caches" in window) {
         try {
@@ -64,43 +62,64 @@ export const store = defineStore("media_page", {
         this.error = e;
       }
     },
-    async fetch_media({ page = 1 } = {}) {
-      const cacheKey = `media_page_${page}`;
-      if (await this._isCacheValid(cacheKey)) {
-        this.media = this._cache[cacheKey].data;
+    async fetch_photo_gallery() {
+      if (await this._isCacheValid("photo_gallery")) {
+        this.photo_gallery = this._cache["photo_gallery"].data;
         return;
       }
       try {
-        const res = await axios.get("media-coverages", {
+        const res = await axios.get("images", {
           params: {
-            page,
-            limit: 12,
+            get_all: 1,
+            limit: 1000,
           },
         });
-        // Normalize response for both paginated and non-paginated
-        let result = res.data;
-        if (!result.data) {
-          // If data is not present, fallback to array
-          result = {
-            data: Array.isArray(res.data) ? res.data : [],
-            current_page: 1,
-            last_page: 1,
-            total: Array.isArray(res.data) ? res.data.length : 0,
-            per_page: 6,
-          };
-        }
-        this.media = result;
-        await this._setCache(cacheKey, this.media);
+        this.photo_gallery = res.data;
+        await this._setCache("photo_gallery", res.data);
       } catch (e) {
         this.error = e;
       }
     },
-    async fetchAllMediaPageData({ page = 1 } = {}) {
+    async fetch_video_gallery() {
+      if (await this._isCacheValid("video_gallery")) {
+        this.video_gallery = this._cache["video_gallery"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("videos", {
+          params: {
+            get_all: 1,
+            limit: 1000,
+          },
+        });
+        this.video_gallery = res.data;
+        await this._setCache("video_gallery", res.data);
+      } catch (e) {
+        this.error = e;
+      }
+    },
+    async fetch_news() {
+      if (await this._isCacheValid("news")) {
+        this.news = this._cache["news"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("news/custom-data");
+        this.news = res.data;
+        await this._setCache("news", res.data);
+      } catch (e) {
+        this.error = e;
+      }
+    },
+
+    async fetchAllGalleryPageData() {
       this.loading = true;
       this.error = null;
       try {
         await Promise.all([
-          this.fetch_media({ page }),
+          this.fetch_photo_gallery(),
+          this.fetch_video_gallery(),
+          this.fetch_news(),
           this.fetch_section_headings(),
         ]);
       } catch (e) {

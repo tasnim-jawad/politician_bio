@@ -105,6 +105,15 @@ class FrontendController extends Controller
         ]);
     }
 
+    // Pages/Gallery
+    public function GalleryPage()
+    {
+        return Inertia::render('Pages/Gallery/Index', [
+            'event' => [
+                'title' => 'Gallery',
+            ]
+        ]);
+    }
     // Pages/Media
     public function MediaPage()
     {

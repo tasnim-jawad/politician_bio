@@ -9,14 +9,14 @@ class GetAllData
     public static function execute()
     {
         try {
-            $pageLimit = request()->input('limit') ?? 10;
+            $pageLimit = (int) (request()->input('limit') ?? 10);
             $orderByColumn = request()->input('sort_by_col') ?? 'id';
             $orderByType = request()->input('sort_type') ?? 'desc';
             $status = request()->input('status') ?? 'active';
             $fields = request()->input('fields') ?? '*';
             $start_date = request()->input('start_date');
             $end_date = request()->input('end_date');
-
+            // dd($pageLimit);
             $with = [];
 
             $condition = [
@@ -67,7 +67,7 @@ class GetAllData
                     ->limit($pageLimit)
                     ->orderBy($orderByColumn, $orderByType)
                     ->get();
-
+                    dd($data->toArray());
                 return entityResponse($data);
             } elseif ('trased' == $status) {
                 $data = $data
@@ -83,9 +83,9 @@ class GetAllData
                     ->where($condition)
                     ->where('status', $status)
                     ->orderBy($orderByColumn, $orderByType)
-                    ->paginate($pageLimit);
+                    ->paginate($pageLimit );
             }
-
+            // dd($data->toArray());
             return entityResponse([
                 ...$data->toArray(),
                 'active_data_count' => self::$model::active()->count(),

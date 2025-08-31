@@ -13,12 +13,6 @@ export default [
 		value: "",
 	},
 
-	{
-		name: "description",
-		label: "Enter your description",
-		type: "textarea",
-		value: "",
-	},
 
 	{
 		name: "image",
@@ -26,5 +20,13 @@ export default [
 		type: "file",
 		multiple: "false",
 		value: "",
+	},
+
+	{
+		name: "description",
+		label: "Enter your description",
+		type: "textarea",
+		value: "",
+		row_col_class: "col-md-12",
 	},
 ];
