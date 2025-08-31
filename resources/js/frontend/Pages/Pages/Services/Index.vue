@@ -15,8 +15,14 @@
 
   <!-- Secrvices Single Section Start here -->
   <service-section
-    :sectionTitle="'We provide a full range services for Our Country'"
-    :sectionDescription="'Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.'"
+    :sectionTitle="
+      servicesSection?.short_title ||
+      'We provide a full range services for Our Country'
+    "
+    :sectionDescription="
+      servicesSection?.long_title ||
+      'Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.'
+    "
     :serviceMarginTop="'0px'"
     :serviceMarginBottom="'90px'"
     v-if="services"
@@ -25,15 +31,27 @@
   <!-- Services Single Section Start here -->
 
   <!-- People say section-02 start here -->
-  <people-say-section v-if="comments.length > 0" :comments="comments" />
+  <people-say-section
+    v-if="comments.length > 0"
+    :comments="comments"
+  />
   <!-- People say section-02 end here -->
 
   <!-- Project Planing Section Start Here -->
-  <project-plan-section v-if="project_planings" :project_planings="project_planings"/>
+  <project-plan-section
+    v-if="project_planings"
+    :project_planings="project_planings"
+  />
   <!-- Project Planing Section Start Here -->
 
   <!-- News Section Start -->
-  <News v-if="news" :lead_news="news.lead_news" :side_news="news.side_news" />
+  <News
+    v-if="news"
+    :lead_news="news.lead_news"
+    :side_news="news.side_news"
+    :short_title="servicesNewsSection?.short_title"
+    :title="servicesNewsSection?.title"
+  />
   <!-- News Section End  -->
 </template>
 
@@ -64,9 +82,29 @@ export default {
   },
   methods: {
     ...mapActions(service_store, ["fetchAllServicesPageData"]),
+    get_section_headings_data(section_type) {
+      return this.section_headings?.find(
+        (section) => section.section_type === section_type
+      );
+    },
   },
   computed: {
-    ...mapWritableState(service_store, ["services", "comments", "project_planings", "news"]),
+    ...mapWritableState(service_store, [
+      "services",
+      "comments",
+      "project_planings",
+      "news",
+      "section_headings",
+    ]),
+    servicesSection() {
+      return this.get_section_headings_data("services_services");
+    },
+    servicesPublicCommentsSection() {
+      return this.get_section_headings_data("services_public_comments");
+    },
+    servicesNewsSection() {
+      return this.get_section_headings_data("services_news");
+    },
   },
 };
 </script>

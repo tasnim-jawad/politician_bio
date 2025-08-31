@@ -21,10 +21,14 @@
       <div class="row justify-content-center">
         <div class="col-lg-6">
           <div class="section-title">
-            <h4 class="title">Read Our Daily News</h4>
+            <h4 class="title">
+              {{ newsSection?.short_title || "Read Our Daily News" }}
+            </h4>
             <p class="description wow animate__ animate__fadeInUp animated">
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{
+                newsSection?.title ||
+                "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently."
+              }}
             </p>
           </div>
         </div>
@@ -233,6 +237,11 @@ export default {
       "filterByCategory",
       "clearFilter",
     ]),
+    get_section_headings_data(section_type) {
+      return this.section_headings?.find(
+        (section) => section.section_type === section_type
+      );
+    },
     handlePageChange(page) {
       console.log("Going to page:", page);
       if (page < 1 || page > (this.news.data.last_page || 1)) return;
@@ -251,7 +260,11 @@ export default {
       "categories",
       "currentFilter",
       "recent_news",
+      "section_headings",
     ]),
+    newsSection() {
+      return this.get_section_headings_data("news_news");
+    },
     shouldShowBannerSkeleton() {
       return this.loading;
     },

@@ -25,6 +25,11 @@
     <office-address-section
       v-else-if="isAddressVisible && addresses?.data?.length > 0"
       :addresses="addresses.data"
+      :title="contactUsAddressSection?.short_title || 'Have to join with us?'"
+      :description="
+        contactUsAddressSection?.long_title ||
+        'Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.'
+      "
     />
   </div>
   <!-- Office Address Section End here -->
@@ -35,7 +40,16 @@
     <contact-page-form-section
       v-else-if="isFormVisible"
       @submit="handleFormSubmission"
-    />
+    >
+      <template #headline>{{
+        contactUsPeopleSection?.short_title ||
+        "Thanks for your interest in Senatory"
+      }}</template>
+      <template #subtext>{{
+        contactUsPeopleSection?.long_title ||
+        "The circumstances get murkier with both sides trying every trick to ensure their victory in upcoming."
+      }}</template>
+    </contact-page-form-section>
   </div>
   <!-- Contact Page Form Section End Here -->
 
@@ -45,6 +59,13 @@
     <map-section
       v-else-if="isMapVisible && firstAddressMapLink"
       :mapSrc="firstAddressMapLink"
+      :title="
+        contactUsMapLocationSection?.short_title || 'Find Us on Google Maps'
+      "
+      :description="
+        contactUsMapLocationSection?.long_title ||
+        'Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.'
+      "
     />
   </div>
   <!-- Map Section End Here -->
@@ -163,6 +184,16 @@ export default {
   methods: {
     ...mapActions(contact_store, ["fetchAllContactPageData"]),
 
+    get_section_headings_data(section_type) {
+      if (!this.section_headings || this.section_headings.length === 0) {
+        return null;
+      }
+      const data = this.section_headings.find(
+        (item) => item.section_type === section_type
+      );
+      return data || null;
+    },
+
     handleFormSubmission(result) {
       if (result.success) {
         console.log("Form submitted successfully:", result.data);
@@ -174,7 +205,16 @@ export default {
     },
   },
   computed: {
-    ...mapState(contact_store, ["addresses"]),
+    ...mapState(contact_store, ["addresses", "section_headings"]),
+    contactUsAddressSection() {
+      return this.get_section_headings_data("contact_us_contact_address");
+    },
+    contactUsPeopleSection() {
+      return this.get_section_headings_data("contact_us_contact_people");
+    },
+    contactUsMapLocationSection() {
+      return this.get_section_headings_data("contact_us_map_location");
+    },
     shouldShowBannerSkeleton() {
       return this.loading;
     },

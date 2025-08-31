@@ -1,9 +1,9 @@
 <template>
   <div class="comment-form-wrap margin-top-15">
     <!-- Comment Form Section -->
-    <h3 class="reply-title">{{ replyTitle }}</h3>
+    <h3 class="reply-title">{{ short_title }}</h3>
     <p>
-      {{ replyNote }}
+      {{ special_note }}
     </p>
 
     <!-- Success Message -->
@@ -175,6 +175,10 @@ export default {
       type: [String, Number],
       required: true,
     },
+    section: {
+      type: Object,
+      default: null,
+    },
     replyTitle: {
       type: String,
       default: "Leave A Comments",
@@ -233,6 +237,12 @@ export default {
     },
     totalComments() {
       return this.comments.length;
+    },
+    sectionTitle() {
+      return this.section?.short_title || this.replyTitle;
+    },
+    sectionNote() {
+      return this.section?.special_note || this.replyNote;
     },
   },
   created() {

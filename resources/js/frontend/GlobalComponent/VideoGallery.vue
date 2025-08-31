@@ -5,13 +5,15 @@
         <div class="col-lg-6">
           <div class="section-title">
             <h4 class="title wow animate__animated animate__fadeInUp">
-              See Our Video
+              {{ short_title || "See Our Video" }}
             </h4>
             <p
               class="description style-03 wow animate__animated animate__fadeInUp"
             >
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{
+                long_title ||
+                "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently."
+              }}
             </p>
           </div>
         </div>
@@ -77,6 +79,15 @@ export default {
     videos: {
       type: Array,
       default: () => [],
+    },
+    short_title: {
+      type: String,
+      default: "See Our Video",
+    },
+    long_title: {
+      type: String,
+      default:
+        "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
     },
   },
   name: "VideoGallery",

@@ -6,13 +6,15 @@
         <div class="col-lg-6">
           <div class="section-title">
             <h4 class="title wow animate__animated animate__fadeInUp">
-              Meet Our Party Volunteer
+              {{ short_title || "Meet Our Party Volunteer" }}
             </h4>
             <p
               class="description style-03 wow animate__animated animate__fadeInUp"
             >
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{
+                long_title ||
+                "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently."
+              }}
             </p>
           </div>
         </div>
@@ -98,6 +100,15 @@ export default {
     volunteers: {
       type: Array,
       required: true,
+    },
+    short_title: {
+      type: String,
+      default: "Meet Our Party Volunteer",
+    },
+    long_title: {
+      type: String,
+      default:
+        "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
     },
   },
   name: "TeamSectionArea",

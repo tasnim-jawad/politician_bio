@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const store = defineStore("service_details_page", {
   state: () => ({
+    section_headings: [],
     service_details: null,
     whyChoseUs: [],
     mission_vision: [],
@@ -119,6 +120,24 @@ export const store = defineStore("service_details_page", {
         this.error = e;
       }
     },
+    async fetch_section_headings() {
+      if (await this._isCacheValid("section_headings")) {
+        this.section_headings = this._cache["section_headings"].data;
+        return;
+      }
+      try {
+        const res = await axios.get("section-headings", {
+          params: {
+            get_all: 1,
+            limit: 1000,
+          },
+        });
+        this.section_headings = res.data.data;
+        await this._setCache("section_headings", res.data.data);
+      } catch (e) {
+        this.error = e;
+      }
+    },
     async fetchAllServiceDetailsPageData() {
       this.loading = true;
       this.error = null;
@@ -128,6 +147,7 @@ export const store = defineStore("service_details_page", {
           this.fetch_mission_vision(),
           this.fetch_counters(),
           this.fetch_services(),
+          this.fetch_section_headings(),
         ]);
       } catch (e) {
         this.error = e;

@@ -13,7 +13,12 @@
   <!-- banner section End here -->
 
   <!-- Volunteer Team Section Start here -->
-  <team-section-area v-if="volunteers" :volunteers="volunteers?.data" />
+  <team-section-area
+    v-if="volunteers"
+    :volunteers="volunteers?.data"
+    :short_title="teamVolunteerSection?.short_title"
+    :long_title="teamVolunteerSection?.long_title"
+  />
   <!-- Volunteer Team Section Start here -->
 
   <!-- Pagination -->
@@ -68,6 +73,11 @@ export default {
   },
   methods: {
     ...mapActions(team_store, ["fetchAllTeamPageData"]),
+    get_section_headings_data(section_type) {
+      return this.section_headings?.find(
+        (section) => section.section_type === section_type
+      );
+    },
     goToPage(page) {
       console.log("Going to page:", page);
       if (page < 1 || page > (this.volunteers.data.last_page || 1)) return;
@@ -78,10 +88,10 @@ export default {
     await this.fetchAllTeamPageData();
   },
   computed: {
-    ...mapState(team_store, [
-      "volunteers",
-      "counters",
-    ]),
+    ...mapState(team_store, ["volunteers", "counters", "section_headings"]),
+    teamVolunteerSection() {
+      return this.get_section_headings_data("team_volunteer");
+    },
   },
 };
 </script>

@@ -13,7 +13,7 @@
           class="title-shape style-01"
           alt=""
         />
-        <h6 class="title">Join the event</h6>
+        <h6 class="title">{{ title || "Join the event" }}</h6>
       </div>
       <form
         @submit.prevent="submitForm"
@@ -112,6 +112,10 @@ export default {
     event_id: {
       type: Number,
       required: true,
+    },
+    title: {
+      type: String,
+      default: "Join the event",
     },
   },
   name: "JoinTheEvent",

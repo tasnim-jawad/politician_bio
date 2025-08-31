@@ -27,6 +27,7 @@
     <event-banner-section
       v-else-if="event_details"
       :event="event_details?.data"
+      :joinEventTitle="eventDetailsJoinEventSection?.title"
     />
   </div>
   <!-- Event Content Section End here -->
@@ -43,6 +44,8 @@
     <speaker-slider
       v-else-if="event_details"
       :speakers="event_details?.data?.event_speakers"
+      :title="eventDetailsSpeakersSection?.short_title"
+      :description="eventDetailsSpeakersSection?.long_title"
     />
   </div>
   <!-- Speaker Section End Here -->
@@ -58,6 +61,8 @@
     <event-facilities-section
       v-else-if="event_details"
       :facilities="event_details?.data?.event_facilities"
+      :sectionTitle="eventDetailsFacilitiesSection?.short_title"
+      :sectionDescription="eventDetailsFacilitiesSection?.long_title"
     />
   </div>
   <!-- Event Facilities Section End Here -->
@@ -71,7 +76,12 @@
       :cardCount="3"
       class="more-events-skeleton"
     />
-    <event-slider v-else-if="latest_events" :events="latest_events?.data" />
+    <event-slider
+      v-else-if="latest_events"
+      :events="latest_events?.data"
+      :title="eventDetailsMoreEventSection?.short_title"
+      :description="eventDetailsMoreEventSection?.long_title"
+    />
   </div>
   <!-- More Event Section End Here -->
 </template>
@@ -248,7 +258,20 @@ export default {
     ...mapWritableState(event_details_store, [
       "event_details",
       "latest_events",
+      "section_headings",
     ]),
+    eventDetailsSpeakersSection() {
+      return this.get_section_headings_data("event_details_speakers");
+    },
+    eventDetailsJoinEventSection() {
+      return this.get_section_headings_data("event_details_join_event");
+    },
+    eventDetailsFacilitiesSection() {
+      return this.get_section_headings_data("event_details_facilities");
+    },
+    eventDetailsMoreEventSection() {
+      return this.get_section_headings_data("event_details_more_event");
+    },
     shouldShowBannerSkeleton() {
       return this.loading;
     },
@@ -298,6 +321,11 @@ export default {
       "fetch_event_details",
       "fetchAllEventDetailsPageData",
     ]),
+    get_section_headings_data(section_type) {
+      return this.section_headings?.find(
+        (section) => section.section_type === section_type
+      );
+    },
   },
 };
 </script>

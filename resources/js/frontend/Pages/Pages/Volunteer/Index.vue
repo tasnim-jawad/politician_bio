@@ -19,13 +19,15 @@
         <div class="col-lg-6">
           <div class="section-title">
             <h4 class="title volunteer wow animate__animated animate__fadeInUp">
-              Get Involved!
+              {{ volunteerGetInvolvedSection?.short_title || "Get Involved!" }}
             </h4>
             <p
               class="description style-03 wow animate__animated animate__fadeInUp"
             >
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{
+                volunteerGetInvolvedSection?.long_title ||
+                "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently."
+              }}
             </p>
           </div>
         </div>
@@ -356,7 +358,11 @@ export default {
       "success_message",
       "is_submitting",
       "has_validation_errors",
+      "section_headings",
     ]),
+    volunteerGetInvolvedSection() {
+      return this.get_section_headings_data("volunteer_get_involved");
+    },
   },
 
   methods: {
@@ -367,8 +373,13 @@ export default {
       "toggle_time_slot",
       "toggle_week_day",
       "clear_messages",
+      "fetch_section_headings",
     ]),
-
+    get_section_headings_data(section_type) {
+      return this.section_headings?.find(
+        (section) => section.section_type === section_type
+      );
+    },
     async submit_form() {
       try {
         await this.submit_volunteer_application();
@@ -382,6 +393,8 @@ export default {
   mounted() {
     // Clear any existing messages when component mounts
     this.clear_messages();
+    // Fetch section headings for dynamic content
+    this.fetch_section_headings();
   },
 };
 </script>

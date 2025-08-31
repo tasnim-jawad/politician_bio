@@ -9,11 +9,13 @@
           <div class="facility-single-item">
             <div class="content">
               <h4 class="title wow animate__animated animate__fadeInUp">
-                Event facilities
+                {{ sectionTitle || "Event facilities" }}
               </h4>
               <p class="wow animate__animated animate__fadeInUp">
-                Every pleasures is to welcomed pain avoided owing to the duty
-                the obligations of business it will frequently.
+                {{
+                  sectionDescription ||
+                  "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently."
+                }}
               </p>
               <div class="btn-wrapper">
                 <a
@@ -56,6 +58,15 @@ export default {
     facilities: {
       type: [Object, Array],
       default: () => ({}),
+    },
+    sectionTitle: {
+      type: String,
+      default: "Event facilities",
+    },
+    sectionDescription: {
+      type: String,
+      default:
+        "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
     },
   },
 

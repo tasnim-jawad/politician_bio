@@ -5,13 +5,15 @@
         <div class="col-lg-6">
           <div class="section-title">
             <h4 class="title style-02 wow animate__animated animate__fadeInUp">
-              Our Photo Gallery
+              {{ short_title || "Our Photo Gallery" }}
             </h4>
             <p
               class="description style-02 wow animate__animated animate__fadeInUp"
             >
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{
+                long_title ||
+                "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently."
+              }}
             </p>
           </div>
         </div>
@@ -104,6 +106,15 @@ export default {
     photos: {
       type: Array,
       default: () => [],
+    },
+    short_title: {
+      type: String,
+      default: "Our Photo Gallery",
+    },
+    long_title: {
+      type: String,
+      default:
+        "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently.",
     },
   },
   name: "PhotoGallery",

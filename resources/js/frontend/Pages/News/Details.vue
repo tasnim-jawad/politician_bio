@@ -113,7 +113,11 @@
 
           <!-- Comment Form Section Start Here -->
           <!-- Comment Form Section Start Here -->
-          <comment-form-section :news-id="news_details?.id" />
+          <comment-form-section
+            :news-id="news_details?.id"
+            :short_title="newsDetailsCommentSection?.short_title || 'Leave A Comment'"
+            :special_note="newsDetailsCommentSection?.special_note || 'Your email address will not be published. Required fields are marked *'"
+          />
           <!-- Comment Form Section End Here -->
           <!-- Comment Form Section End Here -->
         </div>
@@ -218,6 +222,7 @@ export default {
       }
     }
     await this.fetchAllNewsDetailsPageData();
+    await this.fetch_section_headings();
     console.log("recent_news after fetch:", this.latest_news);
   },
   methods: {
@@ -226,7 +231,17 @@ export default {
       "fetchAllNewsDetailsPageData",
       "fetch_prev_next_news",
       "fetch_related_news",
+      "fetch_section_headings",
     ]),
+    get_section_headings_data(section_type) {
+      if (!this.section_headings || this.section_headings.length === 0) {
+        return null;
+      }
+      const data = this.section_headings.find(
+        (item) => item.section_type === section_type
+      );
+      return data || null;
+    },
   },
   computed: {
     ...mapWritableState(news_details_store, [
@@ -234,14 +249,17 @@ export default {
       "recent_news",
       "latest_news",
       "related_news",
+      "section_headings",
     ]),
+    newsDetailsCommentSection() {
+      return this.get_section_headings_data("news_details_news_comment");
+    },
     getTagsList() {
       if (!this.news_details?.tags) return [];
       return this.news_details.tags
         .split(",")
         .filter((tag) => tag.trim() !== "");
     },
-    
   },
 };
 </script>

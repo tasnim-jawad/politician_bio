@@ -29,11 +29,15 @@
           />
           <div v-else class="section-title">
             <h4 class="title wow animate__animated animate__fadeInUp">
-              <a href="#">Issues Around Us</a>
+              <a href="#">{{
+                issuesSection?.short_title || "Issues Around Us"
+              }}</a>
             </h4>
             <p class="description wow animate__animated animate__fadeInUp">
-              Every pleasures is to welcomed pain avoided owing to the duty the
-              obligations of business it will frequently.
+              {{
+                issuesSection?.long_title ||
+                "Every pleasures is to welcomed pain avoided owing to the duty the obligations of business it will frequently."
+              }}
             </p>
           </div>
         </div>
@@ -212,6 +216,11 @@ export default {
   },
   methods: {
     ...mapActions(issues_store, ["fetchAllIssuesPageData"]),
+    get_section_headings_data(section_type) {
+      return this.section_headings?.find(
+        (section) => section.section_type === section_type
+      );
+    },
     goToPage(page) {
       console.log("Going to page:", page);
       if (page < 1 || page > (this.issues.data.last_page || 1)) return;
@@ -219,7 +228,10 @@ export default {
     },
   },
   computed: {
-    ...mapState(issues_store, ["issues"]),
+    ...mapState(issues_store, ["issues", "section_headings"]),
+    issuesSection() {
+      return this.get_section_headings_data("issues_issues");
+    },
     shouldShowBannerSkeleton() {
       return this.loading;
     },

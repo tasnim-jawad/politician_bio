@@ -19,10 +19,14 @@
         <div class="col-lg-4">
           <div class="help-single-item">
             <div class="content">
-              <h4 class="title">Frequently Asked Questions</h4>
+              <h4 class="title">
+                {{ faqSection?.short_title || "Frequently Asked Questions" }}
+              </h4>
               <p>
-                Proin rutrum sem at rutrum ultrirecies. Nunc felis neque, dictum
-                ut porta a, ullamcorper vel ante. Quisque none consequat.
+                {{
+                  faqSection?.long_title ||
+                  "Proin rutrum sem at rutrum ultrirecies. Nunc felis neque, dictum ut porta a, ullamcorper vel ante. Quisque none consequat."
+                }}
               </p>
             </div>
           </div>
@@ -143,7 +147,11 @@ export default {
   },
   methods: {
     ...mapActions(faqs_store, ["fetchAllFaqsPageData"]),
-
+    get_section_headings_data(section_type) {
+      return this.section_headings?.find(
+        (section) => section.section_type === section_type
+      );
+    },
     getSettingValuesByTitle(title) {
       if (
         !this.website_settings?.data ||
@@ -182,7 +190,10 @@ export default {
     );
   },
   computed: {
-    ...mapState(faqs_store, ["faqs", "website_settings"]),
+    ...mapState(faqs_store, ["faqs", "website_settings", "section_headings"]),
+    faqSection() {
+      return this.get_section_headings_data("faq_faq");
+    },
   },
 };
 </script>

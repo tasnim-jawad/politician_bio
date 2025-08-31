@@ -19,6 +19,23 @@
   <!-- Event items Section Start Here -->
   <div class="issues-around-us-section">
     <div class="container">
+      <!-- Section Title -->
+      <div class="row justify-content-center" v-if="eventsSection">
+        <div class="col-lg-6">
+          <div class="section-title">
+            <h4 class="title wow animate__animated animate__fadeInUp">
+              {{ eventsSection?.short_title || "Our Events" }}
+            </h4>
+            <p class="description wow animate__animated animate__fadeInUp">
+              {{
+                eventsSection?.long_title ||
+                "Stay updated with our upcoming events and activities."
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <!-- Events Grid with Skeleton -->
       <div class="row" ref="eventsSection">
         <GenericSectionSkeleton
@@ -187,6 +204,11 @@ export default {
   },
   methods: {
     ...mapActions(events_store, ["fetchAllEventsPageData"]),
+    get_section_headings_data(section_type) {
+      return this.section_headings?.find(
+        (section) => section.section_type === section_type
+      );
+    },
     goToPage(page) {
       console.log("Going to page:", page);
       if (page < 1 || page > (this.events.data.last_page || 1)) return;
@@ -194,7 +216,10 @@ export default {
     },
   },
   computed: {
-    ...mapState(events_store, ["events"]),
+    ...mapState(events_store, ["events", "section_headings"]),
+    eventsSection() {
+      return this.get_section_headings_data("events_events");
+    },
     shouldShowBannerSkeleton() {
       return this.loading;
     },

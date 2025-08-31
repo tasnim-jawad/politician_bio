@@ -88,16 +88,16 @@
                     </div>
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label form-control-label"
-                        >Special Note</label
+                        >Long Title</label
                       >
                       <div class="col-lg-9">
                         <input
-                          name="special_note"
+                          name="long_title"
                           class="form-control"
                           type="text"
                           :value="`${get_heading_value(
                             'contact_us_contact_address',
-                            'special_note'
+                            'long_title'
                           )}`"
                           placeholder="Enter long title"
                         />
@@ -151,16 +151,16 @@
                     </div>
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label form-control-label"
-                        >Special Note</label
+                        >Long Title</label
                       >
                       <div class="col-lg-9">
                         <input
-                          name="special_note"
+                          name="long_title"
                           class="form-control"
                           type="text"
                           :value="`${get_heading_value(
                             'contact_us_contact_people',
-                            'special_note'
+                            'long_title'
                           )}`"
                           placeholder="Enter long title"
                         />
@@ -214,16 +214,16 @@
                     </div>
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label form-control-label"
-                        >Special Note</label
+                        >Long Title</label
                       >
                       <div class="col-lg-9">
                         <input
-                          name="special_note"
+                          name="long_title"
                           class="form-control"
                           type="text"
                           :value="`${get_heading_value(
                             'contact_us_map_location',
-                            'special_note'
+                            'long_title'
                           )}`"
                           placeholder="Enter long title"
                         />

@@ -52,7 +52,7 @@
           <div class="event-location">
             <div class="row">
               <div class="col-lg-4">
-                <join-the-event :event_id="event.id" />
+                <join-the-event :event_id="event.id" :title="joinEventTitle" />
               </div>
               <div class="col-lg-8">
                 <location-map :location="event.location_link" />
@@ -71,6 +71,10 @@ import LocationMap from "../../../../GlobalComponent/LocationMap.vue";
 export default {
   props: {
     event: Object,
+    joinEventTitle: {
+      type: String,
+      default: "Join the event",
+    },
   },
   name: "EventBannerSection",
   components: {
