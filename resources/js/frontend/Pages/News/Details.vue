@@ -21,7 +21,7 @@
           <div class="blog-details-items">
             <div class="thumb">
               <img
-                :src="`/${news_details?.banner_image}`"
+                :src="news_details?.banner_image ? `/${news_details.banner_image}` : '/uploads/default.jpg'"
                 alt="blog"
                 class="news-banner-image"
               />

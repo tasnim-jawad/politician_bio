@@ -101,7 +101,7 @@
                     <div class="mt-1 mb-3">
                       <input
                         class="form-control form-control-square mb-2"
-                        type="text"
+                        type="number"
                         :name="`statistics[${index}][percent]`"
                         v-model="statistics.percent"
                         id="percent"

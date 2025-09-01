@@ -27,7 +27,7 @@
               placeholder="Your Name*"
               v-model="form.name"
             />
-            <div v-if="errors.name" class="invalid-feedback">
+            <div v-if="errors.name" class="invalid-feedback text-white">
               {{ errors.name[0] }}
             </div>
           </div>
@@ -41,7 +41,7 @@
               placeholder="Your Email*"
               v-model="form.email"
             />
-            <div v-if="errors.email" class="invalid-feedback">
+            <div v-if="errors.email" class="invalid-feedback text-white">
               {{ errors.email[0] }}
             </div>
           </div>
@@ -56,7 +56,7 @@
               placeholder="Write message*"
               v-model="form.comment"
             ></textarea>
-            <div v-if="errors.comment" class="invalid-feedback">
+            <div v-if="errors.comment" class="invalid-feedback text-white">
               {{ errors.comment[0] }}
             </div>
           </div>

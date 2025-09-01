@@ -46,6 +46,7 @@
                 :row_col_class="form_field.row_col_class"
               />
             </template>
+            <multi-chip :name="`tag`" />
 
             <!-- for facts_and_features list input start-->
             <div class="col-md-12 pt-3">
@@ -163,9 +164,12 @@ import { mapActions, mapState } from "pinia";
 import { store } from "../store";
 import setup from "../setup";
 import form_fields from "../setup/form_fields";
+import MultiChip from "../components/meta_component/MultiChip.vue";
 
 export default {
-  components: {},
+  components: {
+    MultiChip,
+  },
 
   data: () => ({
     setup,

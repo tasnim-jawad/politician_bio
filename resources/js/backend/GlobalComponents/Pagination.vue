@@ -1,11 +1,20 @@
 <template>
-  <nav aria-label="" class="d-flex gap-2 align-items-center" style="gap: 10px">
+  <nav
+    aria-label=""
+    class="d-flex gap-2 align-items-center flex-wrap"
+    style="gap: 10px"
+  >
     <ul class="pagination my-2" style="font-size: 11px">
       <template v-for="(link, index) in data.links" :key="index">
         <li class="page-item" :class="{ active: link.active }">
           <a
             class="page-link"
-            :class="data.current_page == data.last_page && data.links.length - 1 == index ? 'disabled' : ''"
+            :class="
+              data.current_page == data.last_page &&
+              data.links.length - 1 == index
+                ? 'disabled'
+                : ''
+            "
             @click.prevent="set_page_data(link)"
             :href="link.url"
             v-html="`<span>${link.label}</span>`"
@@ -25,7 +34,10 @@
     <div class="d-flex" style="gap: 5px">
       <span></span>
       <span> Limit </span>
-      <select @change="set_per_page_limit" class="bg-transparent text-white rounded-1">
+      <select
+        @change="set_per_page_limit"
+        class="bg-transparent text-white rounded-1"
+      >
         <option value="5">5</option>
         <option value="10">10</option>
         <option value="15">15</option>

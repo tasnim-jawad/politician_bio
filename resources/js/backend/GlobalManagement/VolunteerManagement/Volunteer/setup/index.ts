@@ -42,7 +42,7 @@ const setup: setup_type = {
         "id",
         "name",
             "designation",
-            "social_link",
+            
             "image",
         "status",
         "created_at",
@@ -51,7 +51,7 @@ const setup: setup_type = {
         "id",
         "name",
             "designation",
-            "social_link",
+            
             "image",
         "status",
         "created_at",

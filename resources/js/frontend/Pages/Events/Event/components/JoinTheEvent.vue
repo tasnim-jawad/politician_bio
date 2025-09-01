@@ -33,7 +33,7 @@
                 required
                 aria-required="true"
               />
-              <div v-if="errors.name" class="invalid-feedback">
+              <div v-if="errors.name" class="invalid-feedback text-white">
                 {{ errors.name[0] }}
               </div>
             </div>
@@ -50,7 +50,7 @@
                 required
                 aria-required="true"
               />
-              <div v-if="errors.email" class="invalid-feedback">
+              <div v-if="errors.email" class="invalid-feedback text-white">
                 {{ errors.email[0] }}
               </div>
             </div>
@@ -67,7 +67,10 @@
                 required
                 aria-required="true"
               />
-              <div v-if="errors.mobile_number" class="invalid-feedback">
+              <div
+                v-if="errors.mobile_number"
+                class="invalid-feedback text-white"
+              >
                 {{ errors.mobile_number[0] }}
               </div>
             </div>
@@ -82,7 +85,7 @@
                 :class="{ 'is-invalid': errors.comment }"
                 aria-required="true"
               ></textarea>
-              <div v-if="errors.comment" class="invalid-feedback">
+              <div v-if="errors.comment" class="invalid-feedback text-white">
                 {{ errors.comment[0] }}
               </div>
             </div>

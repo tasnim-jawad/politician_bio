@@ -16,11 +16,19 @@
           >
             <div
               class="news-bg"
-              :style="{ backgroundImage: `url(/${item.banner_image ?? 'uploads/default.jpg'})` }"
+              :style="{
+                backgroundImage: `url(/${
+                  item.banner_image ?? 'uploads/default.jpg'
+                })`,
+              }"
             >
               <span class="even">{{ item.tags }}</span>
               <div class="content">
-                <h4 class="title">{{ item.title }}</h4>
+                <h4 class="title">
+                  <Link :href="`/news/details?slug=${item.slug}`">{{
+                    item?.title
+                  }}</Link>
+                </h4>
                 <div class="author-meta">
                   <p class="author-name">By:{{ item?.author ?? "Admin" }}</p>
                   <p>{{ formatDate(item.date) }}</p>

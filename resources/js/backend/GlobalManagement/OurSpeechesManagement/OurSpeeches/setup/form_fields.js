@@ -6,12 +6,12 @@ export default [
 		value: "",
 	},
 
-	{
-		name: "tag",
-		label: "Enter your tag",
-		type: "text",
-		value: "",
-	},
+	// {
+	// 	name: "tag",
+	// 	label: "Enter your tag",
+	// 	type: "text",
+	// 	value: "",
+	// },
 
 	{
 		name: "title",

@@ -12,12 +12,12 @@ export default [
 		multiple: "false",
 		value: "",
 	},
-	{
-		name: "tag",
-		label: "Enter your tag",
-		type: "text",
-		value: "",
-	},
+	// {
+	// 	name: "tag",
+	// 	label: "Enter your tag",
+	// 	type: "text",
+	// 	value: "",
+	// },
 	{
 		name: "short_description",
 		label: "Enter your short description",
