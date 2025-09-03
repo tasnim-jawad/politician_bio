@@ -6,7 +6,7 @@
       <th>{{ row_item }}</th>
       <th class="text-center">:</th>
       <th class="text-trim">
-        <template v-if="row_item === 'image'">
+        <template v-if="row_item === 'commenter_image'">
           <a 
             :href="item[row_item] || '/avatar.png'" 
             data-fancybox="detail-gallery" 

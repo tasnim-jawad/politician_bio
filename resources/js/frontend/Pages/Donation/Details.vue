@@ -1,6 +1,12 @@
 <template>
   <Head :title="event.title" />
-  <NavbarArea />
+
+  <Header />
+  <!-- Navbar area Start -->
+  <template class="d-lg-block">
+    <NavbarArea />
+  </template>
+  <!-- navbar area end -->
   <!-- Donation Content Section Start here -->
   <div
     class="donation-content-section margin-top-20"
@@ -296,6 +302,7 @@
 <script>
 import { Head } from "@inertiajs/vue3";
 import { mapActions, mapWritableState } from "pinia";
+import Header from "../../Shared/Header.vue";
 import NavbarArea from "../../CommonComponents/NavbarArea.vue";
 import SidebarWidgets from "./components/SidebarComponentSet/SidebarWidgets.vue";
 import MoreDonationProgramsSection from "../../GlobalComponent/MoreDonationProgramsSection.vue";
@@ -309,6 +316,7 @@ export default {
     NavbarArea,
     SidebarWidgets,
     MoreDonationProgramsSection,
+    Header,
   },
   data() {
     return {

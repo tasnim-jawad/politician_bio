@@ -31,5 +31,6 @@ export default [
 		label: "Enter your description",
 		type: "textarea",
 		value: "",
+		row_col_class: "col-md-12",
 	},
 ];

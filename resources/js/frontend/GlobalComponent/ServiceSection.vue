@@ -135,15 +135,15 @@ export default {
 }
 
 /* Responsive gap adjustments */
-@media (max-width: 991.98px) {
+/* @media (max-width: 991.98px) {
   .row.d-flex {
     gap: 1.5rem !important;
   }
-}
+} */
 
 @media (max-width: 767.98px) {
-  .row.d-flex {
+  /* .row.d-flex {
     gap: 1rem !important;
-  }
+  } */
 }
 </style>

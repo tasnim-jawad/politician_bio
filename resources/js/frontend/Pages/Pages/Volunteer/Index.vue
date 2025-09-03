@@ -1,5 +1,11 @@
 <template>
-  <NavbarArea />
+
+  <Header />
+  <!-- Navbar area Start -->
+  <template class="d-lg-block">
+    <NavbarArea />
+  </template>
+  <!-- navbar area end -->
   <!-- banner section start here -->
   <common-banner
     :background-image="'/frontend/assets/img/about-bg.png'"
@@ -339,6 +345,8 @@
 </template>
 
 <script>
+
+import Header from "../../../Shared/Header.vue";
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
 import { mapActions, mapState } from "pinia";
@@ -348,6 +356,7 @@ export default {
   components: {
     NavbarArea,
     CommonBanner,
+    Header,
   },
 
   computed: {

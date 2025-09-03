@@ -245,7 +245,7 @@
                                                 />
                                                 <img
                                                     v-if="auth_info.image"
-                                                    class="mt-2"
+                                                    class="mt-2 object_fit_contain"
                                                     :src="`${get_setting_value(
                                                         'footer_logo'
                                                     )}`"
@@ -269,13 +269,14 @@
                                                 />
                                                 <img
                                                     v-if="auth_info.image"
-                                                    class="mt-2"
+                                                    class="mt-2 object_fit_contain"
                                                     :src="`${get_setting_value(
                                                         'header_logo'
                                                     )}`"
                                                     height="100"
                                                     width="100"
                                                     alt=""
+                                                    
                                                 />
                                             </div>
                                         </div>
@@ -687,6 +688,44 @@
                                             </div>
                                         </div>
 
+
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-lg-3 col-form-label form-control-label"
+                                                >Heading Color</label
+                                            >
+                                            <div class="col-lg-9">
+                                                <input
+                                                    name="heading_color"
+                                                    class="form-control"
+                                                    type="color"
+                                                    placeholder="Enter heading color"
+                                                    :value="`${get_setting_value(
+                                                        'heading_color'
+                                                    )}`"
+                                                />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-lg-3 col-form-label form-control-label"
+                                                >Paragraph Color</label
+                                            >
+                                            <div class="col-lg-9">
+                                                <input
+                                                    name="paragraph_color"
+                                                    class="form-control"
+                                                    type="color"
+                                                    placeholder="Enter paragraph color"
+                                                    :value="`${get_setting_value(
+                                                        'paragraph_color'
+                                                    )}`"
+                                                />
+                                            </div>
+                                        </div>
+
                                         <!-- Save Button -->
                                         <div class="form-group row">
                                             <label
@@ -757,4 +796,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scop>
+.object_fit_contain {
+    object-fit: contain;
+}
+</style>

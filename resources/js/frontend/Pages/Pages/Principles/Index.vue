@@ -1,6 +1,12 @@
 <template>
   <Head :title="event.title" />
-  <navbar-area />
+
+  <Header />
+  <!-- Navbar area Start -->
+  <template class="d-lg-block">
+    <NavbarArea />
+  </template>
+  <!-- navbar area end -->
   <!-- banner section start here -->
   <common-banner
     :background-image="'/frontend/assets/img/about-bg.png'"
@@ -54,6 +60,7 @@ import { store as principles_store } from "./Store/principles_store.js";
 import { mapActions, mapState } from "pinia";
 
 import { Head } from "@inertiajs/vue3";
+import Header from "../../../Shared/Header.vue";
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
 import OurPrinciple from "../../../GlobalComponent/OurPrinciple.vue";
@@ -70,6 +77,7 @@ export default {
     OurPrinciple,
     PeopleSaySection,
     OurSpeechesSection,
+    Header,
   },
   created: function () {
     this.fetchAllPrinciplesPageData();

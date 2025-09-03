@@ -1,6 +1,12 @@
 <template>
   <!-- <Head :title="event.title" /> -->
-  <NavbarArea />
+
+  <Header />
+  <!-- Navbar area Start -->
+  <template class="d-lg-block">
+    <NavbarArea />
+  </template>
+  <!-- navbar area end -->
   <!-- banner section start here -->
   <common-banner
     :background-image="'/frontend/assets/img/about-bg.png'"
@@ -37,6 +43,8 @@
 </template>
 <script>
 // import { Head } from "@inertiajs/vue3";
+
+import Header from "../../../Shared/Header.vue";
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import OurJourney from "../../../GlobalComponent/OurJourney.vue";
 import HistoryTimeline from "../../../GlobalComponent/HistoryTimeline.vue";
@@ -52,6 +60,8 @@ export default {
     HistoryTimeline,
     AtAGlance,
     CommonBanner,
+    // Head,
+    Header,
   },
   data() {
     return {

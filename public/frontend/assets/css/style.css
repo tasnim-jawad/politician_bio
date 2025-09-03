@@ -12,6 +12,7 @@
   --main-color-two: #000565;
   --secondary-color: #0E115A;
   --heading-color: #04072E;
+  --subtitle-color: #04072E;
   --paragraph-color: #727777;
   --heading-font: "Barlow Semi Condensed", sans-serif;
   --heading-font-02: "Kalam", cursive;
@@ -38,7 +39,7 @@ html {
 
 body {
   margin: 0;
-  color: var(--paragraph-color);
+  color: var(--main-color-two);
   overflow-x: hidden;
   font-family: var(--body-font);
   font-size: 14px;
@@ -49,7 +50,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(125deg, #DD131A 0%, #ffc05e 100%);
+  background-image: linear-gradient(125deg, var(--main-color-one) 0%, var(--main-color-two) 100%);
   border-radius: 10px;
 }
 
@@ -1176,16 +1177,16 @@ ul {
 .btn-wrapper .boxed-btn.btn-sanatory {
   background-color: var(--main-color-one);
   text-transform: uppercase;
-  -webkit-box-shadow: 0 7px 20px rgba(221, 19, 26, 0.3);
-          box-shadow: 0 7px 20px rgba(221, 19, 26, 0.3);
+  -webkit-box-shadow: 0 7px 20px color-mix(in srgb, var(--main-color-one) 30%, transparent);
+          box-shadow: 0 7px 20px color-mix(in srgb, var(--main-color-one) 30%, transparent);
 }
 .btn-wrapper .boxed-btn.btn-sanatory .icon-paper-plan {
   margin-left: 5px;
 }
 .btn-wrapper .boxed-btn.btn-sanatory:hover {
   background-color: var(--secondary-color);
-  -webkit-box-shadow: 0 7px 20px rgba(14, 17, 90, 0.3);
-          box-shadow: 0 7px 20px rgba(14, 17, 90, 0.3);
+  -webkit-box-shadow: 0 7px 20px color-mix(in srgb, var(--secondary-color) 30%, transparent);
+          box-shadow: 0 7px 20px color-mix(in srgb, var(--secondary-color) 30%, transparent);
 }
 .btn-wrapper .boxed-btn.btn-sanatory.style-01 {
   background-color: transparent;
@@ -1637,7 +1638,7 @@ ul {
   width: 100px;
   height: 100px;
   line-height: 100px;
-  background: rgba(221, 19, 26, 0.4);
+  background: color-mix(in srgb, var(--main-color-one) 40%, transparent);
   border-radius: 50%;
   -webkit-animation: pulse-video-02 2000ms ease-out infinite;
           animation: pulse-video-02 2000ms ease-out infinite;
@@ -1651,7 +1652,7 @@ ul {
   width: 120px;
   height: 120px;
   line-height: 120px;
-  background: rgba(221, 19, 26, 0.2);
+  background: color-mix(in srgb, var(--main-color-one) 20%, transparent);
   border-radius: 50%;
   -webkit-animation: pulse-video-02 2000ms ease-out infinite;
           animation: pulse-video-02 2000ms ease-out infinite;
@@ -4736,7 +4737,7 @@ ul {
   line-height: 28px;
   font-family: var(--body-font);
   font-weight: 400;
-  color: #505050;
+  color: var(--paragraph-color);
   margin-bottom: 25px;
   max-width: 510px;
 }
@@ -4748,7 +4749,7 @@ ul {
   line-height: 35px;
   font-family: var(--body-font);
   font-weight: 400;
-  color: #505050;
+  color: var(--paragraph-color);
 }
 .people-say-single-item .content .author-meta .line {
   display: inline-block;
@@ -4978,7 +4979,7 @@ ul {
 .accoridion-section .section-title .title {
   font-size: 40px;
   font-weight: 700;
-  color: #000629;
+  color: var(--heading-color);
   line-height: 55px;
 }
 .accoridion-section .shape {
@@ -7224,7 +7225,7 @@ blockquote:not(.has-light-gray-color):not(.has-very-dark-gray-color):not(.is-sty
   line-height: 28px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
-  color: #505050;
+  color: var(--paragraph-color);
   margin-bottom: 25px;
   -webkit-transition: 0.7s all ease;
   transition: 0.7s all ease;
@@ -11123,7 +11124,7 @@ input[type=checkbox] {
     Footer Area
 -------------------------*/
 .footer-area {
-  background-color: var(--heading-color);
+  background-color: var(--main-color-two);
 }
 .footer-area.line-bg {
   background-size: cover;
@@ -13033,7 +13034,7 @@ input[type=checkbox] {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--heading-color);
+  background: var(--secondary-color);
   opacity: 0.85;
 }
 .why-choose-us-section .choose-bg-02 {
@@ -13135,7 +13136,7 @@ input[type=checkbox] {
   line-height: 28px;
   font-family: var(--body-font);
   font-weight: 400;
-  color: #6B6B6B;
+  color: var(--paragraph-color);
 }
 .why-choose-us-section .single-items-wrapper .why-choose-single-items .shape {
   position: absolute;

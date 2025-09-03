@@ -1,5 +1,11 @@
 <template>
-  <NavbarArea />
+
+  <Header />
+  <!-- Navbar area Start -->
+  <template class="d-lg-block">
+    <NavbarArea />
+  </template>
+  <!-- navbar area end -->
   <!-- banner section start here -->
   <common-banner
     :background-image="'/frontend/assets/img/about-bg.png'"
@@ -146,6 +152,8 @@
 <script>
 import { Head } from "@inertiajs/vue3";
 import { Link } from "@inertiajs/vue3";
+
+import Header from "../../Shared/Header.vue";
 import NavbarArea from "../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../CommonComponents/CommonBanner.vue";
 import CategorySection from "./components/CategorySection.vue";
@@ -172,6 +180,7 @@ export default {
     RecentPostSection,
     NewsSlider,
     CommentFormSection,
+    Header,
   },
   data() {
     return {

@@ -28,10 +28,4 @@ export default [
 		value: "",
 	},
 
-	{
-		name: "tag",
-		label: "Enter your tag",
-		type: "text",
-		value: "",
-	},
 ];

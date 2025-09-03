@@ -40,10 +40,16 @@ export default {
         this.get_setting_value("main_color_two") || "#000565";
       const secondaryColor =
         this.get_setting_value("secondary_color") || "#0E115A";
+      const headingColor =
+        this.get_setting_value("heading_color") || "#000565";
+      const paragraphColor =
+        this.get_setting_value("paragraph_color") || "#0E115A";
 
       root.style.setProperty("--main-color-one", mainColorOne);
       root.style.setProperty("--main-color-two", mainColorTwo);
       root.style.setProperty("--secondary-color", secondaryColor);
+      root.style.setProperty("--heading-color", headingColor);
+      root.style.setProperty("--paragraph-color", paragraphColor);
     },
   },
 

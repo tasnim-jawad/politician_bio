@@ -1,6 +1,12 @@
 <template>
   <Head :title="event?.title" />
-  <NavbarArea />
+
+  <Header />
+  <!-- Navbar area Start -->
+  <template class="d-lg-block">
+    <NavbarArea />
+  </template>
+  <!-- navbar area end -->
   <!-- banner section start here -->
   <BannerSkeleton v-if="shouldShowBannerSkeleton" />
   <common-banner
@@ -116,6 +122,7 @@ import { Head } from "@inertiajs/vue3";
 import { usePageSkeleton } from "../../composables/usePageSkeleton.js";
 import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
 
+import Header from "../../Shared/Header.vue";
 import NavbarArea from "../../CommonComponents/NavbarArea.vue";
 import NewsSingleItem from "./components/NewsSingleItem.vue";
 import RecentPostSection from "./components/RecentPostSection.vue";
@@ -147,6 +154,7 @@ export default {
     Pagination,
     BannerSkeleton,
     GenericSectionSkeleton,
+    Header,
   },
   setup() {
     const {

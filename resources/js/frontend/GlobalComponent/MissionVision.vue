@@ -36,9 +36,7 @@
                   </h5>
                 </div>
                 <div id="collapseOwo" class="collapse" data-parent="#accordion">
-                  <div class="card-body">
-                    {{ mission_vision?.vision?.description }}
-                  </div>
+                  <div class="card-body" v-html="mission_vision?.vision?.description"></div>
                 </div>
               </div>
               <div
@@ -59,9 +57,7 @@
                   </h5>
                 </div>
                 <div id="collapseTwo" class="collapse" data-parent="#accordion">
-                  <div class="card-body">
-                    {{ mission_vision?.mission?.description }}
-                  </div>
+                  <div class="card-body" v-html="mission_vision?.mission?.description"></div>
                 </div>
               </div>
               <div
@@ -86,9 +82,7 @@
                   class="collapse"
                   data-parent="#accordion"
                 >
-                  <div class="card-body">
-                    {{ mission_vision?.future_plan?.description }}
-                  </div>
+                  <div class="card-body" v-html="mission_vision?.future_plan?.description"></div>
                 </div>
               </div>
             </div>

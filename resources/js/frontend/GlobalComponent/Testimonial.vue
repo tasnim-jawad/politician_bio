@@ -38,9 +38,8 @@
                   </h4>
                   <p
                     class="description wow animate__animated animate__fadeInUp"
-                  >
-                    {{ item.comment }}
-                  </p>
+                    v-html="item?.comment"
+                  ></p>
                   <div
                     class="author-meta wow animate__animated animate__fadeInUp"
                   >

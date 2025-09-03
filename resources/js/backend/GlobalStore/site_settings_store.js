@@ -66,10 +66,14 @@ export const site_settings_store = defineStore("site_settings_store", {
             const mainColorOne = this.get_setting_value('main_color_one') || '#DD131A';
             const mainColorTwo = this.get_setting_value('main_color_two') || '#000565';
             const secondaryColor = this.get_setting_value('secondary_color') || '#0E115A';
-            
+            const headingColor = this.get_setting_value('heading_color') || '#04072E';
+            const paragraphColor = this.get_setting_value('paragraph_color') || '#727777';
+
             root.style.setProperty('--main-color-one', mainColorOne);
             root.style.setProperty('--main-color-two', mainColorTwo);
             root.style.setProperty('--secondary-color', secondaryColor);
+            root.style.setProperty('--heading-color', headingColor);
+            root.style.setProperty('--paragraph-color', paragraphColor);
         },
     },
 });

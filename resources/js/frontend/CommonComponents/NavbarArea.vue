@@ -59,9 +59,9 @@
           </li>
         </ul>
       </div>
-      <div class="nav-right-content">
+      <div class="nav-right-content style-01">
         <div class="btn-wrapper">
-          <Link href="/about-us" class="boxed-btn btn-sanatory style-04"
+          <Link href="/pages/volunteer" class="boxed-btn btn-sanatory style-04"
             >join now<i class="icon-paper-plan"></i
           ></Link>
         </div>

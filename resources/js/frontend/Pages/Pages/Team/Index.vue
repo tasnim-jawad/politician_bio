@@ -1,5 +1,11 @@
 <template>
-  <NavbarArea />
+
+  <Header />
+  <!-- Navbar area Start -->
+  <template class="d-lg-block">
+    <NavbarArea />
+  </template>
+  <!-- navbar area end -->
   <!-- banner section start here -->
   <common-banner
     :background-image="'/frontend/assets/img/about-bg.png'"
@@ -42,6 +48,8 @@
   <!-- Counter Section End -->
 </template>
 <script>
+
+import Header from "../../../Shared/Header.vue";
 import NavbarArea from "../../../CommonComponents/NavbarArea.vue";
 import CommonBanner from "../../../CommonComponents/CommonBanner.vue";
 import AtAGlance from "../../../GlobalComponent/AtAGlance.vue";
@@ -59,6 +67,7 @@ export default {
     AtAGlance,
     TeamSectionArea,
     Pagination,
+    Head,
   },
   watched: {
     volunteers: {
