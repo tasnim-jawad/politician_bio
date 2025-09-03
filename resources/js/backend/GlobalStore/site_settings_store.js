@@ -19,6 +19,9 @@ export const site_settings_store = defineStore("site_settings_store", {
                 this.website_settings_data = Array.isArray(response.data?.data)
                     ? response.data.data
                     : Object.values(response.data.data); // Ensure it's an array
+                
+                // Update CSS variables after loading settings
+                this.updateCSSVariables();
             } catch (error) {
                 console.error("Error fetching website settings:", error);
                 this.website_settings_data = [];
@@ -53,6 +56,20 @@ export const site_settings_store = defineStore("site_settings_store", {
                 console.error("Error fetching setting value:", error);
                 return multiple ? [] : "";
             }
+        },
+
+        // Method to update CSS variables directly
+        updateCSSVariables() {
+            if (typeof document === 'undefined') return; // For SSR compatibility
+            
+            const root = document.documentElement;
+            const mainColorOne = this.get_setting_value('main_color_one') || '#DD131A';
+            const mainColorTwo = this.get_setting_value('main_color_two') || '#000565';
+            const secondaryColor = this.get_setting_value('secondary_color') || '#0E115A';
+            
+            root.style.setProperty('--main-color-one', mainColorOne);
+            root.style.setProperty('--main-color-two', mainColorTwo);
+            root.style.setProperty('--secondary-color', secondaryColor);
         },
     },
 });

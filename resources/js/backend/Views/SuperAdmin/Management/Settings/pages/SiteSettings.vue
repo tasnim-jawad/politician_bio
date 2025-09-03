@@ -91,6 +91,20 @@
                                     >
                                     <hr />
                                 </li>
+                                <li class="nav-item" @click="tab = 'theme_color'">
+                                    <a
+                                        :class="tab == 'theme_color' ? ' active' : ''"
+                                        href="javascript:void();"
+                                        data-target="#theme_color"
+                                        data-toggle="pill"
+                                        class="nav-link"
+                                        ><i class="icon-note"></i>
+                                        <span class="hidden-xs"
+                                            >Theme Color Settings</span
+                                        ></a
+                                    >
+                                    <hr />
+                                </li>
                             </ul>
                             <div class="ml-2 flex-grow-1 tab-content p-3 card">
                                 <div
@@ -221,19 +235,43 @@
                                         <div class="form-group row">
                                             <label
                                                 class="col-lg-3 col-form-label form-control-label"
-                                                >Site Logo</label
+                                                >Footer Logo</label
                                             >
                                             <div class="col-lg-9">
                                                 <input
                                                     class="form-control"
-                                                    name="image"
+                                                    name="footer_logo"
                                                     type="file"
                                                 />
                                                 <img
                                                     v-if="auth_info.image"
                                                     class="mt-2"
                                                     :src="`${get_setting_value(
-                                                        'image'
+                                                        'footer_logo'
+                                                    )}`"
+                                                    height="100"
+                                                    width="100"
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-lg-3 col-form-label form-control-label"
+                                                >Header Logo</label
+                                            >
+                                            <div class="col-lg-9">
+                                                <input
+                                                    class="form-control"
+                                                    name="header_logo"
+                                                    type="file"
+                                                />
+                                                <img
+                                                    v-if="auth_info.image"
+                                                    class="mt-2"
+                                                    :src="`${get_setting_value(
+                                                        'header_logo'
                                                     )}`"
                                                     height="100"
                                                     width="100"
@@ -573,6 +611,82 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <!-- Save Button -->
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-lg-3 col-form-label form-control-label"
+                                            ></label>
+                                            <div class="col-lg-9">
+                                                <input
+                                                    type="submit"
+                                                    class="btn btn-primary"
+                                                    value="Save Details"
+                                                />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div
+                                    v-if="tab == 'theme_color'"
+                                    :class="tab == 'theme_color' ? ' active' : ''"
+                                    class="tab-pane"
+                                    id="theme_color"
+                                >
+                                    <form @submit.prevent="SiteSettingsHandler">
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-lg-3 col-form-label form-control-label"
+                                                >Main colore One</label
+                                            >
+                                            <div class="col-lg-9">
+                                                <input
+                                                    name="main_color_one"
+                                                    class="form-control"
+                                                    type="color"
+                                                    placeholder="Enter main color one"
+                                                    :value="`${get_setting_value(
+                                                        'main_color_one'
+                                                    )}`"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-lg-3 col-form-label form-control-label"
+                                                >Main Color Two</label
+                                            >
+                                            <div class="col-lg-9">
+                                                <input
+                                                    name="main_color_two"
+                                                    class="form-control"
+                                                    type="color"
+                                                    placeholder="Enter main color two"
+                                                    :value="`${get_setting_value(
+                                                        'main_color_two'
+                                                    )}`"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-lg-3 col-form-label form-control-label"
+                                                >Secondary Color</label
+                                            >
+                                            <div class="col-lg-9">
+                                                <input
+                                                    name="secondary_color"
+                                                    class="form-control"
+                                                    type="color"
+                                                    placeholder="Enter secondary color"
+                                                    :value="`${get_setting_value(
+                                                        'secondary_color'
+                                                    )}`"
+                                                />
+                                            </div>
+                                        </div>
+
                                         <!-- Save Button -->
                                         <div class="form-group row">
                                             <label

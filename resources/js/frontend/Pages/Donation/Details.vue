@@ -92,7 +92,7 @@
                                 :style="
                                   Object.assign(
                                     {
-                                      backgroundColor: 'rgb(175, 15, 21)',
+                                      backgroundColor: 'var(--main-color-one)',
                                       height: '5px',
                                       borderRadius: '8px',
                                     },

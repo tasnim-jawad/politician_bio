@@ -29,6 +29,18 @@ class StoreData
                         $imagePath = uploader($image, 'uploads/settings'); // Upload the image
                         $finalValue = $imagePath; // Set the image path as the value
                     }
+                    // Handle image upload only if the title is for an image
+                    if (request()->hasFile('footer_logo') && $title === 'footer_logo') {
+                        $footer_logo = request()->file('footer_logo');
+                        $footer_logoPath = uploader($footer_logo, 'uploads/settings'); // Upload the image
+                        $finalValue = $footer_logoPath; // Set the image path as the value
+                    }
+                    // Handle image upload only if the title is for an image
+                    if (request()->hasFile('header_logo') && $title === 'header_logo') {
+                        $header_logo = request()->file('header_logo');
+                        $header_logoPath = uploader($header_logo, 'uploads/settings'); // Upload the image
+                        $finalValue = $header_logoPath; // Set the image path as the value
+                    }
 
                     // Update or create the setting title
                     $settingTitle = self::$model::updateOrCreate(

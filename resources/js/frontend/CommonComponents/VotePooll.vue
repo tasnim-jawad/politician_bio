@@ -84,7 +84,7 @@
           class="progress"
           :class="{ 'd-block': hasVoted }"
           :style="{
-            backgroundColor: 'rgb(175, 15, 21)',
+            backgroundColor: 'var(--main-color-one)',
             height: '5px',
             borderRadius: '8px',
             width: optionWidths[option.id] + '%',

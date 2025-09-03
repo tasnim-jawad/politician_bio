@@ -28,7 +28,7 @@
               </div>
               <div class="content">
                 <h4 class="title">{{ item.title }}</h4>
-                <p>{{ item.description.length > 80 ? item.description.substring(0, 80) + '...' : item.description }}</p>
+                <p v-html="item.description.length > 80 ? item.description.substring(0, 80) + '...' : item.description"></p>
               </div>
               <img
                 src="frontend/assets/img/setting-shape.png"

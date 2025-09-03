@@ -57,7 +57,9 @@
                       >
                     </h4>
                     <div class="author-meta">
-                      <p class="author-name">By: {{ lead_news?.author ?? 'admin'}}</p>
+                      <p class="author-name">
+                        By: {{ lead_news?.author ?? "admin" }}
+                      </p>
                       <p>{{ lead_news?.date }}</p>
                     </div>
                   </div>
@@ -99,9 +101,7 @@
         </div>
         <div class="col-lg-12">
           <div class="text-center mt-4">
-            <Link href="/news" class="btn btn-danger btn-square px-5">
-              View All News
-            </Link>
+            <Link href="/news" class="btn-main-theme"> View All News </Link>
           </div>
         </div>
       </div>
@@ -254,7 +254,7 @@ export default {
   flex-wrap: wrap;
 }
 .tag-badge {
-  background-color: rgb(255, 0, 0);
+  background-color: var(--main-color-one, #dd131a);
   padding: 10px 10px;
   border-radius: 3px;
   font-size: 16px;
@@ -296,5 +296,34 @@ export default {
   font-size: 12px;
   color: #999;
   margin-bottom: 5px;
+}
+
+.main_color_one {
+  background-color: var(--main-color-one);
+  border-color: var(--main-color-one);
+  color: #fff;
+}
+
+/* View All News Button Styling */
+.btn-main-theme {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: var(--main-color-one, #dd131a);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  border: 2px solid var(--main-color-one, #dd131a);
+}
+
+.btn-main-theme:hover {
+  background-color: var(--secondary-color, #0e115a);
+  border-color: var(--secondary-color, #0e115a);
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 </style>

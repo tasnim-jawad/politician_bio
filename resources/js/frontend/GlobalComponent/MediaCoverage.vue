@@ -56,7 +56,15 @@
                 </div>
               </div>
               <div class="media-content">
-                <span class="category">{{ item.tag }}</span>
+                <template v-if="item?.tag">
+                  <span
+                    class="category badge mr-2"
+                    v-for="(tag, idx) in item.tag.split(',').slice(0, 3)"
+                    :key="idx"
+                  >
+                    {{ tag.trim() }}
+                  </span>
+                </template>
                 <h3 class="title">{{ item.title }}</h3>
                 <span class="date"
                   ><i class="fas fa-calendar-alt"></i> {{ item.date }}</span
@@ -67,9 +75,7 @@
         </div>
         <div class="row justify-content-center mt-4">
           <div class="col-auto">
-            <Link class="link_button" href="/pages/media">
-              See More
-            </Link>
+            <Link class="link_button" href="/pages/media"> See More </Link>
           </div>
         </div>
       </div>
@@ -182,10 +188,10 @@ export default {
   top: 0;
 }
 .bg_image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
 }
 .link_button {
   background-color: var(--main-color-one);
@@ -198,7 +204,7 @@ export default {
 }
 
 .link_button:hover {
-  background-color: #c82333;
+  background-color: var(--secondary-color);
   color: #fff;
 }
 </style>
