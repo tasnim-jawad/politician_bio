@@ -689,6 +689,7 @@ export default {
   content-visibility: auto;
   contain-intrinsic-size: 300px 200px;
   transition: opacity 0.3s ease;
+  height: 100%;
 }
 
 /* Optimize image containers */

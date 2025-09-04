@@ -14663,6 +14663,12 @@ input[type=checkbox] {
 }
 
 /*navbar-default*/
+.logo-wrapper  {
+  height: 40px;
+}
+.logo-wrapper  img{
+  height: 100%;
+}
 .logo-wrapper .site-title {
   font-size: 30px;
   line-height: 40px;
